@@ -18,7 +18,7 @@ export default function BottomNav() {
     return (
         <Stack  sx={{overflowX:'scroll','::-webkit-scrollbar':{display:'none'}}} alignItems={'center'} direction={'row'} my={{ xs: 2, md: 3 }} mx={'auto'} gap={3}>
             <Box display={{xs:'none',md:'inline-block'}} borderRadius={'8px'} >
-                <Button sx={{ py: '8px', display: 'flex', gap: '16px', bgcolor: 'var(--secondary-clr)', '& svg': { color: 'var(--text-clr)' } }} startIcon={<IoIosMenu size={24} />} endIcon={<IoIosArrowDown size={22} />}>
+                <Button sx={{ py: '8px', display: 'flex', gap: '16px', bgcolor: 'var(--secondary-clr)','&:hover':{bgcolor:'var(--secondary-clr-dark)'}, '& svg': { color: 'var(--text-clr)' } }} startIcon={<IoIosMenu size={24} />} endIcon={<IoIosArrowDown size={22} />}>
                     <Typography fontSize={'16px'} color='var(--text-clr)' noWrap>دسته بندی ها</Typography>
                 </Button>
             </Box>

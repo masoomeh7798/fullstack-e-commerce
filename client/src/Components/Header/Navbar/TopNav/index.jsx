@@ -38,11 +38,11 @@ export default function TopNav() {
     {/* end search bar */}
     {/* start user and cart part */}
     <Stack flex={1} justifyContent={'end'} gap={{ xs: 1, sm: 4 }} alignItems={'center'} direction={'row'}>
-      <Button sx={{ borderRadius: 2, px: 2, py: 1, bgcolor: 'var(--secondary-clr)', display: { xs: 'none', sm: 'inline-block' } }}>
+      <Button sx={{ borderRadius: 2, px: 2, py: 1, bgcolor: 'var(--secondary-clr)', display: { xs: 'none', sm: 'inline-block' },'&:hover':{bgcolor:'var(--secondary-clr-dark)'} }}>
         <Typography fontSize={{ xs: '12px', sm: "16px" }} noWrap color='var(--text-clr)' component={'p'}>ورود/ ثبت نام</Typography>
       </Button>
       <Box>
-        <IconButton sx={{ bgcolor: "var(--text-clr)", width: {xs:'40px',sm:'50px'}, height: {xs:'40px',sm:"50px"}, p: 0 }}>
+        <IconButton sx={{ bgcolor: "var(--text-clr)",'&:hover':{bgcolor:'var(--secondary-clr-light)'}, width: {xs:'40px',sm:'50px'}, height: {xs:'40px',sm:"50px"}, p: 0 }}>
           <Badge badgeContent={1} max={9} color='secondary'>
             <ShoppingCartIcon sx={{ width: {xs:'1.2em',sm:'1.5em'}, height: {xs:'1.2em',sm:'1.5em'} }} color='var(--text-clr)' />
           </Badge>
