@@ -10,10 +10,13 @@
   font-family: 'Baloo Bhaijaan 2', sans-serif;
 
 }
-
+::-webkit-scrollbar{
+  display: none;
+}
 :root{
   --primary-clr:#2A363B;
   --secondary-clr:#CF4647;
+  --secondary-clr-light:#cf46462b;
   --third-clr:#F5D061;
   --text-clr:#F8F6F6;
 }
