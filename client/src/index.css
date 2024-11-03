@@ -21,3 +21,9 @@
   --third-clr:#F5D061;
   --text-clr:#F8F6F6;
 }
+
+.isCatOpen{
+  opacity: 1 !important;
+  visibility: visible !important;
+  top: 129% !important;
+}

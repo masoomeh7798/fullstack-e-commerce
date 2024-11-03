@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <header style={{borderBottom:'1px solid rgba(0,0,0,0.2)'}}>
+    <header style={{borderBottom:'1px solid rgba(0,0,0,0.1)'}}>
 
       {/* start top strip */}
       <Box py={1} bgcolor={'var(--secondary-clr)'} align='center'><Typography variant='body1' fontWeight={'500'} fontSize={'16px'} color='var(--text-clr)'>"عرضه به روزترين بدليجات برند و استيل ."</Typography>
