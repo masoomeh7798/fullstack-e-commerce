@@ -52,6 +52,7 @@ background-color: var(--secondary-clr);
 .home-slider .swiper-button-prev,
 .home-slider .swiper-button-next{
   padding: 24px;
+  margin:0 8px;
   background-color: var(--secondary-clr-dark);
   border-radius: 50%;
   border: 1px solid var(--secondary-clr);
@@ -63,4 +64,21 @@ background-color: var(--secondary-clr);
   font-weight: 900;
   font-size: 24px;
 
+}
+
+@media screen and (max-width:600px){
+  .home-slider.swiper {
+    height: 50vh;
+  }
+  .home-slider .swiper-button-prev,
+.home-slider .swiper-button-next{
+  padding:8px 20px;
+
+}
+.home-slider .swiper-button-prev::after,
+.home-slider .swiper-button-next::after{
+
+  font-size: 16px;
+
+}
 }
