@@ -1,9 +1,34 @@
-import { Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import React from 'react'
 import Banner from './Banner'
+import Products from './Products';
+import AsideBanner from './AsideBanner';
 
 export default function Home() {
   return (
-    <Banner/>
+    <>
+      {/* start banner */}
+      <Banner />
+      {/* start banner */}
+      {/* start main */}
+      <main>
+        <Box width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'} mt={'40px'}>
+          <Stack direction={'row'} gap={'2%'}>
+            {/* start products  */}
+            <Products />
+            {/* end products  */}
+
+            {/* start aside banner  */}
+            <AsideBanner />
+            {/* end aside banner  */}
+
+          </Stack>
+        </Box>
+      </main>
+      {/* end main */}
+    </>
+
   )
 }
+
+

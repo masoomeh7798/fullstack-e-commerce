@@ -13,6 +13,7 @@ import { FaHorseHead } from "react-icons/fa";
 import { IoMdFlower } from "react-icons/io";
 import { GiFootprint } from "react-icons/gi";
 import { BsFillBox2HeartFill } from "react-icons/bs";
+import { FaAngleLeft } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 
@@ -25,8 +26,8 @@ const listItemStyle = { position: 'relative', '&:hover .sub-menu': { opacity: 1,
 
 export default function BottomNav() {
     const [isOpenCat, setIsOpenCat] = useState(false);
-    const handleOpenCat=()=>{
-        setIsOpenCat(isOpenCat?false:true)
+    const handleOpenCat = () => {
+        setIsOpenCat(isOpenCat ? false : true)
     }
     return (
         <Stack sx={{ overflowX: 'scroll', '::-webkit-scrollbar': { display: 'none' }, overflow: 'visible' }} alignItems={'start'} direction={'row'} mt={{ xs: 2, md: 3 }} mx={'auto'} gap={3}>
@@ -35,19 +36,32 @@ export default function BottomNav() {
                 <Button onClick={handleOpenCat} sx={{ py: '8px', display: 'flex', gap: '16px', bgcolor: 'var(--secondary-clr)', '&:hover': { bgcolor: 'var(--secondary-clr-dark)' }, '& svg': { color: 'var(--text-clr)' } }} startIcon={<IoIosMenu size={24} />} endIcon={<IoIosArrowDown size={22} />}>
                     <Typography fontSize={'16px'} color='var(--text-clr)' noWrap>همه دسته ها</Typography>
                 </Button>
-                <Box className={`${isOpenCat?'isCatOpen':''}`} sx={{ overflow: 'hidden', border: '1px solid rgba(0,0,0,0.2)', position: 'absolute', top: '90%', right: '0', bgcolor: 'white', textAlign: 'start', '& button': { width: '100%',  justifyContent: 'start', '&:hover': { bgcolor: 'var(--text-clr)' } }, opacity: 0, visibility: 'hidden', transition: 'all .2s ease-out', padding: '8px' }} width={'100%'} zIndex={'2'}>
-                    <List sx={{ '& li': { padding: '0' },'& li a':{lineHeight:'2em'},'& li:hover button':{bgcolor:'var(--secondary-clr-light)'}, paddingInlineStart: '0 !important' }}>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><IoMdWatch /><span>ساعت</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiHeartNecklace /><span>گردنبند</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiDoubleNecklace /><span>سرویس</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiBigDiamondRing /><span>انگشتر</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiHeartEarrings /><span>گوشواره</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><FaRing /><span>دستبند</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><FaGlasses/><span style={{ textWrap: 'nowrap' }}>بند عینک</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><FaHorseHead/><span style={{ textWrap: 'nowrap' }}>آویز و جاکلیدی</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><IoMdFlower/><span style={{ textWrap: 'nowrap' }}>گلسر</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiFootprint/><span style={{ textWrap: 'nowrap' }}>پابند</span></Link></Button></ListItem>
-                            <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><BsFillBox2HeartFill/><span style={{ textWrap: 'nowrap' }}>باکس و جعبه</span></Link></Button></ListItem>
+                <Box className={`${isOpenCat ? 'isCatOpen' : ''}`} sx={{ border: '1px solid rgba(0,0,0,0.2)', position: 'absolute', top: '90%', right: '0', bgcolor: 'white', textAlign: 'start', '& button': { width: '100%', justifyContent: 'start', '&:hover': { bgcolor: 'var(--text-clr)' } }, opacity: 0, visibility: 'hidden', transition: 'all .2s ease-out', padding: '8px' }} width={'100%'} zIndex={'3 !important'}>
+                    <List sx={{ '& li': { padding: '0' }, '& li a': { lineHeight: '2em' }, '& li:hover button': { bgcolor: 'var(--secondary-clr-light)' }, paddingInlineStart: '0 !important' }}>
+                        <ListItem sx={{ position: 'static', '&:hover .allCategory-submenu': { visibility: 'visible', opacity: '1', right: '105.5%' } }}><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><IoMdWatch /><span style={{ marginLeft: '45px' }}>ساعت</span><FaAngleLeft opacity={'.8'} /></Link></Button>
+                            <Box className='allCategory-submenu' bgcolor={'white'} boxShadow={'-1px 1px 2px 2px rgba(0,0,0,.2)'} position={'absolute'} top={'-8px'} right={'120%'} width={'fit-content'} zIndex={1} visibility={'hidden'} sx={{ opacity: '0', transition: 'all .2s ease-out' }} >
+                                <List sx={{ '& li a': { color: 'var(--primary-clr)', textWrap: 'nowrap' }, padding: ' 16px 24px' }}>
+                                    <ListItem>
+                                        <Link to='/'>ساعت مردانه</Link>
+                                    </ListItem>
+                                    <ListItem>
+                                        <Link to='/'>ساعت زنانه</Link>
+                                    </ListItem>
+                                </List>
+                            </Box>
+                        </ListItem>
+                        <ListItem sx={{ position: 'static' }}><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiHeartNecklace /><span>گردنبند</span></Link></Button>
+
+                        </ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiDoubleNecklace /><span>سرویس</span></Link></Button></ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiBigDiamondRing /><span>انگشتر</span></Link></Button></ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiHeartEarrings /><span>گوشواره</span></Link></Button></ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><FaRing /><span>دستبند</span></Link></Button></ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><FaGlasses /><span style={{ textWrap: 'nowrap' }}>بند عینک</span></Link></Button></ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><FaHorseHead /><span style={{ textWrap: 'nowrap' }}>آویز و جاکلیدی</span></Link></Button></ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><IoMdFlower /><span style={{ textWrap: 'nowrap' }}>گلسر</span></Link></Button></ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiFootprint /><span style={{ textWrap: 'nowrap' }}>پابند</span></Link></Button></ListItem>
+                        <ListItem><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><BsFillBox2HeartFill /><span style={{ textWrap: 'nowrap' }}>باکس و جعبه</span></Link></Button></ListItem>
 
                     </List>
                 </Box>
@@ -64,7 +78,7 @@ export default function BottomNav() {
                     </ListItem>
 
                     <ListItem sx={listItemStyle}><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><GiHeartNecklace /><span>گردنبند</span></Link></Button>
-                    <Box className='sub-menu' sx={subMenuBox}>
+                        <Box className='sub-menu' sx={subMenuBox}>
                             <Button ><Link style={{ textWrap: 'nowrap', color: 'var(--primary-clr)' }} to='/'>گردنبند زنانه</Link></Button>
                             <Button ><Link style={{ textWrap: 'nowrap', color: 'var(--primary-clr)' }} to='/'>گردنبند مردانه</Link></Button>
                         </Box>
