@@ -16,7 +16,7 @@ import { BsArrowsFullscreen } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
 
 
-export default function NewestProducts() {
+export default function PopularProducts() {
     const [products, setProducts] = useState([]);
     const [rating, setRating] = useState(3);
     useEffect(() => {
@@ -80,7 +80,7 @@ export default function NewestProducts() {
     return (
         <Stack width={'100%'} height={'82vh'} my={3}>
             <Stack direction='row' alignItems={'center'} justifyContent={'space-between'} mb={3}>
-                <Typography fontSize={'2em'} component={'h3'}>جدیدترین محصولات</Typography>
+                <Typography fontSize={'2em'} component={'h3'}>محبوب ترین ها</Typography>
                 <Button sx={{ borderRadius: '24px', bgcolor: 'var(--third-clr)', transition: 'all .3s', '&:hover': { opacity: .7 } }}><Link style={{ display: 'flex', alignItems: 'center', justifyContent: "space-between", gap: '8px' }} to='/'><Typography color='primary' variant='body2'>مشاهده همه محصولات</Typography><FaAngleLeft /></Link></Button>
             </Stack>
             <Swiper
