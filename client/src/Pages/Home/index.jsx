@@ -3,6 +3,7 @@ import React from 'react'
 import Banner from './Banner'
 import Products from './Products';
 import AsideBanner from './AsideBanner';
+import FeaturedCategories from './FeaturedCategories';
 
 export default function Home() {
   return (
@@ -13,16 +14,16 @@ export default function Home() {
       {/* start main */}
       <main>
         <Box width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'} mt={'40px'}>
+        <FeaturedCategories/>
           <Stack direction={'row'} gap={'2%'}>
             {/* start products  */}
             <Products />
             {/* end products  */}
-
             {/* start aside banner  */}
             <AsideBanner />
             {/* end aside banner  */}
-
           </Stack>
+
         </Box>
       </main>
       {/* end main */}
