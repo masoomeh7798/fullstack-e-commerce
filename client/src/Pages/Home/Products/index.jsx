@@ -4,6 +4,7 @@ import { Box, Button, Stack } from '@mui/material';
 
 import NewestProducts from './NewestProducts';
 import PopularProducts from './PopularProducts';
+import DiscountBanner from './DiscountsBanner';
 
 
 
@@ -17,6 +18,9 @@ export default function Products() {
             {/* start popular products */}
             <PopularProducts/>
             {/* end popular products */}
+            {/* start discounts banner */}
+            <DiscountBanner/>
+            {/* end discounts banner */}
         </Stack>
     )
 }

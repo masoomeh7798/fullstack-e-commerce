@@ -23,7 +23,7 @@ export default function Home() {
             <AsideBanner />
             {/* end aside banner  */}
           </Stack>
-
+          
         </Box>
       </main>
       {/* end main */}
