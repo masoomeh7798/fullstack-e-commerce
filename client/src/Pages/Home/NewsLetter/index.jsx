@@ -5,7 +5,7 @@ import { MdEmail } from "react-icons/md";
 
 export default function NewsLetter() {
     return (
-        <Stack height={{xs:'45vh',md:'50vh'}} bgcolor={'var(--primary-clr)'} alignItems={{xs:'center',md:'start'}} position={'relative'} justifyContent={'center'} px={{xs:0,sm:'5%',lg:'9%'}}>
+        <Stack height={{xs:'45vh',md:'50vh'}} bgcolor={'var(--secondary-clr)'} alignItems={{xs:'center',md:'start'}} position={'relative'} justifyContent={'center'} px={{xs:0,sm:'5%',lg:'9%'}}>
             <Stack color={'var(--text-clr)'} width={{xs:'90%',md:'50%'}}>
                 <Typography sx={{ opacity: '.85' }} fontSize={{xs:'1em',sm:'1.2em'}} mb={2}>ارسال رایگان برا ی اولین خرید</Typography>
                 <Typography sx={{ opacity: '.95' }} fontSize={{xs:'1.5em',sm:'2em'}} mb={1}>عضویت در خبرنامه رنگین مد</Typography>

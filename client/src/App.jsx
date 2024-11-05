@@ -4,6 +4,7 @@ import Header from './Components/Header'
 import Home from './Pages/Home'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import Footer from './Components/Footer';
 
 // start default theme 
 export default function App() {
@@ -269,6 +270,7 @@ export default function App() {
     <Routes>
       <Route exact path='/' element={<Home/>}  />
     </Routes>
+    <Footer/>
     </BrowserRouter>
     </ThemeProvider> 
   )
