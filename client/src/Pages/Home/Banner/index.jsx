@@ -22,7 +22,6 @@ export default function Banner() {
   const items = banners?.map((e, index) => (
     <SwiperSlide key={index}><img src={e.image} alt="" /></SwiperSlide>
   ))
- console.log(banners);
   return (
     <>{banners&&
       <Swiper

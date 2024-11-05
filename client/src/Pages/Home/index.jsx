@@ -4,6 +4,7 @@ import Banner from './Banner'
 import Products from './Products';
 import AsideBanner from './AsideBanner';
 import FeaturedCategories from './FeaturedCategories';
+import NewsLetter from './NewsLetter';
 
 export default function Home() {
   return (
@@ -23,10 +24,10 @@ export default function Home() {
             <AsideBanner />
             {/* end aside banner  */}
           </Stack>
-          
         </Box>
       </main>
       {/* end main */}
+      <NewsLetter/>
     </>
 
   )
