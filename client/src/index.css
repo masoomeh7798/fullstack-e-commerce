@@ -32,7 +32,7 @@
 
 .home-slider.swiper {
   width: 100%;
-  height: 70vh;
+  height: 55vh;
 }
 
 .home-slider .swiper-wrapper,
@@ -40,7 +40,12 @@
   width: 100%;
   height: 100%;
 }
-
+.home-slider.swiper{
+  overflow: visible !important;
+}
+.home-slider .swiper-slide{
+  overflow: hidden;
+}
 .home-slider .swiper-slide img {
   width: 100%;
   height: 100%;

@@ -14,7 +14,7 @@ export default function Home() {
       {/* start banner */}
       {/* start main */}
       <main>
-        <Box width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'} mt={'40px'}>
+        <Box width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'} mt={'20px'}>
         <FeaturedCategories/>
           <Stack direction={'row'} gap={'2%'}>
             {/* start products  */}
