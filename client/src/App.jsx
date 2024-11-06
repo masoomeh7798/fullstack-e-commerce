@@ -13,6 +13,7 @@ export default function App() {
       "keys": ["xs", "sm", "md", "lg", "xl"],
       "values": {
         "xs": 0,
+        "xxs":300,
         "sm": 600,
         "md": 900,
         "lg": 1200,

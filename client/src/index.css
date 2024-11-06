@@ -85,7 +85,9 @@ box-shadow: 0 0 5px 1px rgba(0,0,0,.2);
   object-fit: cover;
 }
 
-
+.css-cokf1l-MuiListItemIcon-root{
+  min-width: 24px !important;
+}
 
 
 @media screen and (max-width:600px){
