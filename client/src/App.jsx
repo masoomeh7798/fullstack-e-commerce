@@ -152,7 +152,11 @@ export default function App() {
       "0px 16px 30px -1px rgba(0,0,0,0.2), 0px 18px 65px 0px rgba(0,0,0,0.14), 0px 1px 120px 0px rgba(0,0,0,0.12)",
       "0px 17px 32px -1px rgba(0,0,0,0.2), 0px 19px 70px 0px rgba(0,0,0,0.14), 0px 1px 130px 0px rgba(0,0,0,0.12)",
       "0px 18px 34px -1px rgba(0,0,0,0.2), 0px 20px 75px 0px rgba(0,0,0,0.14), 0px 1px 140px 0px rgba(0,0,0,0.12)",
-      "0px 19px 36px -1px rgba(0,0,0,0.2), 0px 21px 80px 0px rgba(0,0,0,0.14), 0px 1px 150px 0px rgba(0,0,0,0.12)"
+      "0px 19px 36px -1px rgba(0,0,0,0.2), 0px 21px 80px 0px rgba(0,0,0,0.14), 0px 1px 150px 0px rgba(0,0,0,0.12)",   "0px 20px 40px rgba(0,0,0,0.3)", // 20 - Add custom shadow
+      "0px 24px 48px rgba(0,0,0,0.3)", // 21 - Add custom shadow
+      "0px 28px 56px rgba(0,0,0,0.3)", // 22 - Add custom shadow
+      "0px 32px 64px rgba(0,0,0,0.3)", // 23 - Add custom shadow
+      "0px 36px 72px rgba(0,0,0,0.3)", // 24 - Add custom shadow for elevation 24
     ],
     "typography": {
       "fontFamily": "\"Baloo Bhaijaan 2\", sans-serif",
