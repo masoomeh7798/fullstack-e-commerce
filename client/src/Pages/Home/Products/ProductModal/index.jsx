@@ -31,11 +31,9 @@ export default function ProductModal({ handleClose, img, title, description, ope
 
     return (
         <>
-
-
             <BootstrapDialog sx={{
                 '& .MuiDialog-paper': {
-                    height: '80vh',
+                    
                     padding: ' 0px 2%',
                     maxWidth: { xs: '100%', sm: '80%', md: '70%', lg: '60%' }
                 },
@@ -48,7 +46,7 @@ export default function ProductModal({ handleClose, img, title, description, ope
                 className='heyyyy'
             >
                 <DialogTitle position={'static'} borderBottom={'1px solid rgba(0,0,0,.2)'} sx={{ m: 0, p: 2 }} id="customized-dialog-title" >
-                    <Typography variant='body2' fontSize={'1.5em'}>{title}</Typography>
+                    <Typography variant='body2' fontSize={'1.2em'}>{title}</Typography>
 
                     <Stack direction={'row'} alignItems={'center'} gap={3} >
                         <Typography variant='body2'>برند: ژوپینگ</Typography>

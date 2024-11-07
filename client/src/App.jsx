@@ -5,6 +5,7 @@ import Home from './Pages/Home'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import Footer from './Components/Footer';
+import Products from './Pages/Products';
 
 // start default theme 
 export default function App() {
@@ -18,44 +19,6 @@ export default function App() {
         "md": 900,
         "lg": 1200,
         "xl": 1536
-      }
-    },
-    "direction": "ltr",
-    "components": {
-      "MuiButton": {
-        "defaultProps": {
-          "disableElevation": true
-        },
-        "styleOverrides": {
-          "root": {
-            "borderRadius": 8
-          }
-        }
-      },
-      "MuiAppBar": {
-        "styleOverrides": {
-          "root": {
-            "zIndex": 1201
-          }
-        }
-      },
-      "MuiTypography": {
-        "styleOverrides": {
-          "root": {
-            "fontSize": "inherit",
-            "lineHeight": "inherit"
-          }
-        }
-      },
-      "MuiInput": {
-        "defaultProps": {
-          "disableUnderline": true
-        },
-        "styleOverrides": {
-          "root": {
-            "borderRadius": 4
-          }
-        }
       }
     },
     "palette": {
@@ -119,45 +82,7 @@ export default function App() {
       "contrastThreshold": 3,
       "tonalOffset": 0.2
     },
-    "spacing": 8,
-    "shape": {
-      "borderRadius": 4
-    },
-    "containerQueries": {},
-    "applyStyles": {},
-    "unstable_sxConfig": {},
-    "unstable_sx": function() {},
-    "mixins": {
-      "toolbar": {
-        "minHeight": 56
-      }
-    },
-    "shadows": [
-      "none",
-      "0px 1px 2px 0px rgba(0,0,0,0.2)",
-      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
-      "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)",
-      "0px 4px 6px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)",
-      "0px 5px 8px -1px rgba(0,0,0,0.2), 0px 7px 12px 0px rgba(0,0,0,0.14), 0px 1px 24px 0px rgba(0,0,0,0.12)",
-      "0px 6px 10px -1px rgba(0,0,0,0.2), 0px 8px 15px 0px rgba(0,0,0,0.14), 0px 1px 28px 0px rgba(0,0,0,0.12)",
-      "0px 7px 12px -1px rgba(0,0,0,0.2), 0px 9px 20px 0px rgba(0,0,0,0.14), 0px 1px 36px 0px rgba(0,0,0,0.12)",
-      "0px 8px 14px -1px rgba(0,0,0,0.2), 0px 10px 25px 0px rgba(0,0,0,0.14), 0px 1px 40px 0px rgba(0,0,0,0.12)",
-      "0px 9px 16px -1px rgba(0,0,0,0.2), 0px 11px 30px 0px rgba(0,0,0,0.14), 0px 1px 50px 0px rgba(0,0,0,0.12)",
-      "0px 10px 18px -1px rgba(0,0,0,0.2), 0px 12px 35px 0px rgba(0,0,0,0.14), 0px 1px 60px 0px rgba(0,0,0,0.12)",
-      "0px 11px 20px -1px rgba(0,0,0,0.2), 0px 13px 40px 0px rgba(0,0,0,0.14), 0px 1px 70px 0px rgba(0,0,0,0.12)",
-      "0px 12px 22px -1px rgba(0,0,0,0.2), 0px 14px 45px 0px rgba(0,0,0,0.14), 0px 1px 80px 0px rgba(0,0,0,0.12)",
-      "0px 13px 24px -1px rgba(0,0,0,0.2), 0px 15px 50px 0px rgba(0,0,0,0.14), 0px 1px 90px 0px rgba(0,0,0,0.12)",
-      "0px 14px 26px -1px rgba(0,0,0,0.2), 0px 16px 55px 0px rgba(0,0,0,0.14), 0px 1px 100px 0px rgba(0,0,0,0.12)",
-      "0px 15px 28px -1px rgba(0,0,0,0.2), 0px 17px 60px 0px rgba(0,0,0,0.14), 0px 1px 110px 0px rgba(0,0,0,0.12)",
-      "0px 16px 30px -1px rgba(0,0,0,0.2), 0px 18px 65px 0px rgba(0,0,0,0.14), 0px 1px 120px 0px rgba(0,0,0,0.12)",
-      "0px 17px 32px -1px rgba(0,0,0,0.2), 0px 19px 70px 0px rgba(0,0,0,0.14), 0px 1px 130px 0px rgba(0,0,0,0.12)",
-      "0px 18px 34px -1px rgba(0,0,0,0.2), 0px 20px 75px 0px rgba(0,0,0,0.14), 0px 1px 140px 0px rgba(0,0,0,0.12)",
-      "0px 19px 36px -1px rgba(0,0,0,0.2), 0px 21px 80px 0px rgba(0,0,0,0.14), 0px 1px 150px 0px rgba(0,0,0,0.12)",   "0px 20px 40px rgba(0,0,0,0.3)", // 20 - Add custom shadow
-      "0px 24px 48px rgba(0,0,0,0.3)", // 21 - Add custom shadow
-      "0px 28px 56px rgba(0,0,0,0.3)", // 22 - Add custom shadow
-      "0px 32px 64px rgba(0,0,0,0.3)", // 23 - Add custom shadow
-      "0px 36px 72px rgba(0,0,0,0.3)", // 24 - Add custom shadow for elevation 24
-    ],
+   
     "typography": {
       "fontFamily": "\"Baloo Bhaijaan 2\", sans-serif",
       "fontSize": 14,
@@ -241,29 +166,8 @@ export default function App() {
         "textTransform": "uppercase",
         "letterSpacing": "0.16667em"
       }
-    },
-    "transitions": {
-      "easing": {
-        "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
-        "easeOut": "cubic-bezier(0.4, 0, 0.6, 1)",
-        "easeIn": "cubic-bezier(0.4, 0, 0.2, 1)"
-      },
-      "duration": {
-        "short": 150,
-        "standard": 300,
-        "complex": 375,
-        "leavingScreen": 200,
-        "enteringScreen": 200
-      }
-    },
-    "zIndex": {
-      "modal": 1300,
-      "appBar": 1200,
-      "drawer": 1100,
-      "snackbar": 1000,
-      "tooltip": 1500
-    },
-    "toRuntimeSource": function() {}
+    }
+
   }
 );
 // end default theme
@@ -274,6 +178,7 @@ export default function App() {
     <Header/>
     <Routes>
       <Route exact path='/' element={<Home/>}  />
+      <Route path='/products/:id/:category' element={<Products/>}  />
     </Routes>
     <Footer/>
     </BrowserRouter>
