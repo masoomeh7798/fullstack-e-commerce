@@ -5,7 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Slider from '@mui/material/Slider';
 
 function pricetext(price) {
-    return `${price}°C`;
+    return `${price}`;
 }
 
 
@@ -148,7 +148,7 @@ export default function FilterBoxes() {
                             color:'var(--secondary-clr) !important'
                         }
                     }}
-                    getAriaLabel={() => 'Temperature range'}
+                    getAriaLabel={() => 'Price range'}
                     value={price}
                     onChange={handleChange}
                     valueLabelDisplay="auto"
