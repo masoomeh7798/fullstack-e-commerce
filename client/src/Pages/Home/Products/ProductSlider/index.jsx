@@ -30,7 +30,6 @@ export default function ProductSlider() {
                 <SwiperSlide>
                  
                   <InnerImageZoom zoomType='hover' zoomScale={1}
-                  
                   src='https://swiperjs.com/demos/images/nature-1.jpg'/>
                 </SwiperSlide>
                 <SwiperSlide>

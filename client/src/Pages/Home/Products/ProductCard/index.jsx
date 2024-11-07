@@ -11,6 +11,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import { BsArrowsFullscreen } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
 import ProductModal from '../ProductModal';
+import './style.css'
 
 
 export default function ProductCard({img,title,description}) {
@@ -25,7 +26,7 @@ export default function ProductCard({img,title,description}) {
     };
   return (
     <>
-    <Card sx={{ height: '90%', width: '100%', position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' } }}>
+    <Card sx={{ height: '90%', width: '100%', position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' },'&:hover':{boxShadow:'0 0 5px 2px rgba(0,0,0,0.2)'} }}>
     <CardActionArea sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'start', overflow: 'hidden', alignItems: 'start' }}>
         <Box width={'100%'} height={'48%'} overflow={'hidden'}>
             <CardMedia sx={{ '&:hover': { transform: 'scale(1.1)' }, transition: ' all .5s ease-in-out' }}
@@ -63,7 +64,7 @@ export default function ProductCard({img,title,description}) {
     <Typography sx={{ position: 'absolute', backgroundColor: 'var(--secondary-clr)', color: 'var(--text-clr)', borderRadius: '4px', top: '10px', left: '10px', padding: '4px 8px' }} variant='body2' >25%</Typography>
     <Stack className='screen-heart' sx={{ position: 'absolute', top: '10px', right: '0px', '& button:hover': { bgcolor: 'var(--secondary-clr)', color: 'var(--text-clr)' }, '& button': { bgcolor: 'var(--text-clr)', transition: 'all .3s' }, visibility: 'hidden', opacity: '0', transition: ' all .5s ease-in-out' }} gap={1}>
         <IconButton><FaRegHeart /></IconButton>
-        <IconButton onClick={handleClickOpen}><BsArrowsFullscreen /></IconButton>
+        <IconButton sx={{display:{xs:'none',sm:'inline-flex'}}} onClick={handleClickOpen}><BsArrowsFullscreen /></IconButton>
     </Stack>
 </Card>
 {open && <ProductModal img={img} title={title} description={description} handleClose={handleClose} open={open}/>}
