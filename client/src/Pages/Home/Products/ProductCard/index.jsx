@@ -14,7 +14,7 @@ import ProductModal from '../ProductModal';
 import './style.css'
 
 
-export default function ProductCard({img,title,description}) {
+export default function ProductCard({img,title,description,dynamicWidth}) {
     const [rating, setRating] = useState(3);
     const [open, setOpen] =useState(false);
 
@@ -26,17 +26,20 @@ export default function ProductCard({img,title,description}) {
     };
   return (
     <>
-    <Card sx={{ height: '90%', width: '100%', position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' },'&:hover':{boxShadow:'0 0 5px 2px rgba(0,0,0,0.2)'} }}>
-    <CardActionArea sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'start', overflow: 'hidden', alignItems: 'start' }}>
-        <Box width={'100%'} height={'48%'} overflow={'hidden'}>
+
+    <Card  sx={{ height:`${dynamicWidth=='100%'?'240px':'450px'}`, width: `${dynamicWidth?dynamicWidth:'250px'}`, position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' },'&:hover':{boxShadow:'0 0 5px 2px rgba(0,0,0,0.2)'} }}>
+    <Box className={`${dynamicWidth=='100%'&&'card-product-full'}`} sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'start', overflow: 'hidden', alignItems: 'start' }}>
+        <Box width={'100%'} height={`${dynamicWidth=='100%'?'100%':'48%'}`} overflow={'hidden'}>
             <CardMedia sx={{ '&:hover': { transform: 'scale(1.1)' }, transition: ' all .5s ease-in-out' }}
                 component="img"
                 image={img}
+                height={'100%'}
                 alt="green iguana"
+                
             />
         </Box>
-        <CardContent sx={{ width: '100%' }}>
-            <Box height={'90px'} >
+        <CardContent className='card-content' sx={{ width: '100%' }}>
+            <Box height={'90px'} width={'100%'}>
                 <Typography fontSize={'1.5em'} gutterBottom variant="h5" component="div">
                     {title.split(' ').slice(0, 2).join(' ')}
                 </Typography>
@@ -51,15 +54,15 @@ export default function ProductCard({img,title,description}) {
                     setRating(newValue);
                 }}
             />
-            <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-                <Typography fontSize={{xs:'16px',lg:'12px',xl:'16px'}} sx={{ textDecoration: 'line-through' }}>150000 تومان</Typography>
-                <Typography color='secondary' fontSize={{xs:'18px',lg:'16px',xl:'18px'}}>100000 تومان</Typography>
+            <Stack width={'100%'} direction={'row'} justifyContent={'start'} alignItems={'center'} gap={2}>
+                <Typography fontSize={{xs:'16px',lg:'12px',xl:'14px'}} sx={{ textDecoration: 'line-through' }}>150000 تومان</Typography>
+                <Typography color='secondary' fontSize={{xs:'18px',lg:'16px',xl:'16px'}}>100000 تومان</Typography>
             </Stack>
-            <Stack mt={'8px'} direction={'row'} justifyContent={'center'} alignItems={'center'}>
+            <Stack mt={'16px'} direction={'row'} justifyContent={'center'} alignItems={'center'}>
                 <Button sx={{ bgcolor: 'var(--third-clr)', px: '16px' }}>افزودن به سبد خرید</Button>
             </Stack>
         </CardContent>
-    </CardActionArea>
+    </Box>
 
     <Typography sx={{ position: 'absolute', backgroundColor: 'var(--secondary-clr)', color: 'var(--text-clr)', borderRadius: '4px', top: '10px', left: '10px', padding: '4px 8px' }} variant='body2' >25%</Typography>
     <Stack className='screen-heart' sx={{ position: 'absolute', top: '10px', right: '0px', '& button:hover': { bgcolor: 'var(--secondary-clr)', color: 'var(--text-clr)' }, '& button': { bgcolor: 'var(--text-clr)', transition: 'all .3s' }, visibility: 'hidden', opacity: '0', transition: ' all .5s ease-in-out' }} gap={1}>
@@ -67,6 +70,7 @@ export default function ProductCard({img,title,description}) {
         <IconButton sx={{display:{xs:'none',sm:'inline-flex'}}} onClick={handleClickOpen}><BsArrowsFullscreen /></IconButton>
     </Stack>
 </Card>
+
 {open && <ProductModal img={img} title={title} description={description} handleClose={handleClose} open={open}/>}
 </>
   )

@@ -26,7 +26,7 @@ export default function Footer() {
         <footer>
             {/* start top footer */}
             <Box width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'} >
-                <Stack flexWrap={'wrap'} width={'100%'} direction={'row'} padding={'20px 0'} sx={{ '& svg': { fontSize: '28px' }, '& p': { fontWeight: 500 } }} borderBottom={'1px solid rgba(0,0,0,.2)'}>
+                <Stack flexWrap={'wrap'} width={'100%'} direction={'row'} padding={'20px 0'} sx={{ '& svg': { fontSize: '28px' }, '& p': { fontWeight: 500 } }} borderBottom={'1px solid rgba(0,0,0,.2)'} borderTop={'1px solid rgba(0,0,0,.2)'}>
                     <Stack borderBottom={{ xs: '1px solid rgba(0,0,0,.2)', lg: 0 }} width={{ xs: '100%', sm: '50%', lg: '25%' }} direction={'row'} gap={1} justifyContent={'center'} alignItems={'center'} padding={'8px 16px'}>
                         <CiGift /><Typography>هر روز با محصولات جدید</Typography>
                     </Stack>

@@ -4,7 +4,7 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   text-decoration: none;
   list-style: none;
   font-family: 'Baloo Bhaijaan 2', sans-serif;
@@ -68,8 +68,6 @@ background-color: var(--secondary-clr) !important;
   color: var(--text-clr);
   font-weight: 900;
   font-size: 24px !important;
-
-
 }
 
 .product-slider.swiper{
@@ -84,11 +82,6 @@ box-shadow: 0 0 5px 1px rgba(0,0,0,.2);
   height: 100%;
 }
 
-.product-slider .swiper-slide img {
-  width: 100%;
-  height:100% ;
-  object-fit: cover;
-}
 
 .css-cokf1l-MuiListItemIcon-root{
   min-width: 24px !important;

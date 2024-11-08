@@ -9,7 +9,7 @@ export default function Products() {
             direction={'row'}
             width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'}
             gap={'2%'}
-            my={'20px'}
+            mt={'20px'}
         >
             {/* start products filters part */}
             <FilterBoxes />

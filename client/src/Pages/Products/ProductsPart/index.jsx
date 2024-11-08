@@ -1,5 +1,5 @@
-import { Box, IconButton, Stack } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, IconButton, Pagination, Stack } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TfiLayoutGrid4Alt } from "react-icons/tfi";
 import { BiSolidGrid } from "react-icons/bi";
@@ -8,13 +8,41 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import ProductCard from '../../Home/Products/ProductCard';
+
 
 export default function ProductsPart() {
+  const [products, setProducts] = useState([]);
   const [showItem, setShowItem] = useState('');
+  const [dynamicWidth, setDynamicWidth] = useState('23.5%');
+  const [activeGridIndex, setActiveGridIndex] = useState(1);
 
   const handleShowItem = (e) => {
     setShowItem(e.target.value);
   };
+  const handleChangeGrid = (width, index) => {
+    setDynamicWidth(width)
+    setActiveGridIndex(index)
+  };
+
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('https://fakestoreapi.com/products')
+        const data = await res.json()
+        setProducts(data)
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+
+  }, []);
+  const items = products?.map((e, index) => (
+
+    <ProductCard key={index} img={e.image} title={e.title} description={e.description} dynamicWidth={dynamicWidth} />
+
+  ))
 
   return (
     <Stack
@@ -55,7 +83,7 @@ export default function ProductsPart() {
         >
           {/* start select part */}
           <Stack>
-            <FormControl sx={{ m: 1, minWidth: 120,maxWidth:120 }} size="small">
+            <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }} size="small">
               <InputLabel id="demo-select-small-label">show item</InputLabel>
               <Select
                 labelId="demo-select-small-label"
@@ -94,18 +122,64 @@ export default function ProductsPart() {
             }}
             direction={'row'}
           >
-            <IconButton sx={{ '& svg': { transform: "scale(.8)" } }}><TfiLayoutGrid4Alt /></IconButton>
-            <IconButton><BiSolidGrid /></IconButton>
-            <IconButton sx={{ '& svg': { transform: "scale(1.6)" } }}><BiGridSmall /></IconButton>
-            <IconButton><GiHamburgerMenu /></IconButton>
+            <IconButton onClick={() => handleChangeGrid('23.5%', 1)} sx={{
+              '& svg': {
+                transform: "scale(.8)",
+                color: activeGridIndex == 1 && 'var(--secondary-clr)',
+                opacity: activeGridIndex == 1 && 1
+
+              }
+            }}><TfiLayoutGrid4Alt /></IconButton>
+            <IconButton sx={{
+              '& svg': {
+                color: activeGridIndex == 2 && 'var(--secondary-clr)',
+                opacity: activeGridIndex == 2 && 1
+              }
+            }} onClick={() => handleChangeGrid('32%', 2)}><BiSolidGrid /></IconButton>
+            <IconButton sx={{
+              '& svg': {
+                color: activeGridIndex == 3 && 'var(--secondary-clr)',
+                opacity: activeGridIndex == 3 && 1
+              }
+            }} onClick={() => handleChangeGrid('100%', 3)} ><GiHamburgerMenu /></IconButton>
           </Stack>
           {/* end grid part */}
         </Stack>
         {/* end top select part */}
 
+        {/* start display products */}
+        <Stack
+          direction={'row'}
+          flexWrap={'wrap'}
+          justifyContent={'center'}
+          width={'100%'}
+          gap={'20px'}
+        >
+          {items}
+        </Stack>
+        {/* end display products */}
+
+        {/* start pagination part */}
+        <Stack
+          width={'100%'}
+          spacing={2}
+          alignItems={'center'}
+          justifyContent={'center'}
+          my={'32px'}
+
+        >
+          <Pagination
+            count={10}
+            sx={{
+              direction: 'ltr'
+            }}
+            color="secondary"
+          />
+        </Stack>
+        {/* end pagination part */}
       </Stack>
       {/* end products part */}
 
-    </Stack>
+    </Stack >
   )
 }
