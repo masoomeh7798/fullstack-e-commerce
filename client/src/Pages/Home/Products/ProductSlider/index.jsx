@@ -12,7 +12,7 @@ import InnerImageZoom from 'react-inner-image-zoom';
 
 
 export default function ProductSlider() {
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [thumbsSwiper, setThumbsSwiper] = useState(0);
     return (
         <>
             <Swiper

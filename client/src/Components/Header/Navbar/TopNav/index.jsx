@@ -20,7 +20,7 @@ export default function TopNav() {
     {/* start logo section */}
     <Stack flex={1} alignItems={'center'} gap={{ xs: 1, md: 2 }} direction={'row'} >
       <Box width={{ md: '45px', xs: "35px" }} height={{ md: '45px', xs: "35px" }}>
-        <img width={'100%'} height={'100%'} src='logoland3 (1).png' />
+        <img width={'100%'} height={'100%'} src='/logoland3 (1).png' />
       </Box>
       <Typography noWrap color='var(--primary-clr)' fontSize={{ xs: "24px", md: '32px' }} fontWeight={'600'} component={'h1'}>رنگين مد</Typography>
     </Stack>

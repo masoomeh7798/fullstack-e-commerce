@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import Footer from './Components/Footer';
 import Products from './Pages/Products';
+import ProductDetails from './Pages/productDetails';
 
 // start default theme 
 export default function App() {
@@ -179,6 +180,7 @@ export default function App() {
     <Routes>
       <Route exact path='/' element={<Home/>}  />
       <Route path='/products/:id/:category' element={<Products/>}  />
+      <Route path='/product-details/:id/:name' element={<ProductDetails/>}  />
     </Routes>
     <Footer/>
     </BrowserRouter>

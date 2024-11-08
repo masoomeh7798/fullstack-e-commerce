@@ -12,9 +12,10 @@ import { BsArrowsFullscreen } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
 import ProductModal from '../ProductModal';
 import './style.css'
+import { Link } from 'react-router-dom';
 
 
-export default function ProductCard({img,title,description,dynamicWidth}) {
+export default function ProductCard({img,title,description,dynamicWidth,id}) {
     const [rating, setRating] = useState(3);
     const [open, setOpen] =useState(false);
 
@@ -26,8 +27,8 @@ export default function ProductCard({img,title,description,dynamicWidth}) {
     };
   return (
     <>
-
-    <Card  sx={{ height:`${dynamicWidth=='100% !important'?'240px':'450px'}`, width: `${dynamicWidth?dynamicWidth:'250px'}`, position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' },'&:hover':{boxShadow:'0 0 5px 2px rgba(0,0,0,0.2)'} }}>
+    
+    <Card sx={{ height:`${dynamicWidth=='100% !important'?'240px':'450px'}`, width: `${dynamicWidth?dynamicWidth:'250px'}`, position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' },'&:hover':{boxShadow:'0 0 5px 2px rgba(0,0,0,0.2)'} }}>
     <Box className={`${dynamicWidth=='100% !important'&&'card-product-full'}`} sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'start', overflow: 'hidden', alignItems: 'start' }}>
         <Box width={'100%'} height={`${dynamicWidth=='100% !important'?'100%':'48%'}`} overflow={'hidden'}>
             <CardMedia sx={{ '&:hover': { transform: 'scale(1.1)' }, transition: ' all .5s ease-in-out' }}
@@ -59,7 +60,7 @@ export default function ProductCard({img,title,description,dynamicWidth}) {
                 <Typography color='secondary' fontSize={{xs:'18px',lg:'16px',xl:'16px'}}>100000 تومان</Typography>
             </Stack>
             <Stack mt={'16px'} direction={'row'} justifyContent={'center'} alignItems={'center'}>
-                <Button sx={{ bgcolor: 'var(--third-clr)', px: '16px' }}>افزودن به سبد خرید</Button>
+            <Link to={`/product-details/${id}/${title.replaceAll(' ','-')}`} target='_blank'><Button sx={{ bgcolor: 'var(--third-clr)', px: '16px' }} >افزودن به سبد خرید</Button></Link>
             </Stack>
         </CardContent>
     </Box>

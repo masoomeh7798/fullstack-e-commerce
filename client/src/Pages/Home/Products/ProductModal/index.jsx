@@ -9,10 +9,11 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ProductSlider from '../ProductSlider';
 import { Box, Rating, Stack, Typography } from '@mui/material';
-import { FaMinus, FaPlus } from "react-icons/fa6";
+
 import { IoMdCart } from "react-icons/io";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdCompareArrows } from "react-icons/md";
+import QuantityBox from '../../../../Components/QuantityBox'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 import './style.css'
 
@@ -27,17 +28,17 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 
 export default function ProductModal({ handleClose, img, title, description, open }) {
-    const [dynamicQuantity, setdynamicQuantity] = useState(0);
+
 
     return (
         <>
             <BootstrapDialog sx={{
                 '& .MuiDialog-paper': {
-                    
+
                     padding: ' 0px 2%',
                     maxWidth: { xs: '100%', sm: '80%', md: '70%', lg: '60%' }
                 },
-                display:{xs:'none',sm:'block'},
+                display: { xs: 'none', sm: 'block' },
                 '& .MuiDialogContent-root': { padding: '0' }
             }}
                 onClose={handleClose}
@@ -87,17 +88,11 @@ export default function ProductModal({ handleClose, img, title, description, ope
                                     <Typography color='secondary' fontSize={{ xs: '18px', lg: '16px', xl: '18px' }}>100000 تومان</Typography>
                                 </Stack>
                                 <Typography sx={{ width: 'fit-content', borderRadius: "16px" }} bgcolor={'var(--third-clr)'} padding={'2px 8px'} fontSize={'14px'}>در تخفيف</Typography>
-                                <Box  mb={2}>
+                                <Box mb={2}>
                                     <Typography textAlign={'justify'} fontSize={{ xs: '12px', sm: '16px' }}>{description}</Typography>
                                 </Box>
                                 <Stack direction={{ md: 'row' }} sx={{ width: '100%' }} alignItems={'center'} gap={2} mt={'auto'}>
-                                    <Stack direction={'row'} alignItems={'center'} gap={2} >
-                                        <IconButton onClick={() => setdynamicQuantity(dynamicQuantity + 1)} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' } }}><FaPlus color='var(--primary-clr)' fontSize={20} /></IconButton>
-                                        <Typography width={'30px'} textAlign={'center'} fontSize={20}>{dynamicQuantity}</Typography>
-                                        <IconButton disabled={dynamicQuantity == 0} onClick={() => setdynamicQuantity(dynamicQuantity - 1)} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' }, "&:disabled": { opacity: .5 } }}><FaMinus color='var(--primary-clr)' fontSize={20} /></IconButton>
-
-
-                                    </Stack>
+                                    <QuantityBox />
                                     <Button sx={{ '& svg': { fontSize: "24px !important" }, borderRadius: '24px', bgcolor: "var(--third-clr)", color: 'var(--primary-clr)', padding: '8px 5px 8px 16px ', transition: "all .5s", '&:hover': { bgcolor: "var(--secondary-clr)", color: 'var(--text-clr)' } }} startIcon={<IoMdCart />}><Typography fontSize={{ xs: '12px', xxs: '14px', sm: '16px' }} fontWeight={500} mr={1}> افزودن به سبد خريد</Typography> </Button>
                                 </Stack>
                                 <Stack direction={'row'} sx={{ width: '100%' }} justifyContent={{ xs: "center", md: 'start' }} alignItems={'center'} gap={2} mt={'20px'}>

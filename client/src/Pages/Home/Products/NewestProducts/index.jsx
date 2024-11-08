@@ -29,7 +29,7 @@ export default function NewestProducts() {
     }, []);
     const items = products?.map((e, index) => (
         <SwiperSlide  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} key={index}>
-            <ProductCard img={e.image} title={e.title} description={e.description} dynamicWidth={'99.5%'}/>
+           <ProductCard id={e.id} img={e.image} title={e.title} description={e.description} dynamicWidth={'99.5%'}/>
         </SwiperSlide>
     ))
     return (
