@@ -6,7 +6,7 @@ import { Stack } from '@mui/material'
 export default function Products() {
     return (
         <Stack
-            direction={'row'}
+            direction={{xs:'column',xl:'row'}}
             width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'}
             gap={'2%'}
             mt={'20px'}

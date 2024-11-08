@@ -17,11 +17,14 @@ export default function FilterBoxes() {
     };
     return (
         <Stack
-            width={'19%'}
+            display={{xs:'none',sm:'flex'}}
+            direction={{ xs: 'row', xl: 'column' }}
+            width={{ xs: '100%', xl: '19%' }}
         >
             {/* start categories */}
             <Box
-                mb={6}
+                width={{ xs: '33%', xl: '100% !important' }}
+                mb={{ xl: 4 }}
             >
                 <Typography
                     variant='h6'
@@ -131,50 +134,10 @@ export default function FilterBoxes() {
             </Box>
             {/* end categories */}
 
-            {/* start price range */}
-            <Box
-                mb={6}
-                width={'100% !important'}
-            >
-                <Typography
-                    variant='h6'
-                    fontSize={'20px'}
-                    fontWeight={500}
-                    mb={2}
-                >محدوده قيمت</Typography>
-                <Slider
-                    sx={{
-                        '&.MuiSlider-colorPrimary': {
-                            color: 'var(--secondary-clr) !important'
-                        },
-                        width: '100%'
-                    }}
-                    getAriaLabel={() => 'Price range'}
-                    value={price}
-                    onChange={handleChange}
-                    valueLabelDisplay="auto"
-                    getAriaValueText={pricetext}
-                />
-                <Stack
-                    direction={'row'}
-                    alignItems={'center'}
-                    justifyContent={'space-between'}
-                    sx={{
-                        '& p': {
-                            fontSize: '18px',
-                            fontWeight: 500
-                        }
-                    }}
-                >
-                    <Typography>از: {price[0]} تومان</Typography>
-                    <Typography>تا: {price[1]} تومان</Typography>
-                </Stack>
-            </Box>
-            {/* end price range */}
-
             {/* start brands */}
             <Box
-                mb={4}
+                width={{ xs: '33%', xl: '100% !important' }}
+                mb={{ xl: 4 }}
             >
                 <Typography
                     variant='h6'
@@ -284,6 +247,46 @@ export default function FilterBoxes() {
             </Box>
             {/* end brands */}
 
+
+            {/* start price range */}
+            <Box
+                width={{ xs: '33%', xl: '100% !important' }}
+            >
+                <Typography
+                    variant='h6'
+                    fontSize={'20px'}
+                    fontWeight={500}
+                    mb={2}
+                >محدوده قيمت</Typography>
+                <Slider
+                    sx={{
+                        '&.MuiSlider-colorPrimary': {
+                            color: 'var(--secondary-clr) !important'
+                        },
+                        width: '100%'
+                    }}
+                    getAriaLabel={() => 'Price range'}
+                    value={price}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    getAriaValueText={pricetext}
+                />
+                <Stack
+                    direction={'row'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                    sx={{
+                        '& p': {
+                            fontSize: '18px',
+                            fontWeight: 500
+                        }
+                    }}
+                >
+                    <Typography>از: {price[0]} تومان</Typography>
+                    <Typography>تا: {price[1]} تومان</Typography>
+                </Stack>
+            </Box>
+            {/* end price range */}
         </Stack>
     )
 }

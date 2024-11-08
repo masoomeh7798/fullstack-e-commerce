@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import ProductCard from '../../Home/Products/ProductCard';
 
+const cardWidth={xs:'100%',sm:'48%',md:'32%',xl:'23.5%'}
 
 export default function ProductsPart() {
   const [products, setProducts] = useState([]);
@@ -39,14 +40,12 @@ export default function ProductsPart() {
 
   }, []);
   const items = products?.map((e, index) => (
-
     <ProductCard key={index} img={e.image} title={e.title} description={e.description} dynamicWidth={dynamicWidth} />
-
   ))
 
   return (
     <Stack
-      width={'79%'}
+    width={{xs:'100%',xl:'79%'}}
     >
       {/* start banner */}
       <Box
@@ -58,6 +57,7 @@ export default function ProductsPart() {
             objectPosition: 'bottom'
           }
         }}
+        display={{xs:'none',xl:'block'}}
         borderRadius={'16px'}
         height={300}
         width={'100%'}
@@ -72,14 +72,14 @@ export default function ProductsPart() {
       <Stack>
         {/* start top select part */}
         <Stack
-          sx={{}}
           direction={'row'}
           bgcolor={'#F1F1F1'}
           border={'1px solid rgba(0,0,0,.2)'}
           p={'8px 16px'}
           borderRadius={'16px'}
-          my={1}
+          mt={'10px'}
           justifyContent={'space-between'}
+          display={{xs:'none',xl:'flex'}}
         >
           {/* start select part */}
           <Stack>
@@ -122,7 +122,7 @@ export default function ProductsPart() {
             }}
             direction={'row'}
           >
-            <IconButton onClick={() => handleChangeGrid('23.5%', 1)} sx={{
+            <IconButton onClick={() => handleChangeGrid('23.5% !important', 1)} sx={{
               '& svg': {
                 transform: "scale(.8)",
                 color: activeGridIndex == 1 && 'var(--secondary-clr)',
@@ -135,13 +135,13 @@ export default function ProductsPart() {
                 color: activeGridIndex == 2 && 'var(--secondary-clr)',
                 opacity: activeGridIndex == 2 && 1
               }
-            }} onClick={() => handleChangeGrid('32%', 2)}><BiSolidGrid /></IconButton>
+            }} onClick={() => handleChangeGrid('32% !important', 2)}><BiSolidGrid /></IconButton>
             <IconButton sx={{
               '& svg': {
                 color: activeGridIndex == 3 && 'var(--secondary-clr)',
                 opacity: activeGridIndex == 3 && 1
               }
-            }} onClick={() => handleChangeGrid('100%', 3)} ><GiHamburgerMenu /></IconButton>
+            }} onClick={() => handleChangeGrid('100% !important', 3)} ><GiHamburgerMenu /></IconButton>
           </Stack>
           {/* end grid part */}
         </Stack>
@@ -149,11 +149,18 @@ export default function ProductsPart() {
 
         {/* start display products */}
         <Stack
+        sx={{
+          '& > div':{
+            width:{xs:'100%',sm:'47%',md:'30%',xl:'23.5%'},
+            mb:'10px'
+          }
+        }}
           direction={'row'}
           flexWrap={'wrap'}
           justifyContent={'center'}
           width={'100%'}
-          gap={'20px'}
+          gap={{sm:'10px',lg:'20px'}}
+          mt={'10px'}
         >
           {items}
         </Stack>
@@ -165,7 +172,7 @@ export default function ProductsPart() {
           spacing={2}
           alignItems={'center'}
           justifyContent={'center'}
-          my={'32px'}
+          my={{xs:'16px',sm:"24px",xl:'32px'}}
 
         >
           <Pagination

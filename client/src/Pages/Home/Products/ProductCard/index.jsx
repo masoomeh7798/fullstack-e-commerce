@@ -27,9 +27,9 @@ export default function ProductCard({img,title,description,dynamicWidth}) {
   return (
     <>
 
-    <Card  sx={{ height:`${dynamicWidth=='100%'?'240px':'450px'}`, width: `${dynamicWidth?dynamicWidth:'250px'}`, position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' },'&:hover':{boxShadow:'0 0 5px 2px rgba(0,0,0,0.2)'} }}>
-    <Box className={`${dynamicWidth=='100%'&&'card-product-full'}`} sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'start', overflow: 'hidden', alignItems: 'start' }}>
-        <Box width={'100%'} height={`${dynamicWidth=='100%'?'100%':'48%'}`} overflow={'hidden'}>
+    <Card  sx={{ height:`${dynamicWidth=='100% !important'?'240px':'450px'}`, width: `${dynamicWidth?dynamicWidth:'250px'}`, position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' },'&:hover':{boxShadow:'0 0 5px 2px rgba(0,0,0,0.2)'} }}>
+    <Box className={`${dynamicWidth=='100% !important'&&'card-product-full'}`} sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'start', overflow: 'hidden', alignItems: 'start' }}>
+        <Box width={'100%'} height={`${dynamicWidth=='100% !important'?'100%':'48%'}`} overflow={'hidden'}>
             <CardMedia sx={{ '&:hover': { transform: 'scale(1.1)' }, transition: ' all .5s ease-in-out' }}
                 component="img"
                 image={img}
