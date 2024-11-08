@@ -17,11 +17,11 @@ export default function FilterBoxes() {
     };
     return (
         <Stack
-            width={'29%'}
+            width={'19%'}
         >
             {/* start categories */}
             <Box
-            mb={6}
+                mb={6}
             >
                 <Typography
                     variant='h6'
@@ -132,11 +132,11 @@ export default function FilterBoxes() {
             {/* end categories */}
 
             {/* start price range */}
-            <Box 
-            sx={{ width: 300 }}
-            mb={6}
+            <Box
+                mb={6}
+                width={'100% !important'}
             >
-            <Typography
+                <Typography
                     variant='h6'
                     fontSize={'20px'}
                     fontWeight={500}
@@ -144,9 +144,10 @@ export default function FilterBoxes() {
                 >محدوده قيمت</Typography>
                 <Slider
                     sx={{
-                        '&.MuiSlider-colorPrimary':{
-                            color:'var(--secondary-clr) !important'
-                        }
+                        '&.MuiSlider-colorPrimary': {
+                            color: 'var(--secondary-clr) !important'
+                        },
+                        width: '100%'
                     }}
                     getAriaLabel={() => 'Price range'}
                     value={price}
@@ -154,26 +155,26 @@ export default function FilterBoxes() {
                     valueLabelDisplay="auto"
                     getAriaValueText={pricetext}
                 />
-                <Stack 
-                direction={'row'} 
-                alignItems={'center'}
-                justifyContent={'space-between'}
-                sx={{
-                '& p':{
-                    fontSize:'18px',
-                    fontWeight:500
-                }
-                }}
+                <Stack
+                    direction={'row'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                    sx={{
+                        '& p': {
+                            fontSize: '18px',
+                            fontWeight: 500
+                        }
+                    }}
                 >
-                <Typography>از: {price[0]} تومان</Typography>
-                <Typography>تا: {price[1]} تومان</Typography>
+                    <Typography>از: {price[0]} تومان</Typography>
+                    <Typography>تا: {price[1]} تومان</Typography>
                 </Stack>
             </Box>
             {/* end price range */}
 
             {/* start brands */}
             <Box
-            mb={4}
+                mb={4}
             >
                 <Typography
                     variant='h6'
