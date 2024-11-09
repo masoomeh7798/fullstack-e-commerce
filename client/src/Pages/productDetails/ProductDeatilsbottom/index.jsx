@@ -79,18 +79,28 @@ export default function ProductDeatilsBottom({ product }) {
                     {activeTab == 2 &&
                         <TableContainer component={Paper}
                             sx={{
-                                width: '60%',
-                                alignSelf: 'center'
+                                width: {xs:'100%',sm:'90%',md:'85%',xl:'60%'},
+                                alignSelf: 'center',
+                                '& th,& td':{
+                                    padding:{
+                                        xs:'4px',
+                                        sm:'16px'
+                                    },
+                                    fontSize:{
+                                        xs:'12px',
+                                        sm:'16px'
+                                    }
+                                }
                             }}
                         >
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <Table  aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Dessert (100g serving)</TableCell>
-                                        <TableCell align="right">Calories</TableCell>
-                                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                                        <TableCell align="center">Dessert (100g serving)</TableCell>
+                                        <TableCell align="center">Calories</TableCell>
+                                        <TableCell align="center">Fat&nbsp;(g)</TableCell>
+                                        <TableCell align="center">Carbs&nbsp;(g)</TableCell>
+                                        <TableCell align="center">Protein&nbsp;(g)</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -99,13 +109,13 @@ export default function ProductDeatilsBottom({ product }) {
                                             key={row.name}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
-                                            <TableCell component="th" scope="row">
+                                            <TableCell align="center" component="th" scope="row">
                                                 {row.name}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
+                                            <TableCell align="center">{row.calories}</TableCell>
+                                            <TableCell align="center">{row.fat}</TableCell>
+                                            <TableCell align="center">{row.carbs}</TableCell>
+                                            <TableCell align="center">{row.protein}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
