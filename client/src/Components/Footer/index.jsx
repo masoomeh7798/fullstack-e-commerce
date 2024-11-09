@@ -82,7 +82,7 @@ export default function Footer() {
                     <Stack>
                         <Typography sx={{ textWrap: 'nowrap' }} color='secondary' variant='h3' fontSize={'1.2em'} fontWeight={500} mb={1} >نماد اعتماد الکترونیک</Typography>
                         <Box width='100%'>
-                            <img style={{ width: '100%' }} src="nemad-300x163.png" alt="" />
+                            <img style={{ width: '100%' }} src="/nemad-300x163.png" alt="" />
                         </Box>
                     </Stack>
                     {/* end namade etemad */}
@@ -151,7 +151,7 @@ export default function Footer() {
                         </AccordionSummary>
                         <AccordionDetails>
                         <Stack sx={{'& img':{width:{xs:'100% !important',xxs:'70% !important'}}}} direction={'row'} mx={'auto'} width={{xs:'90% ',sm:'70%'}} justifyContent={'center'}>
-                            <img src="nemad-300x163.png" alt="" />
+                            <img src="/nemad-300x163.png" alt="" />
                         </Stack>
                         </AccordionDetails>
                      
