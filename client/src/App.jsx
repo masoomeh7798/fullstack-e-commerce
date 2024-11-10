@@ -13,7 +13,7 @@ import Cart from './Pages/Cart';
 export default function App() {
   const theme = createTheme({
     "breakpoints": {
-      "keys": ["xs", "sm", "md", "lg", "xl"],
+      "keys": ["xs","xxs", "sm", "md", "lg", "xl"],
       "values": {
         "xs": 0,
         "xxs":300,

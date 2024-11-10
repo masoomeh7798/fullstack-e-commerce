@@ -10,6 +10,9 @@
   font-family: 'Baloo Bhaijaan 2', sans-serif;
 
 }
+body{
+  overflow-x: hidden !important;
+}
 
 ::-webkit-scrollbar {
   display: none;

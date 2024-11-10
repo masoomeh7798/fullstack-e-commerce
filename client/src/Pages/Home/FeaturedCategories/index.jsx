@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 export default function FeaturedCategories() {
     return (
 
-        <Stack direction={'column'} gap={2} my={3}>
+        <Stack direction={'column'} gap={2} my={3} sx={{overflowX:'scroll'}}>
             <Typography fontSize={'1.5em'} fontWeight={400} component={'h3'}>دسته بندی های اصلی</Typography>
             <Stack gap={1} direction={'row'} justifyContent={'space-around'} sx={{ overflowX: 'scroll' ,overflow:'visible'}} >
                 <Link style={{overflow:'visible !important'}} to='/'>

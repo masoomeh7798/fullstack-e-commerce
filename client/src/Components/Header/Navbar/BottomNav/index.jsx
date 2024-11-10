@@ -30,9 +30,9 @@ export default function BottomNav() {
         setIsOpenCat(isOpenCat ? false : true)
     }
     return (
-        <Stack sx={{ overflowX: 'scroll', '::-webkit-scrollbar': { display: 'none' }, overflow: 'visible' }} alignItems={'start'} direction={'row'} mt={{ xs: 2, md: 3 }} mx={'auto'} gap={3}>
+        <Stack sx={{ overflowX: 'scroll !important', '::-webkit-scrollbar': { display: 'none' }, overflow: 'visible' }} alignItems={'start'} direction={'row'} mt={{ xs: 2, md: 3 }} mx={'auto'} gap={3}>
             {/* start all category */}
-            <Box  display={{ xs: 'none', md: 'inline-block' }} borderRadius={'8px'} sx={{ position: 'relative' }} >
+            <Box  display={{ xs: 'none', md: 'inline-block' }} borderRadius={'8px'} sx={{ position: 'relative', }}  >
                 <Button onClick={handleOpenCat} sx={{ py: '8px', display: 'flex', gap: '16px', bgcolor: 'var(--secondary-clr)', '&:hover': { bgcolor: 'var(--secondary-clr-dark)' }, '& svg': { color: 'var(--text-clr)' } }} startIcon={<IoIosMenu size={24} />} endIcon={<IoIosArrowDown size={22} />}>
                     <Typography fontSize={'16px'} color='var(--text-clr)' noWrap>همه دسته ها</Typography>
                 </Button>
