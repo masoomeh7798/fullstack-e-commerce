@@ -21,12 +21,21 @@ export default function Banner() {
 
   }, []);
   const items = banners?.map((e, index) => (
-    <SwiperSlide key={index} style={{ boxShadow: '0 0 5px 2px rgba(0,0,0,.2)',borderRadius:'16px' }}><img src={e?.image} alt="" /></SwiperSlide>
+    <SwiperSlide key={index} style={{ boxShadow: '0 0 5px 2px rgba(0,0,0,.2)',borderRadius:'16px' }}><img 
+    src={e?.image} alt="" /></SwiperSlide>
   ))
   return (
 
     <> {banners &&
-      <Box overflow={'hidden !important'}>
+      <Box overflow={'hidden !important'} sx={{
+        '& img':{
+          transition:'transform 5s'
+        },
+        '& img:hover':{
+          transform:'scale(1.2)',
+          cursor:'pointer'
+        }
+      }}>
       <Box width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'} my={'20px'} >
         <Swiper
           loop={true}

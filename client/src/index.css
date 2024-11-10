@@ -30,8 +30,10 @@ body{
 .isCatOpen {
   opacity: 1 !important;
   visibility: visible !important;
-  top: 129% !important;
+  top: 115% !important;
 }
+
+
 
 .home-slider.swiper {
   width: 100%;

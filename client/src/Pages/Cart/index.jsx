@@ -58,16 +58,16 @@ export default function Cart() {
       <Typography component={'h2'}
         fontSize={{ xs: '24px', md: '32px' }}
         fontWeight={500}
-        mb={{md:2}}
+        mb={{ md: 2 }}
       >
         سبد خريد
       </Typography>
       <Stack
         direction={{ xs: 'column', lg: 'row' }}
-        gap={{md:2}}
+        gap={{ md: 2 }}
         justifyContent={{ lg: 'space-between' }}
         alignItems={{ xs: 'center', lg: 'start' }}
-        borderRadius={{xs:'8px',md:0}}
+        borderRadius={{ xs: '8px', md: 0 }}
         p={'1px'}
       >
 
@@ -121,7 +121,7 @@ export default function Cart() {
                       </Box>
                       <Stack
                         gap={1}
-                        width={{ md: '250px', lg: '220px',xl:'300px' }}
+                        width={{ md: '250px', lg: '220px', xl: '300px' }}
                         alignItems={'start'}
                         sx={{
                           '& a': {
@@ -146,10 +146,10 @@ export default function Cart() {
                   <StyledTableCell
                     sx={{
                       '& .quantityChanger button': {
-                        padding: {md: '8px' }
+                        padding: { md: '8px' }
                       },
                       '& .quantityChanger': {
-                        gap: {md: '8px' }
+                        gap: { md: '8px' }
                       }
                     }}
                     align="center"><QuantityBox /></StyledTableCell>
@@ -190,8 +190,8 @@ export default function Cart() {
                   objectFit: 'cover'
                 }
               }}
-              width={{ xs: '100px', xxs: '150px',sm: '200px' }}
-              height={{ xs: '100px', xxs: '150px',sm: '200px' }}
+              width={{ xs: '100px', xxs: '150px', sm: '200px' }}
+              height={{ xs: '100px', xxs: '150px', sm: '200px' }}
             >
               <img src={e?.image} alt="" />
             </Box>
@@ -211,13 +211,13 @@ export default function Cart() {
                       color: '#FAAF00'
                     }
                   }
-                }}    
+                }}
               >
                 <Link to={`/product-details/${e?.id}/${e?.title.replaceAll(' ', '-')}`} target='_blank'>
                   <Typography
                     textAlign={'start'}
-                    fontSize={{ xs: '14px', xxs: '16px'}}
-                    width={{xs:80,xxs:150,sm:200}}
+                    fontSize={{ xs: '14px', xxs: '16px' }}
+                    width={{ xs: 80, xxs: 150, sm: 200 }}
                   >{e?.title.split(' ').slice(0, 8).join(' ')}...</Typography></Link>
                 <Button
                   sx={{
@@ -266,13 +266,13 @@ export default function Cart() {
                     }
                   },
                   '& .quantityChanger button': {
-                    padding: {xs:'2px',xxs:'4px'},
-                   '& svg':{
-                    fontSize:{xs:'16px',xxs:'20px'}
-                   }
+                    padding: { xs: '2px', xxs: '4px' },
+                    '& svg': {
+                      fontSize: { xs: '16px', xxs: '20px' }
+                    }
                   },
                   '& .quantityChanger': {
-                    gap: {xs:'0',xxs:'4px'}
+                    gap: { xs: '0', xxs: '4px' }
                   }
                 }}
               >
@@ -280,7 +280,7 @@ export default function Cart() {
                   textAlign={'start'}
                   fontSize={{ xs: '12px', sm: '14px', md: '16px' }}
                 >تعداد</Typography>
-                <Typography><QauntityBox/></Typography>
+                <Typography><QauntityBox /></Typography>
               </Stack>
               <Stack
                 direction={'row'}
@@ -301,7 +301,7 @@ export default function Cart() {
                   textAlign={'start'}
                   fontSize={{ xs: '12px', sm: '14px', md: '16px' }}
                 >مجموع قيمت</Typography>
-                <Typography>{e?.price*e?.id}</Typography>
+                <Typography>{e?.price * e?.id}</Typography>
               </Stack>
 
             </Stack>
@@ -312,13 +312,13 @@ export default function Cart() {
 
         {/* start final price */}
         <Stack
-          width={{ xs: '100%',xxs:'80%',sm:'50%',md:'40%', lg: '24%' }}
+          width={{ xs: '100%', xxs: '80%', sm: '50%', md: '40%', lg: '24%' }}
           height={'fit-content'}
           boxShadow={'0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)'}
           border={'1px solid rgba(0,0,0,.1)'}
           borderRadius={'4px'}
           p={'0 24px'}
-          my={{xs:2,md:0}}
+          my={{ xs: 2, md: 0 }}
         >
           <Typography
             borderBottom={'1px solid rgba(0,0,0,.2)'}

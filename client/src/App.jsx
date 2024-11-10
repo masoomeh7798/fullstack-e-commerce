@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter, Route, Routes} from "react-router-dom"
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import Header from './Components/Header'
 import Home from './Pages/Home'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -8,15 +8,21 @@ import Footer from './Components/Footer';
 import Products from './Pages/Products';
 import ProductDetails from './Pages/productDetails';
 import Cart from './Pages/Cart';
+import Auth from './Pages/Auth';
+import { useSelector } from 'react-redux';
 
 // start default theme 
 export default function App() {
+  const { token } = useSelector(state => state.auth)
+  const location = useLocation()
+  const showNavAndFooter = location.pathname != '/auth'
+
   const theme = createTheme({
     "breakpoints": {
-      "keys": ["xs","xxs", "sm", "md", "lg", "xl"],
+      "keys": ["xs", "xxs", "sm", "md", "lg", "xl"],
       "values": {
         "xs": 0,
-        "xxs":300,
+        "xxs": 300,
         "sm": 600,
         "md": 900,
         "lg": 1200,
@@ -84,7 +90,7 @@ export default function App() {
       "contrastThreshold": 3,
       "tonalOffset": 0.2
     },
-   
+
     "typography": {
       "fontFamily": "\"Baloo Bhaijaan 2\", sans-serif",
       "fontSize": 14,
@@ -171,22 +177,22 @@ export default function App() {
     }
 
   }
-);
-// end default theme
+  );
+  // end default theme
   return (
     <ThemeProvider theme={theme}>
-    <CssBaseline/>
-    <BrowserRouter>
-    <Header/>
-    <Routes>
-      <Route exact path='/' element={<Home/>}  />
-      <Route path='/products/:id/:category' element={<Products/>}  />
-      <Route path='/product-details/:id/:name' element={<ProductDetails/>}  />
-      <Route path='/cart' element={<Cart/>}  />
-    </Routes>
-    <Footer/>
-    </BrowserRouter>
-    </ThemeProvider> 
+      <CssBaseline />
+      {showNavAndFooter && <Header />}
+      <Routes>
+        <Route exact path='/' element={<Home />} />
+        <Route path='/products/:id/:category' element={<Products />} />
+        <Route path='/product-details/:id/:name' element={<ProductDetails />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/auth' element={token ? <Navigate to='/' /> : <Auth />} />
+      </Routes>
+      {showNavAndFooter && <Footer />}
+
+    </ThemeProvider>
   )
 }
 

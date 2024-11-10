@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge, Box, Button, Stack, Typography } from '@mui/material';
 import { HiOutlineMenu } from "react-icons/hi";
+import { Link } from 'react-router-dom';
 
 
 
@@ -38,8 +39,8 @@ export default function TopNav() {
     {/* end search bar */}
     {/* start user and cart part */}
     <Stack flex={1} justifyContent={'end'} gap={{ xs: 1, sm: 4 }} alignItems={'center'} direction={'row'}>
-      <Button sx={{ borderRadius: 2, px: 2, py: 1, bgcolor: 'var(--secondary-clr)', display: { xs: 'none', sm: 'inline-block' },'&:hover':{bgcolor:'var(--secondary-clr-dark)'} }}>
-        <Typography fontSize={{ xs: '12px', sm: "16px" }} noWrap color='var(--text-clr)' component={'p'}>ورود/ ثبت نام</Typography>
+      <Button href='/auth' sx={{ borderRadius: 2, px: 2, py: 1, bgcolor: 'var(--secondary-clr)', display: { xs: 'none', sm: 'inline-block' },'&:hover':{bgcolor:'var(--secondary-clr-dark)'} }}>
+       <Typography fontSize={{ xs: '12px', sm: "16px" }} noWrap color='var(--text-clr)' component={'p'}>ورود/ ثبت نام</Typography>
       </Button>
       <Box>
         <IconButton sx={{ bgcolor: "var(--text-clr)",'&:hover':{bgcolor:'var(--secondary-clr-light)'}, width: {xs:'40px',sm:'50px'}, height: {xs:'40px',sm:"50px"}, p: 0 }}>
