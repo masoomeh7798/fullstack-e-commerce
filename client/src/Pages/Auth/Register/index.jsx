@@ -1,12 +1,17 @@
 import { Box, Button, FormControl, Stack, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { FaEye } from "react-icons/fa";
+import { IoEyeOff } from "react-icons/io5";
 
-export default function Register() {
+
+export default function Register({ handlePageType }) {
+  const [showPass, setShowPass] = useState(false);
 
   return (
     <Box
-      width={{ xs: '95%', xxs: "90%",sm:'70%',md:'45%', lg: '30%' ,xl:'25%'}}
+      width={{ xs: '95%', xxs: "90%", sm: '70%', md: '45%', lg: '30%' }}
+      maxHeight={'98vh'}
     >
       <FormControl
         sx={{
@@ -20,12 +25,12 @@ export default function Register() {
           p={'24px 10%'}
           width={'100%'}
           alignItems={'center'}
-          gap={2}
+          gap={{ xs: 1, sm: 1.5 }}
         >
           <Typography component={'h2'}
-            fontSize={'30px'}
+            fontSize={{xs:'24px',sm:'30px'}}
             fontWeight={500}
-            
+
           >ثبت نام</Typography>
           {/* start text field part */}
           <Stack
@@ -37,9 +42,64 @@ export default function Register() {
             width={'100%'}
             gap={1}
           >
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              gap={1}
+            >
+              <TextField
+                sx={{
+                  p: { xs: '8px 0', sm: '12px 0px',xl:'14px 0' },
+                  '& > div': {
+                    mt: { xs: '0px', sm: '16px' }
+                  },
+                  width: '100%'
+                }}
+                slotProps={{
+                  inputLabel: {
+                    sx: {
+                      textAlign: 'right',
+                      right: 0,
+                      left: 'auto',
+                      fontSize: '16px',
+                      top: {xs:'-16px',sm:0},
+                      '&.MuiInputLabel-shrink': {
+                        top: '-5px', 
+                      }
+                    }
+                  }
+                }}
+                label="نام" variant="standard" />
+              <TextField
+                sx={{
+                  p: { xs: '8px 0', sm: '12px 0px',xl:'14px 0' },
+                  '& > div': {
+                    mt: { xs: '0px', sm: '16px' }
+                  },
+                  width: '100%'
+                }}
+                slotProps={{
+                  inputLabel: {
+                    sx: {
+                      textAlign: 'right',
+                      right: 0,
+                      left: 'auto',
+                      fontSize: '16px',
+                      top: {xs:'-16px',sm:0},
+                      '&.MuiInputLabel-shrink': {
+                        top: '-5px', 
+                      }
+                    }
+                  }
+                }}
+                label="موبايل" variant="standard" />
+
+            </Stack>
             <TextField
               sx={{
-                p: '14px 0px'
+                p: { xs: '8px 0', sm: '12px 0px',xl:'14px 0' },
+                '& > div': {
+                  mt: { xs: '0px', sm: '16px' }
+                },
               }}
               slotProps={{
                 inputLabel: {
@@ -47,29 +107,59 @@ export default function Register() {
                     textAlign: 'right',
                     right: 0,
                     left: 'auto',
-                    fontSize: '16px'
+                    fontSize: '16px',
+                    top: {xs:'-16px',sm:0},
+                    '&.MuiInputLabel-shrink': {
+                      top: '-5px', 
+                    }
                   }
                 }
               }}
               label="ايميل" variant="standard" />
-            <TextField
+            <Box
+              width={'100%'}
+              position={'relative'}
               sx={{
-                p: '14px 0px',
-                pb: 0
-              }}
-              slotProps={{
-                inputLabel: {
-                  sx: {
-                    textAlign: 'right',
-                    right: 0,
-                    left: 'auto',
-                    fontSize: '16px'
-                  }
+                '& svg': {
+                  position: 'absolute',
+                  top: { xs: '20%', sm: '44.5%' },
+                  left: '2%',
+                  opacity: .6,
+                  cursor: 'pointer'
                 }
               }}
-              label="پسورد" variant="standard" />
+            >
+              <TextField
+                type={showPass ? 'text' : 'password'}
+                sx={{
+                  p: { xs: '8px 0', sm: '12px 0px',xl:'14px 0' },
+                  '& > div': {
+                    mt: { xs: '0px', sm: '16px' }
+                  },
+                  pb: 0,
+                  width: '100%',
+                  verticalAlign: 'center'
+                }}
+                slotProps={{
+                  inputLabel: {
+                    sx: {
+                      textAlign: 'right',
+                      right: 0,
+                      left: 'auto',
+                      fontSize: '16px',
+                      top: {xs:'-16px',sm:0},
+                      '&.MuiInputLabel-shrink': {
+                        top: '-5px', 
+                      }
+                    }
+                  }
+                }}
+                label="پسورد" variant="standard" />
+              {showPass ? <IoEyeOff onClick={() => setShowPass(false)} /> : <FaEye onClick={() => setShowPass(true)} />}
+
+            </Box>
           </Stack>
-          {/* start text field part */}
+          {/* end text field part */}
           <Typography
             alignSelf={'start'}
             fontSize={'13px'}
@@ -96,38 +186,39 @@ export default function Register() {
                 color: 'var(--primary-clr)',
               }
             }}
-          >ورود</Button>
+          >ثبت نام</Button>
           <Typography
             alignSelf={'start'}
             fontSize={'14px'}
             fontWeight={500}
-          >عضو سايت نيستي؟<span>
+          >عضو سايت هستي؟<span>
               <Button
+                onClick={handlePageType}
                 disableRipple
                 color='secondary'
-
                 sx={{
                   fontWeight: 600,
                   '&:hover': {
-                    bgcolor: 'transparent', // Remove bgcolor on hover
+                    bgcolor: 'transparent',
                     color: 'var(--third-clr)',
                   },
                   '&:active': {
                     bgcolor: 'transparent'
                   },
+                  minWidth: '40px'
                 }}
 
-              >ثبت نام</Button></span></Typography>
+              >ورود</Button></span></Typography>
           {/* start social */}
           <Typography
-          fontWeight={500}
-          mt={2}
+            fontWeight={500}
+            mt={{ xs: 1, sm: 2 }}
           >ورود با روش ها ديگر</Typography>
           <Button
-          sx={{
-            width:'100%',
-            border:'1px solid rgba(0,0,0,.2)'
-          }}
+            sx={{
+              width: '100%',
+              border: '1px solid rgba(0,0,0,.2)'
+            }}
           >
             <Stack
               direction={'row'}
@@ -143,7 +234,7 @@ export default function Register() {
               <Typography>ورود با حساب گوگل</Typography>
 
             </Stack>
-            </Button>
+          </Button>
 
           {/* end social */}
         </Stack>

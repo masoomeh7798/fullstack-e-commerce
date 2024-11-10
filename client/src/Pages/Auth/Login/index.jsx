@@ -132,7 +132,7 @@ export default function Login({ handlePageType }) {
                 sx={{
                   fontWeight: 600,
                   '&:hover': {
-                    bgcolor: 'transparent', // Remove bgcolor on hover
+                    bgcolor: 'transparent',
                     color: 'var(--third-clr)',
                   },
                   '&:active': {
