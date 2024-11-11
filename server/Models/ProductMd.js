@@ -13,17 +13,13 @@ const productSchema = new mongoose.Schema({
     type: [{ name: String, value: String }],
     default: []
   },
-  variant: {
+  variants: {
     type: [{ type: String, value: String }],
     default: []
   },
   images: {
     type: [String],
     default: []
-  },
-  isActive: {
-    type: Boolean,
-    default: true
   },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -39,17 +35,6 @@ const productSchema = new mongoose.Schema({
     max: 5
   },
   ratingCount: {
-    type: Number,
-    default: 0
-  },
-  productVariantIds: {
-    type: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'ProductVariant'
-    }],
-    default: []
-  },
-  defaultVariantIndex: {
     type: Number,
     default: 0
   },

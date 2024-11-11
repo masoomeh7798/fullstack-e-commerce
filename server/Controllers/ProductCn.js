@@ -6,33 +6,15 @@ import Product from "../Models/ProductMd.js";
 import User from "../Models/UserMd.js";
 
 export const getAll = catchAsync(async (req, res, next) => {
-  const {role} = jwt.verify(req.headers.authorization.split(" ")[1],process.env.JWT_SECRET)
-  let queryString = {
-    ...req.query,
-    populate: {
-      path: "productVariantIds",
-      populate: {
-        path: "variantId",
-        model: "Variant",
-      },
-    },
-  };
-  if (role !== "admin") {
-    queryString = {
-      ...queryString,
-      filters: { ...queryString?.filters, isActive: true },
-    };
-  }
-  const features = new ApiFeatures(Product, queryString)
+  const features = new ApiFeatures(Product, req?.query)
     .filters()
     .sort()
     .paginate()
     .limitFields()
     .populate()
-    .secondPopulate(req?.query?.populate || "");
-
+    .secondPopulate('categoryId').secondPopulate('brandId')
   const products = await features.model
-  const count = await Product.countDocuments(queryString?.filters)
+  const count = await Product.countDocuments(req?.query?.filters)
   return res.status(200).json({
     success: true,
     data: { products },
@@ -68,13 +50,7 @@ export const get = catchAsync(async (req, res, next) => {
     user.recentlyProductIds = recentlyProductIds
     await user.save()
   }
-  const product = await Product.findById(id).populate({
-    path: "productVariantIds",
-    populate: {
-      path: "variantId",
-      model: "Variant",
-    },
-  })
+  const product = await Product.findById(id).populate('categoryId').populate('brandId')
   return res.status(200).json({
     success: true,
     data: { product },
