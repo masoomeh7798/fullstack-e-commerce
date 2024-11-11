@@ -27,12 +27,6 @@ body{
   --text-clr: #F8F6F6;
 }
 
-.isCatOpen {
-  opacity: 1 !important;
-  visibility: visible !important;
-  top: 115% !important;
-}
-
 
 
 .home-slider.swiper {

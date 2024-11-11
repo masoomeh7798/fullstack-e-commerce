@@ -6,7 +6,7 @@ import isAdmin from "../Middleware/isAdmin.js";
 const uploadRouter = express.Router();
 uploadRouter
   .route("/")
-  .post(isAdmin, upload.single("file"), uploadFile)
-  .delete(isAdmin, deleteFile);
+  .post( upload.single("file"), uploadFile)
+  .delete(deleteFile);
   
 export default uploadRouter;
