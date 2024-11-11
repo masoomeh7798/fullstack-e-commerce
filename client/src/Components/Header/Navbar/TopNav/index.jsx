@@ -10,6 +10,10 @@ import { Link } from 'react-router-dom';
 
 
 export default function TopNav() {
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   window.location.reload();
+  // };
   return (
     <Stack alignItems={'center'} direction={'row'} my={{ xs: 2, md: 3 }} gap={1}>
         <Stack flex={1} display={{xs:'inline-block',sm:'none'}}>
@@ -19,12 +23,12 @@ export default function TopNav() {
         </Stack>
 
     {/* start logo section */}
-    <Stack flex={1} alignItems={'center'} gap={{ xs: 1, md: 2 }} direction={'row'} >
+    <Link style={{flex:1}} to='/'><Stack alignItems={'center'} gap={{ xs: 1, md: 2 }} direction={'row'} >
       <Box width={{ md: '45px', xs: "35px" }} height={{ md: '45px', xs: "35px" }}>
         <img width={'100%'} height={'100%'} src='/logoland3 (1).png' />
       </Box>
       <Typography noWrap color='var(--primary-clr)' fontSize={{ xs: "24px", md: '32px' }} fontWeight={'600'} component={'h1'}>رنگين مد</Typography>
-    </Stack>
+    </Stack></Link>
     {/* end logo section */}
     {/* strat search bar */}
     <Stack display={{ xs: 'none', sm: 'flex' }} bgcolor={'var(--text-clr)'} justifyContent={'space-between'} px={1} flex={2} alignItems={'center'} direction={'row'} border={'1px solid rgba(0,0,0,0.2)'} borderRadius={2}>

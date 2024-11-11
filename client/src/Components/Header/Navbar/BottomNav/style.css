@@ -4,4 +4,14 @@
     top: 118% !important;
   }
   
-  
+.catTabNav .MuiTabScrollButton-horizontal{
+    display: none !important;
+}
+.catTabNav{
+    overflow-x: hidden;
+
+}
+
+.catTabNav .MuiTabs-flexContainer{
+    gap:8px;
+}

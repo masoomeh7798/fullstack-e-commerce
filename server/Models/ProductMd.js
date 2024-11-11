@@ -22,8 +22,8 @@ const productSchema = new mongoose.Schema({
     default: []
   },
   categoryId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category'
+    type:[{type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category'}]
   },
   brandId: {
     type: mongoose.Schema.Types.ObjectId,
