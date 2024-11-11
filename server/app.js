@@ -5,8 +5,8 @@ import { fileURLToPath } from "url";
 import path from "path";
 import HandleError from "./Utils/handleError.js";
 import catchError from "./Utils/catchError.js";
-
-
+import categoryRouter from "./Routes/Category.js";
+import uploadRouter from "./Routes/Upload.js";
 
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
@@ -16,6 +16,9 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 app.use(express.static("Public"));
+
+app.use('/upload',uploadRouter)
+app.use('/category',categoryRouter)
 
 
 app.use("*", (req, res, next) => {

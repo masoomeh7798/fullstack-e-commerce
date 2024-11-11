@@ -10,6 +10,7 @@ import ProductDetails from './Pages/productDetails';
 import Cart from './Pages/Cart';
 import Auth from './Pages/Auth';
 import { useSelector } from 'react-redux';
+import NotFound from './Pages/NotFound';
 
 // start default theme 
 export default function App() {
@@ -189,6 +190,7 @@ export default function App() {
         <Route path='/product-details/:id/:name' element={<ProductDetails />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/auth' element={token ? <Navigate to='/' /> : <Auth />} />
+        <Route path='*' element={<NotFound/>} />
       </Routes>
       {showNavAndFooter && <Footer />}
 

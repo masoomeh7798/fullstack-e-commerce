@@ -48,7 +48,6 @@ class ApiFeatures{
     secondPopulate(p){
         if(p){
             this.model=this.model.populate(p)
-
         }
        return this
     }
