@@ -122,7 +122,7 @@ export default function Register({ handlePageType }) {
               sx={{
                 '& svg': {
                   position: 'absolute',
-                  top: { xs: '20%', sm: '44.5%' },
+                  top: { xs: '20%', sm: '38%' },
                   left: '2%',
                   opacity: .6,
                   cursor: 'pointer'

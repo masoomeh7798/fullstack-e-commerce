@@ -69,7 +69,7 @@ export default function BottomNav() {
             </Box>
             {/* end all category */}
 
-            <List sx={{ '& li': { padding: '0' },'& > div': { px: '16px' },display:'flex', paddingInlineStart: '0 !important',alignItems:'center',direction:'row' ,justifyContent:'center',gap:{ xs: 1, md: 3 }}}  >
+            <List sx={{ '& li': { padding: '0' },'& > div': { px: '16px' },display:'flex', paddingInlineStart: '0 !important',alignItems:'center',direction:'row' ,justifyContent:'center',gap:{ xs: 1, md: 3 },height:'50px !important',overflowX:'scroll'}}  >
                     <ListItem sx={listItemStyle}><Button sx={{ borderRadius: '16px', px: { xs: '8px', md: '16px' }, '&:hover': { backgroundColor: 'var(--secondary-clr-light)' } }} ><Link style={ButtonBox} to='/'><IoMdWatch /><span>ساعت</span></Link></Button>
                         <Box className='sub-menu' sx={subMenuBox}>
                             <Button ><Link style={{ textWrap: 'nowrap', color: 'var(--primary-clr)' }} to='/'>ساعت زنانه</Link></Button>
