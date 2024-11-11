@@ -7,6 +7,9 @@ import HandleError from "./Utils/handleError.js";
 import catchError from "./Utils/catchError.js";
 import categoryRouter from "./Routes/Category.js";
 import uploadRouter from "./Routes/Upload.js";
+import productRouter from "./Routes/Product.js";
+import productVariantRouter from "./Routes/ProductVariant.js";
+import variantRouter from "./Routes/Variant.js";
 
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
@@ -19,6 +22,7 @@ app.use(express.static("Public"));
 
 app.use('/upload',uploadRouter)
 app.use('/category',categoryRouter)
+app.use('/product',productRouter)
 
 
 app.use("*", (req, res, next) => {

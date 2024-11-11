@@ -39,17 +39,18 @@ export const getCategory = catchAsync(async (req, res, next) => {
 })
 
 export const update = catchAsync(async (req, res, next) => {
-    const category = await Category.findByIdAndUpdate(req.params.id, req.body)
+    const category = await Category.findById(req.params.id)
     if (category.image != req.body.image) {
         fs.unlinkSync(`${__dirname}/Public/${category.image}`)
     }
-    await category.save()
+    const updatedCategory=await Category.findByIdAndUpdate(req.params.id, req.body,{new:true})
 
     return res.status(200).json({
         success: true,
-        data: { category }
+        data: { updatedCategory }
     })
 })
+
 export const create = catchAsync(async (req, res, next) => {
     const category = await Category.create(req.body)
     return res.status(200).json({
