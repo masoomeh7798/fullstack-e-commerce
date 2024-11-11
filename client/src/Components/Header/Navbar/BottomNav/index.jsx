@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, List, ListItem, Stack, Typography } from '@mui/material'
 import { IoIosMenu } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
@@ -29,6 +29,18 @@ export default function BottomNav() {
     const handleOpenCat = () => {
         setIsOpenCat(isOpenCat ? false : true)
     }
+
+    useEffect(() => {
+        (async()=>{
+            try {
+                
+            } catch (error) {
+                console.log(e);
+            }
+        })()
+        
+    }, []);
+
     return (
         <Stack sx={{ overflowX: 'scroll', '::-webkit-scrollbar': { display: 'none' }, overflow: 'visible' }} alignItems={'start'} direction={'row'} mt={{ xs: 2, md: 3 }} mx={'auto'} gap={3}>
             {/* start all category */}
