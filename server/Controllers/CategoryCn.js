@@ -21,7 +21,7 @@ export const getAllCategory = catchAsync(async (req, res, next) => {
     }else{
         queryString=req.query
     }
-    const features = new ApiFeatures(Category, queryString).filters().sort().limitFields().paginate().secondPopulate('subCategory')
+    const features = new ApiFeatures(Category, queryString).filters().sort().limitFields().secondPopulate('subCategory')
     const categories = await features.model
     const count = await Category.countDocuments(req?.query?.filters)
     return res.status(200).json({

@@ -19,9 +19,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("Public"));
 
-app.use('/upload',uploadRouter)
-app.use('/category',categoryRouter)
-app.use('/product',productRouter)
+app.use('/api/upload',uploadRouter)
+app.use('/api/category',categoryRouter)
+app.use('/api/product',productRouter)
 
 
 app.use("*", (req, res, next) => {
