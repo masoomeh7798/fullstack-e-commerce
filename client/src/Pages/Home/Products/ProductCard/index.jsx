@@ -47,10 +47,15 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                                 {description.split(' ').slice(0, 5).join(' ')}...
                             </Typography>
                         </Box>
-                        <Rating
+                          <Rating
                             readOnly
                             value={rating}
-                        />
+                            precision={0.5}
+                            
+                            sx={{direction:'ltr'}}
+                        />  
+                       
+                        
                         <Stack width={'100%'} direction={'row'} justifyContent={'start'} alignItems={'center'} gap={2}>
                             <Typography fontSize={{ xs: '16px', lg: '12px', xl: '14px' }} sx={{ textDecoration: 'line-through' }}>{price} تومان</Typography>
                             <Typography color='secondary' fontSize={{ xs: '18px', lg: '16px', xl: '16px' }}>{finalPrice} تومان</Typography>

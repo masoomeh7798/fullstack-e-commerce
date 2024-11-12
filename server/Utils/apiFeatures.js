@@ -14,7 +14,7 @@ class ApiFeatures{
     }  
     sort(){
         if(this.queryString.sort){
-            const sortBy=this.queryString.sort.split(',').join(' ')
+            const sortBy=this.queryString.sort?.split(',').join(' ')
             this.model=this.model.sort(sortBy)
         }else{
             this.model=this.model.sort('-createdAt')
