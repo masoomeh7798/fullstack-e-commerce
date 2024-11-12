@@ -9,10 +9,10 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { MdCompareArrows } from "react-icons/md";
 import QuantityBox from '../../../Components/QuantityBox'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
+import Variants from '../../../Components/Variants';
 
 
 export default function ProductDetailsTop({product}) {
-    const [activeVariant, setActiveVariant] = useState(1);
     return (
         <Box
             boxShadow={'0 0 10px 2px rgba(0,0,0,.2)'}
@@ -48,48 +48,7 @@ export default function ProductDetailsTop({product}) {
                                 <Typography textAlign={'justify'} fontSize={{ xs: '12px', sm: '16px' }}>{product?.description}</Typography>
                             </Box>
                             {/* start product variant */}
-                            <Stack
-                                direction={'row'}
-                                gap={2}
-                                alignItems={'center'}
-                                mt={'auto'}
-                            >
-                                <Typography
-                                    variant='body2'
-                                    fontSize={'16px'}
-                                    fontWeight={'500'}
-                                >رنگ ها: </Typography>
-                                <Stack
-                                    flexDirection={'inherit'}
-                                    gap={1}
-                                    sx={{
-                                        '& button': {
-                                            fontSize:{xs:'12px',sm:'16px'},
-                                            minWidth:{xs:'40px',sm:'64px'},
-                                            bgcolor: '#F1F1F1'
-                                        }
-                                    }}
-                                >
-                                    <Button
-                                        sx={{
-                                            color: activeVariant == 1 ? 'var(--text-clr) !important' : 'black',
-                                            bgcolor: activeVariant == 1 ? 'var(--secondary-clr) !important' : '#F1F1F1'
-                                        }}
-                                        onClick={() => setActiveVariant(1)}>صورتي</Button>
-                                    <Button
-                                        sx={{
-                                            color: activeVariant == 2 ? 'var(--text-clr) !important' : 'black',
-                                            bgcolor: activeVariant == 2 ? 'var(--secondary-clr) !important' : '#F1F1F1'
-                                        }}
-                                        onClick={() => setActiveVariant(2)}>قرمز</Button>
-                                    <Button
-                                        sx={{
-                                            color: activeVariant == 3 ? 'var(--text-clr) !important' : 'black',
-                                            bgcolor: activeVariant == 3 ? 'var(--secondary-clr) !important' : '#F1F1F1'
-                                        }}
-                                        onClick={() => setActiveVariant(3)}>سفيذ</Button>
-                                </Stack>
-                            </Stack>
+                           <Variants/>
                             {/* end product variant */}
                             <Stack direction={{ md: 'row' }} sx={{ width: '100%' }} alignItems={'center'} gap={2} mt={'auto'}>
                                 <QuantityBox />

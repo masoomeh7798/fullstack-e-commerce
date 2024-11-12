@@ -11,7 +11,7 @@ import InnerImageZoom from 'react-inner-image-zoom';
 
 
 
-export default function ProductSlider() {
+export default function ProductSlider({ img }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(0);
     return (
         <>
@@ -19,7 +19,8 @@ export default function ProductSlider() {
 
                 style={{
                     '--swiper-navigation-color': '#fff',
-                    '--swiper-pagination-color': '#fff',
+                    '--swiper-pagination-color': '#fff',   
+        
                 }}
                 loop={true}
                 spaceBetween={10}
@@ -27,38 +28,14 @@ export default function ProductSlider() {
                 modules={[FreeMode, Thumbs]}
                 className="product-slider-2"
             >
-                <SwiperSlide>
-                 
-                  <InnerImageZoom zoomType='hover' zoomScale={1}
-                  src='https://swiperjs.com/demos/images/nature-1.jpg'/>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-                </SwiperSlide>
+                {img?.map((e, index) => (
+                    <SwiperSlide key={index}>
+                        <InnerImageZoom zoomType='hover' zoomScale={.8}
+                            src={import.meta.env.VITE_BASE_URL + `${e}`} />
+                    </SwiperSlide>
+
+                ))}
+
             </Swiper>
             <Swiper
                 onSwiper={setThumbsSwiper}
@@ -70,36 +47,13 @@ export default function ProductSlider() {
                 modules={[FreeMode, Navigation, Thumbs]}
                 className="product-slider-3"
             >
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-                </SwiperSlide>
+                 {img?.map((e, index) => (
+                    <SwiperSlide key={index}>
+                        <img
+                            src={import.meta.env.VITE_BASE_URL + `${e}`} />
+                    </SwiperSlide>
+
+                ))}
             </Swiper>
         </>
     )
