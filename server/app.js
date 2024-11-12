@@ -8,6 +8,8 @@ import catchError from "./Utils/catchError.js";
 import categoryRouter from "./Routes/Category.js";
 import uploadRouter from "./Routes/Upload.js";
 import productRouter from "./Routes/Product.js";
+import sliderRouter from "./Routes/Slider.js";
+import brandRouter from "./Routes/Brand.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +24,8 @@ app.use(express.static("Public"));
 app.use('/api/upload',uploadRouter)
 app.use('/api/category',categoryRouter)
 app.use('/api/product',productRouter)
+app.use('/api/slider',sliderRouter)
+app.use('/api/brand',brandRouter)
 
 
 app.use("*", (req, res, next) => {

@@ -4,8 +4,8 @@ import { create, favoriteProduct, get, getAll, update } from '../Controllers/Pro
 import isLogin from '../Middleware/isLogin.js';
 
 const productRouter=express.Router()
-productRouter.route('/').post(isAdmin,create).get(getAll)
-productRouter.route('/:id').get(get).patch(isAdmin,update)
+productRouter.route('/').post(create).get(getAll)
+productRouter.route('/:id').get(get).patch(update)
 productRouter.route('/favorite').post(isLogin,favoriteProduct)
 
 export default productRouter

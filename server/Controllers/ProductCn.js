@@ -8,7 +8,6 @@ import Product from "../Models/ProductMd.js";
 export const getAll = catchAsync(async (req, res, next) => {
   const features = new ApiFeatures(Product, req?.query)
     .filters()
-    .sort()
     .paginate()
     .limitFields()
     .populate()

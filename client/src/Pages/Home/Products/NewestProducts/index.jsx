@@ -18,9 +18,9 @@ export default function NewestProducts() {
     useEffect(() => {
         (async () => {
             try {
-                const res = await fetch('https://fakestoreapi.com/products')
+                const res = await fetch(import.meta.env.VITE_BASE_API+`product?limit=10&sort[createdAt]=-1`)
                 const data = await res.json()
-                setProducts(data)
+                setProducts(data?.data?.products)
             } catch (error) {
                 console.log(error);
             }
@@ -29,14 +29,25 @@ export default function NewestProducts() {
     }, []);
     const items = products?.map((e, index) => (
         <SwiperSlide  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} key={index}>
-           <ProductCard id={e.id} img={e.image} title={e.title} description={e.description} dynamicWidth={'99.5%'}/>
+           <ProductCard 
+           id={e._id}
+           name={e?.name}
+           description={e?.description}
+           variants={e?.variants}
+           brand={e?.brandId?.title}
+           rating={e?.rating}
+           price={e?.price}
+           finalPrice={e?.finalPrice}
+           discount={10}
+           img={e.images}
+           dynamicWidth={'99.5%'}/>
         </SwiperSlide>
     ))
     return (
-        <Stack width={'100%'} height={'85vh'} my={3}>
+        <Stack width={'100%'} height={{xs:'95vh',sm:'85vh'}} my={3}>
             <Stack direction='row' alignItems={'center'} justifyContent={'space-between'} mb={3}>
                 <Typography fontSize={'2em'} component={'h3'}>جدیدترین محصولات</Typography>
-                <Button sx={{ borderRadius: '24px', bgcolor: 'var(--third-clr)', transition: 'all .3s', '&:hover': { opacity: .7 } }}><Link style={{ display: 'flex', alignItems: 'center', justifyContent: "space-between", gap: '8px' }} to='/'><Typography color='primary' variant='body2'>مشاهده همه محصولات</Typography><FaAngleLeft /></Link></Button>
+                <Button sx={{ borderRadius: '24px', bgcolor: 'var(--third-clr)', transition: 'all .3s', '&:hover': { opacity: .7 } }}><Link style={{ display: 'flex', alignItems: 'center', justifyContent: "space-between"}} to='/'><Typography p={'0 8px'} color='primary' variant='body2'>مشاهده همه محصولات</Typography><FaAngleLeft /></Link></Button>
             </Stack>
             <Swiper
                 slidesPerView={1}

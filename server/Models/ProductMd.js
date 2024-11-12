@@ -14,7 +14,7 @@ const productSchema = new mongoose.Schema({
     default: []
   },
   variants: {
-    type: [{ type: String, value: String }],
+    type: [{ name: String, value:[String]}],
     default: []
   },
   images: {
