@@ -30,7 +30,7 @@ export default function ProductSlider({ img }) {
             >
                 {img?.map((e, index) => (
                     <SwiperSlide key={index}>
-                        <InnerImageZoom zoomType='hover' zoomScale={.8}
+                        <InnerImageZoom zoomType='hover' zoomScale={1}
                             src={import.meta.env.VITE_BASE_URL + `${e}`} />
                     </SwiperSlide>
 

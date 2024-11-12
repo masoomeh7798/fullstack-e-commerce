@@ -1,8 +1,10 @@
 import { Box, List, ListItem, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Slider from '@mui/material/Slider';
+import { useDispatch } from 'react-redux';
+import {getPrice,getCat,getBrand} from "../../../Store/Slice/FiltersSlice"
 
 function pricetext(price) {
     return `${price}`;
@@ -10,11 +12,33 @@ function pricetext(price) {
 
 
 export default function FilterBoxes() {
-    const [price, setPrice] = useState([20, 37]);
+    const dispatch=useDispatch()
+    const [price, setPrice] = useState([20000, 300000]);
+    const [selectedBrand, setSelectedBrand] = useState('');
+    const [selectedCat, setSelectedCat] = useState('');
+    
+    // get brands and categories for aside
+    const [brands, setBrands] = useState([]);
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        (async()=>{
+            try {
+                const res = await fetch(import.meta.env.VITE_BASE_API + 'category')
+                const data = await res.json()
+                setCategories(data?.data?.categories)
 
-    const handleChange = (event, newValue) => {
-        setPrice(newValue);
-    };
+                const resB = await fetch(import.meta.env.VITE_BASE_API + 'brand')
+                const dataB = await resB.json()
+                setBrands(dataB?.data?.brands)
+
+            } catch (error) {
+                console.log(error);
+            }
+        })()
+        
+    }, []);
+
+
     return (
         <Stack
             display={{xs:'none',sm:'flex'}}
@@ -39,7 +63,9 @@ export default function FilterBoxes() {
                         py: '0'
                     }}
                 >
-                    <ListItem
+                    {categories?.map(e=>(
+                         <ListItem 
+                         key={e?._id}
                         sx={{
                             '& svg': { color: 'var(--secondary-clr)' },
                             px: 0,
@@ -50,86 +76,14 @@ export default function FilterBoxes() {
                             }
                         }}
 
-                    ><FormControlLabel control={<Checkbox />} label="ساعت" />
+                    ><FormControlLabel   control={<Checkbox
+                        checked={selectedCat==e?._id}
+                        onChange={()=>{setSelectedCat(e?._id),dispatch(getCat(e?._id))}}
+                    />} label={e?.title} />
                     </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: '0' },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important"
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-
+                  
+                    ))}
+                  
                 </List>
             </Box>
             {/* end categories */}
@@ -152,7 +106,9 @@ export default function FilterBoxes() {
                         py: '0'
                     }}
                 >
-                    <ListItem
+                  {brands?.map(e=>(
+                         <ListItem 
+                         key={e?._id}
                         sx={{
                             '& svg': { color: 'var(--secondary-clr)' },
                             px: 0,
@@ -163,85 +119,12 @@ export default function FilterBoxes() {
                             }
                         }}
 
-                    ><FormControlLabel control={<Checkbox />} label="ساعت" />
+                    ><FormControlLabel control={<Checkbox
+                        checked={selectedBrand==e?._id}
+                        onChange={(el)=>{setSelectedBrand(e?._id),dispatch(getBrand(e?._id))}}
+                    />} label={e?.title} />
                     </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: '0' },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important",
-                                marginLeft: '4px !important'
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
-                    <ListItem
-                        sx={{
-                            '& svg': { color: 'var(--secondary-clr)' },
-                            px: 0,
-                            '& label': { marginRight: 0 },
-                            '& label span:first-of-type': {
-                                padding: "0 !important"
-                            }
-                        }}
-
-                    ><FormControlLabel control={<Checkbox />} label="گردنبند" />
-                    </ListItem>
+                  ))}
 
                 </List>
             </Box>
@@ -251,6 +134,7 @@ export default function FilterBoxes() {
             {/* start price range */}
             <Box
                 width={{ xs: '33%', xl: '100% !important' }}
+                mb={2}
             >
                 <Typography
                     variant='h6'
@@ -267,9 +151,12 @@ export default function FilterBoxes() {
                     }}
                     getAriaLabel={() => 'Price range'}
                     value={price}
-                    onChange={handleChange}
                     valueLabelDisplay="auto"
                     getAriaValueText={pricetext}
+                    min={20000}
+                    max={1000000}
+                    step={10000}
+                    onChange={(event, newValue)=>{setPrice(newValue);dispatch(getPrice(newValue))}}
                 />
                 <Stack
                     direction={'row'}
@@ -277,13 +164,13 @@ export default function FilterBoxes() {
                     justifyContent={'space-between'}
                     sx={{
                         '& p': {
-                            fontSize: '18px',
+                            fontSize: '14px',
                             fontWeight: 500
                         }
                     }}
                 >
-                    <Typography>از: {price[0]} تومان</Typography>
                     <Typography>تا: {price[1]} تومان</Typography>
+                    <Typography>از: {price[0]} تومان</Typography>
                 </Stack>
             </Box>
             {/* end price range */}

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ProductsPart from './ProductsPart'
 import FilterBoxes from './FilterBoxes'
 import { Stack } from '@mui/material'
 
 export default function Products() {
+  
     return (
         <Stack
             direction={{xs:'column',xl:'row'}}

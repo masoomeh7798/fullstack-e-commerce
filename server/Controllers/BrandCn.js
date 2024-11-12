@@ -13,11 +13,11 @@ export const create=catchAsync(async(req,res,next)=>{
 })
 export const getAll=catchAsync(async(req,res,next)=>{
     const features=new ApiFeatures(Brand,req?.query).filters().sort().limitFields().paginate().populate()
-    const brand=await features.model
+    const brands=await features.model
     const count=await Brand.countDocuments(req?.query?.filters)
     return res.status(200).json({
         success:true,
-        data:{brand},
+        data:{brands},
         count
     })
 })

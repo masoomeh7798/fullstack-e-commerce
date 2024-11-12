@@ -81,7 +81,7 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                 rating={rating}
                 price={price}
                 finalPrice={finalPrice}
-                discount={10}
+                discount={discount}
                 img={img}
                 handleClose={handleClose}
                 open={open} />}
