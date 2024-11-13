@@ -13,7 +13,7 @@ function pricetext(price) {
 
 export default function FilterBoxes() {
     const dispatch=useDispatch()
-    const [price, setPrice] = useState([20000, 300000]);
+    const [price, setPrice] = useState([400000, 600000]);
     const [selectedBrand, setSelectedBrand] = useState('');
     const [selectedCat, setSelectedCat] = useState('');
     

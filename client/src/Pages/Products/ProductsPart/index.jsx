@@ -3,24 +3,18 @@ import React, { useEffect, useState } from 'react'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TfiLayoutGrid4Alt } from "react-icons/tfi";
 import { BiSolidGrid } from "react-icons/bi";
-import { BiGridSmall } from "react-icons/bi";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import ProductCard from '../../Home/Products/ProductCard';
 
 const cardWidth={xs:'100%',sm:'48%',md:'32%',xl:'23.5%'}
 
 export default function ProductsPart() {
   const [products, setProducts] = useState([]);
-  const [showItem, setShowItem] = useState('');
   const [dynamicWidth, setDynamicWidth] = useState('23.5%');
   const [activeGridIndex, setActiveGridIndex] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [count, setCount] = useState(1);
 
-  const handleShowItem = (e) => {
-    setShowItem(e.target.value);
-  };
+
   const handleChangeGrid = (width, index) => {
     setDynamicWidth(width)
     setActiveGridIndex(index)
@@ -30,17 +24,33 @@ export default function ProductsPart() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch('https://fakestoreapi.com/products')
+        const res = await fetch(import.meta.env.VITE_BASE_API + `product?limit=8&page=${currentPage}`)
         const data = await res.json()
-        setProducts(data)
+        setProducts(data?.data?.products)
+        setCount(data?.count)
       } catch (error) {
         console.log(error);
       }
     })()
 
-  }, []);
+  }, [currentPage]);
+
+console.log(count);
+
   const items = products?.map((e, index) => (
-    <ProductCard key={index} img={e.image} title={e.title} description={e.description} dynamicWidth={dynamicWidth} />
+    <ProductCard 
+    key={index}
+    id={e._id}
+    name={e?.name}
+    description={e?.description}
+    variants={e?.variants}
+    brand={e?.brandId?.title}
+    rating={e?.rating}
+    price={e?.price}
+    finalPrice={e?.finalPrice}
+    discount={e?.discount}
+    img={e.images}
+    dynamicWidth={dynamicWidth} />
   ))
 
   return (
@@ -81,27 +91,7 @@ export default function ProductsPart() {
           justifyContent={'space-between'}
           display={{xs:'none',xl:'flex'}}
         >
-          {/* start select part */}
-          <Stack>
-            <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }} size="small">
-              <InputLabel id="demo-select-small-label">show item</InputLabel>
-              <Select
-                labelId="demo-select-small-label"
-                id="demo-select-small"
-                value={showItem}
-                label="show item"
-                onChange={handleShowItem}
-              >
-                <MenuItem value="">
-                  <em>هيچكدام</em>
-                </MenuItem>
-                <MenuItem value={10}>ده</MenuItem>
-                <MenuItem value={20}>بيست</MenuItem>
-                <MenuItem value={30}>سي</MenuItem>
-              </Select>
-            </FormControl>
-          </Stack>
-          {/* end select part */}
+ 
 
           {/* start grid part */}
           <Stack
@@ -156,8 +146,8 @@ export default function ProductsPart() {
           }
         }}
           direction={'row'}
-          flexWrap={'wrap'}
-          justifyContent={'center'}
+          flexWrap={'wrap !important'}
+          justifyContent={{xs:'space-between',lg:'start'}}
           width={'100%'}
           gap={{sm:'10px',lg:'20px'}}
           mt={'10px'}
@@ -176,12 +166,15 @@ export default function ProductsPart() {
 
         >
           <Pagination
-            count={10}
+          page={currentPage}
+          onChange={(e,value)=>setCurrentPage(Number(value))}
+            count={Math.ceil(count/8)}
             sx={{
               direction: 'ltr'
             }}
             color="secondary"
           />
+         
         </Stack>
         {/* end pagination part */}
       </Stack>

@@ -14,7 +14,7 @@ export const getAll = catchAsync(async (req, res, next) => {
     .populate()
     .secondPopulate('categoryId').secondPopulate('brandId')
   const products = await features.model
-  const count = await Product.countDocuments(req?.query?.filters)
+  const count = await Product.countDocuments(features?.query)
   return res.status(200).json({
     success: true,
     data: { products },
