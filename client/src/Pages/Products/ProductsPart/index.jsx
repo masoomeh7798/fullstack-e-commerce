@@ -3,9 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TfiLayoutGrid4Alt } from "react-icons/tfi";
 import { BiSolidGrid } from "react-icons/bi";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import ProductCard from '../../Home/Products/ProductCard';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-const cardWidth={xs:'100%',sm:'48%',md:'32%',xl:'23.5%'}
+// const cardWidth = { xs: '100%', sm: '48%', md: '32%', xl: '23.5%' }
 
 export default function ProductsPart() {
   const [products, setProducts] = useState([]);
@@ -13,49 +19,60 @@ export default function ProductsPart() {
   const [activeGridIndex, setActiveGridIndex] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [count, setCount] = useState(1);
+  const [showItem, setShowItem] = useState('');
+  const [sort, setSort] = useState('');
+  
+  const {price,cat,brand}=useSelector((state)=>state.filters)
+  const {id}=useParams()
+  const catId=cat?cat:id
 
+
+  const handleShowItem = (e) => {
+    setShowItem(e.target.value);
+    setSort(e.target.value)
+  };
 
   const handleChangeGrid = (width, index) => {
     setDynamicWidth(width)
     setActiveGridIndex(index)
   };
-
+  // &filters[categoryId][$in]=${cat.toString()}
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(import.meta.env.VITE_BASE_API + `product?limit=8&page=${currentPage}`)
+        const res = await fetch(import.meta.env.VITE_BASE_API + `product?limit=8&page=${currentPage}&sort=${sort}&filters[price][$gte]=${price[0]}&filters[price][$lte]=${price[1]}${catId=="all" ? "":`&filters[categoryId][$in]=${catId}`}${brand ? `&filters[brandId][$eq]=${brand.toString()}`:""}`)
         const data = await res.json()
         setProducts(data?.data?.products)
-        setCount(data?.count)
+        setCount(data?.count || 1)
       } catch (error) {
         console.log(error);
       }
     })()
 
-  }, [currentPage]);
+  }, [currentPage,price,cat,brand,sort]);
 
-console.log(count);
+  console.log(sort);
 
   const items = products?.map((e, index) => (
-    <ProductCard 
-    key={index}
-    id={e._id}
-    name={e?.name}
-    description={e?.description}
-    variants={e?.variants}
-    brand={e?.brandId?.title}
-    rating={e?.rating}
-    price={e?.price}
-    finalPrice={e?.finalPrice}
-    discount={e?.discount}
-    img={e.images}
-    dynamicWidth={dynamicWidth} />
+    <ProductCard
+      key={index}
+      id={e._id}
+      name={e?.name}
+      description={e?.description}
+      variants={e?.variants}
+      brand={e?.brandId?.title}
+      rating={e?.rating}
+      price={e?.price}
+      finalPrice={e?.finalPrice}
+      discount={e?.discount}
+      img={e.images}
+      dynamicWidth={dynamicWidth} />
   ))
 
   return (
     <Stack
-    width={{xs:'100%',xl:'79%'}}
+      width={{ xs: '100%', xl: '79%' }}
     >
       {/* start banner */}
       <Box
@@ -67,7 +84,7 @@ console.log(count);
             objectPosition: 'bottom'
           }
         }}
-        display={{xs:'none',xl:'block'}}
+        display={{ xs: 'none', xl: 'block' }}
         borderRadius={'16px'}
         height={300}
         width={'100%'}
@@ -89,10 +106,30 @@ console.log(count);
           borderRadius={'16px'}
           mt={'10px'}
           justifyContent={'space-between'}
-          display={{xs:'none',xl:'flex'}}
+          display={{ xs: 'none', xl: 'flex' }}
         >
- 
 
+          {/* start select part */}
+          <Stack>
+            <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }} size="small">
+              <InputLabel id="demo-select-small-label">مرتب سازي</InputLabel>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                value={showItem}
+                label="مرتب سازي"
+                onChange={handleShowItem}
+              >
+                <MenuItem value="">
+                  <em>هيچكدام</em>
+                </MenuItem>
+                <MenuItem value={"-createdAt"}>جديدترين</MenuItem>
+                <MenuItem value={"-price"}>بيشترين قيمت</MenuItem>
+                <MenuItem value={"price"}>كمترين قيمت</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
+          {/* end select part */}
           {/* start grid part */}
           <Stack
             sx={{
@@ -139,17 +176,17 @@ console.log(count);
 
         {/* start display products */}
         <Stack
-        sx={{
-          '& > div':{
-            width:{xs:'100%',sm:'47%',md:'30%',xl:'23.5%'},
-            mb:'10px'
-          }
-        }}
+          sx={{
+            '& > div': {
+              width: { xs: '100%', sm: '47%', md: '30%', xl: '23.5%' },
+              mb: '10px'
+            }
+          }}
           direction={'row'}
           flexWrap={'wrap !important'}
-          justifyContent={{xs:'space-between',lg:'start'}}
+          justifyContent={{ xs: 'space-between', lg: 'start' }}
           width={'100%'}
-          gap={{sm:'10px',lg:'20px'}}
+          gap={{ sm: '10px', lg: '20px' }}
           mt={'10px'}
         >
           {items}
@@ -162,19 +199,19 @@ console.log(count);
           spacing={2}
           alignItems={'center'}
           justifyContent={'center'}
-          my={{xs:'16px',sm:"24px",xl:'32px'}}
+          my={{ xs: '16px', sm: "24px", xl: '32px' }}
 
         >
           <Pagination
-          page={currentPage}
-          onChange={(e,value)=>setCurrentPage(Number(value))}
-            count={Math.ceil(count/8)}
+            page={currentPage}
+            onChange={(e, value) => setCurrentPage(Number(value))}
+            count={Math.ceil(count / 8)}
             sx={{
               direction: 'ltr'
             }}
             color="secondary"
           />
-         
+
         </Stack>
         {/* end pagination part */}
       </Stack>
