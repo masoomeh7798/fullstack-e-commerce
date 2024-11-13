@@ -4,7 +4,7 @@ import isAdmin from '../Middleware/isAdmin.js'
 import { create, getAllComment, getProductComment, isPublish, remove } from '../Controllers/CommentCn.js'
 
 const commentRouter=express.Router()
-commentRouter.route('/create/:id').post(isLogin,create).get(isAdmin,getAllComment)
-commentRouter.route('/:id').get(getProductComment).patch(isAdmin,isPublish).delete(isAdmin,remove)
+commentRouter.route('/:id').post(isLogin,create).get(getProductComment)
+commentRouter.route('/cm/:id').patch(isAdmin,isPublish).delete(isAdmin,remove).get(isAdmin,getAllComment)
 
 export default commentRouter

@@ -13,17 +13,36 @@ import { FaRegHeart } from "react-icons/fa";
 import ProductModal from '../ProductModal';
 import './style.css'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 export default function ProductCard({ img, discount, finalPrice, price, name, description, brand, rating, variants, dynamicWidth, id }) {
     const [open, setOpen] = useState(false);
-
+    const {token}=useSelector(state=>state.auth)
     const handleClickOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
     };
+
+
+
+    const handleAddToRecentProduct = async (e) => {
+        try {
+          const res = await fetch(import.meta.env.VITE_BASE_API + `product/${id}`, {
+            method: "GET",
+            headers: {
+              authorization: `Bearer ${token}`
+            }});
+          const data = await res.json();
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
+
+
     return (
         <>
 
@@ -60,7 +79,7 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                             <Typography color='secondary' fontSize={{ xs: '18px', lg: '16px', xl: '16px' }}>{finalPrice} تومان</Typography>
                         </Stack>
                         <Stack mt={'16px'} direction={'row'} justifyContent={'center'} alignItems={'center'}>
-                            <Link to={`/product-details/${id}/${name?.replaceAll(' ', '-')}`} target='_blank'><Button sx={{ bgcolor: 'var(--third-clr)', px: '16px' }} >افزودن به سبد خرید</Button></Link>
+                            <Button onClick={handleAddToRecentProduct} href={`/product-details/${id}/${name?.replaceAll(' ', '-')}`} target='_blank'  sx={{ bgcolor: 'var(--third-clr)', px: '16px' }} >افزودن به سبد خرید</Button>
                         </Stack>
                     </CardContent>
                 </Box>

@@ -40,7 +40,7 @@ export const get = catchAsync(async (req, res, next) => {
     if (user.boughtProduct.includes(id)) {
       isCustomer = true
     }
-    let recentlyProductIds = user?.recentlyProductIds
+    let recentlyProductIds = user?.recentlyProductIds || []
     if (recentlyProductIds?.length == 10) {
       recentlyProductIds.shift()
       recentlyProductIds.push(id)
@@ -48,7 +48,7 @@ export const get = catchAsync(async (req, res, next) => {
       recentlyProductIds.push(id)
     }
     user.recentlyProductIds = recentlyProductIds
-    await user.save()
+    user.save()
   }
   const product = await Product.findById(id).populate('categoryId').populate('brandId')
   return res.status(200).json({
@@ -100,3 +100,7 @@ export const favoriteProduct = catchAsync(async (req, res, next) => {
     message: newFav ? 'add product to favorite list' : 'remove product from favorite list'
   })
 })
+
+
+
+

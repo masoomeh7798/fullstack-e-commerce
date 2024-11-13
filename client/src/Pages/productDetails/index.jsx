@@ -13,6 +13,9 @@ import RecentlyViewedProducts from './RecentlyViewedProducts';
 
 export default function ProductDetails() {
     const { id } = useParams()
+
+  
+
     return (
         <>
             <Stack width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'} my={2} gap={2}>

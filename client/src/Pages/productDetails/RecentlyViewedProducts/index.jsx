@@ -10,17 +10,24 @@ import { FaAngleLeft } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import ProductCard from '../../Home/Products/ProductCard';
 import './style.css'
+import { useSelector } from 'react-redux';
 
 
 export default function RecentlyViewedProducts() {
     const [products, setProducts] = useState([]);
-
+    const {user,token}=useSelector(state=>state.auth)
+    console.log(user);
     useEffect(() => {
         (async () => {
             try {
-                const res = await fetch(import.meta.env.VITE_BASE_API+`product?limit=10&sort=-createdAt}`)
+                const res = await fetch(import.meta.env.VITE_BASE_API+`user/${user.id}`,{
+                    method: 'GET',
+                    headers:{
+                        authorization:`Bearer ${token}`
+                    }
+                })
                 const data = await res.json()
-                setProducts(data?.data?.products)
+                setProducts(data?.data?.user?.recentlyProductIds)
             } catch (error) {
                 console.log(error);
             }

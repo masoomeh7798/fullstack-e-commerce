@@ -55,7 +55,7 @@ export default function Comments({ productId }) {
   return (
     <>
       {/* start view comments */}
-      <Stack
+      {productComments.length!=0 && (<Stack
         gap={2}
      
         width={{
@@ -139,7 +139,8 @@ export default function Comments({ productId }) {
       
         </Stack>
          ))}
-      </Stack>
+      </Stack>)}
+      
       {/* end view comments */}
 
       {/* start create comment */}
@@ -148,7 +149,7 @@ export default function Comments({ productId }) {
         width={{
           xs: '100%', sm: '90%', md: '85%', xl: '60%'
         }}
-        mt={6}
+        mt={productComments?.length!=0 ? 6 :0}
       >
         <form onSubmit={handleSubmit}>
           <Typography variant='h3'
