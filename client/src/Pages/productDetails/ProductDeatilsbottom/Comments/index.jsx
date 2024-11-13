@@ -1,30 +1,87 @@
 import { Box, Button, Rating, Stack, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import notify from "../../../../Utils/notify"
 
 
-export default function Comments({product}) {
+export default function Comments({ productId }) {
+  const { token, user } = useSelector(state => state.auth)
+  const [commentContent, setCommentContent] = useState('نظر خود را بنويسيد...');
+  const [rating, setRating] = useState(0)
+  const [productComments, setProductComments] = useState([])
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await fetch(import.meta.env.VITE_BASE_API + `comment/${productId}`, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({ content: commentContent, rating, productId }),
+      });
+      const data = await res.json();
+      setCommentContent('نظر خود را بنويسيد...')
+      setRating(0)
+      if (data?.success) {
+        notify("success", data?.message)
+      } else {
+        notify("error", "چيزي ننوشتي :(")
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const resC = await fetch(import.meta.env.VITE_BASE_API + `comment/${productId}`);
+        const dataC = await resC.json();
+        if (dataC?.success) {
+          setProductComments(dataC?.data?.comments)
+        }
+      } catch (error) {
+        console.log(error);
+
+      }
+    })()
+
+  }, []);
+
   return (
     <>
       {/* start view comments */}
       <Stack
         gap={2}
+     
         width={{
           xs: '100%', md: '85%', xl: '60%'
         }}
+        maxHeight={{xs:'200px',sm:'380px'}}
+        overflow={'scroll'}
+       
       >
         <Typography variant='h3'
-          fontSize={{xs:'18px',sm:'24px'}}
+          fontSize={{ xs: '18px', sm: '24px' }}
           fontWeight={500}
         >نظرات</Typography>
+        {productComments?.map(e=>(
         <Stack
           direction={'row'}
           boxShadow={'0px 1px 2px 1px rgba(0,0,0,.2)'}
           borderRadius={'8px'}
-          p={{xs:'12px',xxs:'16px',sm:'24px'}}
-          gap={{xs:1.5,sm:3}}
+          p={{ xs: '12px', xxs: '16px', sm: '24px' }}
+          gap={{ xs: 1.5, sm: 3 }}
+          m={1}
         >
-          {/* start user info */}
-          <Stack
+          
+            <>
+            {/* start user info */}
+                <Stack
             alignItems={'center'}
             gap={1}
           >
@@ -36,17 +93,17 @@ export default function Comments({product}) {
                   objectFit: 'cover'
                 }
               }}
-              width={{xs:'50px',sm:'100px'}}
-              height={{xs:'50px',sm:'100px'}}
+              width={{ xs: '50px', sm: '100px' }}
+              height={{ xs: '50px', sm: '100px' }}
               borderRadius={'50%'}
               overflow={'hidden'}
             >
-              <img src="/20241104_234358.jpg" alt="" />
+              <img src={import.meta.env.VITE_BASE_URL+e?.userId?.img} alt="profile photo" />
             </Box>
             <Typography variant='body2'
-            fontSize={{xs:'12px',sm:'16px'}}
+              fontSize={{ xs: '12px', sm: '16px' }}
               fontWeight={500}
-            >نام خريدار</Typography>
+            >{e?.userId?.fullName}</Typography>
           </Stack>
           {/* end user info */}
 
@@ -56,7 +113,7 @@ export default function Comments({product}) {
             gap={2}
           >
             <Stack
-              direction={{xs:'column',xxs:'row'}}
+              direction={{ xs: 'column', xxs: 'row' }}
               justifyContent={'space-between'}
               alignItems={'center'}
               width={'100%'}
@@ -64,20 +121,24 @@ export default function Comments({product}) {
             >
               <Typography
                 variant='body1'
-                fontSize={{xs:'12px',sm:'14px'}}
+                fontSize={{ xs: '12px', sm: '14px' }}
                 lineHeight={'14px'}
-              >1403/08/28</Typography>
-              <Rating size='small' value={4} readOnly />
+              >{e?.createdAt}</Typography>
+              <Rating size='small' value={e?.rating} readOnly />
             </Stack>
             <Stack>
               <Typography
-               fontSize={{xs:'12px',sm:'16px'}}
+                fontSize={{ xs: '12px', sm: '16px' }}
                 textAlign={'justify'}
-              >Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima labore quis quas eligendi id sed, cum deleniti quasi saepe voluptatum!</Typography>
+              >{e?.content}</Typography>
             </Stack>
           </Stack>
           {/* end user comment */}
+            </>
+         
+      
         </Stack>
+         ))}
       </Stack>
       {/* end view comments */}
 
@@ -89,69 +150,89 @@ export default function Comments({product}) {
         }}
         mt={6}
       >
-        <Typography variant='h3'
-          fontSize={{xs:'18px',sm:'24px'}}
-          fontWeight={500}
-        >نظر شما:</Typography>
-        <Stack
-          borderRadius={'8px'}
-          gap={1}
-        >
+        <form onSubmit={handleSubmit}>
+          <Typography variant='h3'
+            fontSize={{ xs: '18px', sm: '24px' }}
+            fontWeight={500}
+            mb={1.5}
+          >نظر شما:</Typography>
           <Stack
-            direction={'row'}
-            justifyContent={'space-between'}
+            borderRadius={'8px'}
+            gap={1}
           >
-            <input placeholder='نام كاربر:'
+            <Stack
+              direction={'row'}
+              justifyContent={'space-between'}
+            >
+              <input placeholder='نام كاربر:'
+                style={{
+                  width: '40%',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  outline: 'none',
+                  border: '1px solid rgba(0,0,0,.2)'
+                }}
+                readOnly
+                value={user?.fullName || user?.email || 'براي ثبت نظر بايد وارد سايت شويد.'}
+              ></input>
+              <Rating
+                value={rating}
+                onChange={(e, newValue) => setRating(newValue)}
+                sx={{
+                  display: { xs: 'none', sm: 'inline-flex' },
+                  direction: 'ltr'
+                }}
+                size={'medium'}
+                precision={.5}
+              />
+              <Rating
+                value={rating}
+                onChange={(e, newValue) => setRating(newValue)}
+                sx={{
+                  display: { sm: 'none' },
+                  direction: 'ltr'
+                }}
+                size={'small'}
+                precision={.5}
+              />
+            </Stack>
+            <textarea
+              required
+              value={commentContent}
+              onFocus={() => setCommentContent(' ')}
+              onChange={(e) => setCommentContent(e.target.value)}
               style={{
-                width: '40%',
-                borderRadius: '8px',
+                width: '100%',
+                maxWidth: '100%',
+                height: '150px',
+                maxHeight: '150px',
                 padding: '8px 16px',
+                borderRadius: '8px',
                 outline: 'none',
-                border: '1px solid rgba(0,0,0,.2)'
+                boxShadow: '0',
+                border: '1px solid rgba(0,0,0,.2)',
+                fontSize: '14px',
+                color: 'rgba(0,0,0,0.9)'
               }}
-            ></input>
-            <Rating
+            >
+            </textarea>
+            <Button
+              type='submit'
+              variant='contained'
               sx={{
-                display:{xs:'none',sm:'inline-flex'}
+                bgcolor: 'var(--secondary-clr)',
+                width: 'fit-content',
+                borderRadius: '8px',
+                padding: { xs: '4px 12px', sm: '8px 24px' },
+                fontSize: '16px'
               }}
-              size={'medium'}
-            />
-            <Rating
-              sx={{
-                display:{sm:'none'},
-                direction:'ltr'
-              }}
-              size={'small'}
-            />
-          </Stack>
-          <textarea defaultValue='نظر خود را بنويسيد...'
-            style={{
-              width: '100%',
-              maxWidth: '100%',
-              height: '150px',
-              maxHeight: '150px',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              outline: 'none',
-              boxShadow: '0',
-              border: '1px solid rgba(0,0,0,.2)',
-              color: 'rgba(0,0,0,.5)'
-            }} >
-          </textarea>
-          <Button variant='contained'
-            sx={{
-              bgcolor: 'var(--secondary-clr)',
-              width: 'fit-content',
-              borderRadius: '8px',
-              padding: { xs: '4px 12px', sm: '8px 24px' },
-              fontSize: '16px'
-            }}
-            color='info'
+              color='info'
 
-          >
-            ارسال
-          </Button>
-        </Stack>
+            >
+              ارسال
+            </Button>
+          </Stack>
+        </form>
       </Stack>
       {/* end create comment */}
     </>

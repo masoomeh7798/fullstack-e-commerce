@@ -52,7 +52,10 @@ export default function TopNav() {
         sx={{
           p:{xs:'8px',md:'13px'},
           boxShadow:'inset 0 0 5px 2px rgba(0,0,0,.2)',
-          display: { xs: 'none', sm: 'inline-flex' }
+          display: { xs: 'none', sm: 'inline-flex' },
+          '&:hover':{
+            bgcolor:'var(--secondary-clr-light)'
+          }
         }}
         ><Person/></IconButton>
       ):

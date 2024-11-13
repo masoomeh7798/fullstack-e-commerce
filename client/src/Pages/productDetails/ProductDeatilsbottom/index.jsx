@@ -105,7 +105,7 @@ export default function ProductDeatilsBottom({ productId }) {
                             </Table>
                         </TableContainer>
                     }
-                    {activeTab == 3 && <Comments product={product} />}
+                    {activeTab == 3 && <Comments productId={productId} />}
 
                 </Stack>
                 {/* end details part */}

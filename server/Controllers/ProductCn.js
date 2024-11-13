@@ -3,7 +3,7 @@ import HandleError from "../Utils/handleError.js";
 import jwt from "jsonwebtoken";
 import ApiFeatures from "../Utils/apiFeatures.js";
 import Product from "../Models/ProductMd.js";
-// import User from "../Models/UserMd.js";
+import User from "../Models/UserMd.js";
 
 export const getAll = catchAsync(async (req, res, next) => {
   const features = new ApiFeatures(Product, req?.query)

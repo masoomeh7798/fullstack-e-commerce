@@ -12,6 +12,7 @@ import sliderRouter from "./Routes/Slider.js";
 import brandRouter from "./Routes/Brand.js";
 import userRouter from "./Routes/User.js";
 import authRouter from "./Routes/Auth.js";
+import commentRouter from "./Routes/Comment.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -30,6 +31,7 @@ app.use('/api/slider',sliderRouter)
 app.use('/api/brand',brandRouter)
 app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
+app.use('/api/comment',commentRouter)
 
 
 app.use("*", (req, res, next) => {
