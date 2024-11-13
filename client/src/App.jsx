@@ -11,6 +11,7 @@ import Cart from './Pages/Cart';
 import Auth from './Pages/Auth';
 import { useSelector } from 'react-redux';
 import NotFound from './Pages/NotFound';
+import { Toaster } from 'react-hot-toast';
 
 // start default theme 
 export default function App() {
@@ -193,7 +194,7 @@ export default function App() {
         <Route path='*' element={<NotFound/>} />
       </Routes>
       {showNavAndFooter && <Footer />}
-
+    <Toaster/>
     </ThemeProvider>
   )
 }

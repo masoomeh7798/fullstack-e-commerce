@@ -6,10 +6,14 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge, Box, Button, Stack, Typography } from '@mui/material';
 import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Person } from '@mui/icons-material';
 
 
 
 export default function TopNav() {
+
+  const {token}=useSelector(state=>state.auth)
   // const handleClick = (e) => {
   //   e.preventDefault();
   //   window.location.reload();
@@ -42,14 +46,24 @@ export default function TopNav() {
     </Stack>
     {/* end search bar */}
     {/* start user and cart part */}
-    <Stack flex={1} justifyContent={'end'} gap={{ xs: 1, sm: 4 }} alignItems={'center'} direction={'row'}>
-      <Button href='/auth' sx={{ borderRadius: 2, px: 2, py: 1, bgcolor: 'var(--secondary-clr)', display: { xs: 'none', sm: 'inline-block' },'&:hover':{bgcolor:'var(--secondary-clr-dark)'} }}>
+    <Stack flex={1} justifyContent={'end'} gap={{ xs: 1, sm: 2,md:4 }} alignItems={'center'} direction={'row'}>
+      {token?(
+        <IconButton
+        sx={{
+          p:{xs:'8px',md:'13px'},
+          boxShadow:'inset 0 0 5px 2px rgba(0,0,0,.2)',
+          display: { xs: 'none', sm: 'inline-flex' }
+        }}
+        ><Person/></IconButton>
+      ):
+      (<Button href='/auth' sx={{ borderRadius: 2, px: 2, py: 1, bgcolor: 'var(--secondary-clr)', display: { xs: 'none', sm: 'inline-block' },'&:hover':{bgcolor:'var(--secondary-clr-dark)'} }}>
        <Typography fontSize={{ xs: '12px', sm: "16px" }} noWrap color='var(--text-clr)' component={'p'}>ورود/ ثبت نام</Typography>
-      </Button>
-      <Box>
-        <IconButton sx={{ bgcolor: "var(--text-clr)",'&:hover':{bgcolor:'var(--secondary-clr-light)'}, width: {xs:'40px',sm:'50px'}, height: {xs:'40px',sm:"50px"}, p: 0 }}>
+      </Button>)}
+      
+      <Box mt={'-1px'}>
+        <IconButton sx={{ bgcolor: "var(--text-clr)",'&:hover':{bgcolor:'var(--secondary-clr-light)'}, width: {xs:'40px',md:'50px'}, height: {xs:'40px',md:"50px"}, p: 0 ,boxShadow:'inset 0 0 5px 2px rgba(0,0,0,.2)'}}>
           <Badge badgeContent={1} max={9} color='secondary'>
-            <ShoppingCartIcon sx={{ width: {xs:'1.2em',sm:'1.5em'}, height: {xs:'1.2em',sm:'1.5em'} }} color='var(--text-clr)' />
+            <ShoppingCartIcon sx={{ width: {xs:'1.2em',md:'1.5em'}, height: {xs:'1.2em',md:'1.5em'} }} color='var(--text-clr)' />
           </Badge>
         </IconButton>
       </Box>

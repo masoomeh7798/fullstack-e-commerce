@@ -10,6 +10,8 @@ import uploadRouter from "./Routes/Upload.js";
 import productRouter from "./Routes/Product.js";
 import sliderRouter from "./Routes/Slider.js";
 import brandRouter from "./Routes/Brand.js";
+import userRouter from "./Routes/User.js";
+import authRouter from "./Routes/Auth.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,6 +28,8 @@ app.use('/api/category',categoryRouter)
 app.use('/api/product',productRouter)
 app.use('/api/slider',sliderRouter)
 app.use('/api/brand',brandRouter)
+app.use('/api/user',userRouter)
+app.use('/api/auth',authRouter)
 
 
 app.use("*", (req, res, next) => {
