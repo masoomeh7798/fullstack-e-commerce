@@ -1,28 +1,30 @@
 import { Box, Button, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Comments from './Comments';
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
-export default function ProductDeatilsBottom({ product }) {
+export default function ProductDeatilsBottom({ productId }) {
     const [activeTab, setactiveTab] = useState(1);
+    const [product, setProduct] = useState({});
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await fetch(import.meta.env.VITE_BASE_API + `product/${productId}`)
+                const data = await res.json()
+                setProduct(data?.data?.product)
+            } catch (error) {
+                console.log(error);
+            }
+        })()
+
+    }, []);
     return (
         <Box
             boxShadow={'0 0 10px 2px rgba(0,0,0,.2)'}
@@ -35,14 +37,15 @@ export default function ProductDeatilsBottom({ product }) {
                     sx={{
                         '& button': {
                             borderRadius: '24px',
-                            fontWeight: 600
+                            fontWeight: 500,
+                            fontSize:{xs:'12px',xxs:'16px'}
                         }
                     }}
                     direction={'row'}
                     justifyContent={'start'}
                     p={'20px 0'}
                     mx={'24px'}
-                    gap={2}
+                    gap={{xs:1,xxs:2}}
                     borderBottom={'1px solid rgba(0,0,0,.2)'}
                 >
                     <Button
@@ -79,50 +82,30 @@ export default function ProductDeatilsBottom({ product }) {
                     {activeTab == 2 &&
                         <TableContainer component={Paper}
                             sx={{
-                                width: {xs:'100%',sm:'90%',md:'85%',xl:'60%'},
-                                alignSelf: 'center',
-                                '& th,& td':{
-                                    padding:{
-                                        xs:'4px',
-                                        sm:'16px'
-                                    },
-                                    fontSize:{
-                                        xs:'12px',
-                                        sm:'16px'
-                                    }
-                                }
+                                width: { xs: '100%', sm: '60%', lg: '40%' },
+                                alignSelf: 'center'
                             }}
                         >
-                            <Table  aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="center">Dessert (100g serving)</TableCell>
-                                        <TableCell align="center">Calories</TableCell>
-                                        <TableCell align="center">Fat&nbsp;(g)</TableCell>
-                                        <TableCell align="center">Carbs&nbsp;(g)</TableCell>
-                                        <TableCell align="center">Protein&nbsp;(g)</TableCell>
-                                    </TableRow>
-                                </TableHead>
+                            <Table aria-label="simple table">
                                 <TableBody>
-                                    {rows.map((row) => (
+                                    {product?.information?.map((e) => (
                                         <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            key={e?._id}
+                                            sx={{ '&:last-child td': { border: 0 },
+                                            '& td':{
+                                                textAlign:'right'
+                                            }}}
                                         >
-                                            <TableCell align="center" component="th" scope="row">
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell align="center">{row.calories}</TableCell>
-                                            <TableCell align="center">{row.fat}</TableCell>
-                                            <TableCell align="center">{row.carbs}</TableCell>
-                                            <TableCell align="center">{row.protein}</TableCell>
+                                            <TableCell align="start">{e?.name}</TableCell>
+                                            <TableCell key={e?._id} align="start">{e?.value}</TableCell>
                                         </TableRow>
                                     ))}
+
                                 </TableBody>
                             </Table>
                         </TableContainer>
                     }
-                    {activeTab == 3 && <Comments />}
+                    {activeTab == 3 && <Comments product={product} />}
 
                 </Stack>
                 {/* end details part */}

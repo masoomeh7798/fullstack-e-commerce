@@ -13,31 +13,15 @@ import RecentlyViewedProducts from './RecentlyViewedProducts';
 
 export default function ProductDetails() {
     const { id } = useParams()
-    const [product, setProduct] = useState(null);
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch(`https://fakestoreapi.com/products/${id}`)
-                const data = await res.json()
-                setProduct(data)
-
-            } catch (error) {
-                console.log(error);
-            }
-
-        })()
-
-    }, []);
-
     return (
         <>
             <Stack width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'} my={2} gap={2}>
                 {/* start product details top section */}
-                <ProductDetailsTop product={product} />
+                <ProductDetailsTop productId={id} />
                 {/* end product details top section */}
 
                 {/* end product details bottom section */}
-                <ProductDetailsBottom product={product} />
+                <ProductDetailsBottom productId={id} />
                 {/* end product details bottom section */}
 
                 {/* start Recently viewed products */}

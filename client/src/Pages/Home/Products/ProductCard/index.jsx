@@ -51,7 +51,6 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                             readOnly
                             value={rating}
                             precision={0.5}
-                            
                             sx={{direction:'ltr'}}
                         />  
                        

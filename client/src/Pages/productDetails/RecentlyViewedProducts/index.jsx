@@ -18,18 +18,30 @@ export default function RecentlyViewedProducts() {
     useEffect(() => {
         (async () => {
             try {
-                const res = await fetch('https://fakestoreapi.com/products')
+                const res = await fetch(import.meta.env.VITE_BASE_API+`product?limit=10&sort=-createdAt}`)
                 const data = await res.json()
-                setProducts(data)
+                setProducts(data?.data?.products)
             } catch (error) {
                 console.log(error);
             }
         })()
 
     }, []);
+   
     const items = products?.map((e, index) => (
         <SwiperSlide  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}} key={index}>
-           <ProductCard id={e.id} img={e.image} title={e.title} description={e.description} dynamicWidth={'99.5%'}/>
+            <ProductCard 
+           id={e._id}
+           name={e?.name}
+           description={e?.description}
+           variants={e?.variants}
+           brand={e?.brandId?.title}
+           rating={e?.rating}
+           price={e?.price}
+           finalPrice={e?.finalPrice}
+           discount={e?.discount}
+           img={e.images}
+           dynamicWidth={'99.5%'}/>
         </SwiperSlide>
     ))
     return (

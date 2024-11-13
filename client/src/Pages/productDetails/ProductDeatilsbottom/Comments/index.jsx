@@ -2,7 +2,7 @@ import { Box, Button, Rating, Stack, TextField, Typography } from '@mui/material
 import React from 'react'
 
 
-export default function Comments() {
+export default function Comments({product}) {
   return (
     <>
       {/* start view comments */}
@@ -118,7 +118,8 @@ export default function Comments() {
             />
             <Rating
               sx={{
-                display:{sm:'none'}
+                display:{sm:'none'},
+                direction:'ltr'
               }}
               size={'small'}
             />
