@@ -3,6 +3,7 @@ import ApiFeatures from "../Utils/apiFeatures.js";
 import Slider from "../Models/SliderMd.js";
 import { __dirname } from "../app.js";
 import fs from 'fs'
+import HandleError from "../Utils/handleError.js";
 
 export const create=catchAsync(async(req,res,next)=>{
     const slider= await Slider.create(req.body)

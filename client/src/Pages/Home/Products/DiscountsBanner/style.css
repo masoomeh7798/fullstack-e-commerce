@@ -10,4 +10,14 @@
     object-fit: cover;
     border-radius: 8px;
   }
-  
+  .discount-slider .swiper-button-prev::after,
+  .discount-slider .swiper-button-next::after{
+
+  font-size: 16px !important;
+}
+
+.discount-slider .swiper-button-prev,
+.discount-slider .swiper-button-next{
+  padding:8px 20px;
+
+}

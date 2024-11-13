@@ -20,7 +20,7 @@ export default function FeaturedCategories() {
     }, []);
 
     const items=categories?.map(e=>(
-        <Link key={e?._id} to={`/products/${e?._id}/${e?.title.replaceAll(' ', '-')}`}>
+        <Link key={e?._id} to={`/products/${e?._id}/${e?.title.replaceAll(' ', '-')}`} target='_blank'>
         <Stack sx={{ '&:hover div': { boxShadow: ' 0 3px 6px rgba(0,0,0,.5),0 3px 6px rgba(0,0,0,.5)', transform: 'translateY(-5px)' }, '& div': { transition: 'all .3s' } }} alignItems={'center'} justifyContent={'center'} gap={1}>
             <Box width='120px' height={'120px'} borderRadius={'50%'} overflow={'hidden'}>
                 <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={import.meta.env.VITE_BASE_URL+`${e?.image}`} alt={e?.title} />

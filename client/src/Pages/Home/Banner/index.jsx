@@ -11,9 +11,9 @@ export default function Banner() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch('https://fakestoreapi.com/products')
+        const res = await fetch(import.meta.env.VITE_BASE_API+'slider?filters[position][$eq]=home-main-slider' )
         const data = await res.json()
-        setBanners(data)
+        setBanners(data?.data?.slider)
       } catch (error) {
         console.log(error);
       }
@@ -21,8 +21,8 @@ export default function Banner() {
 
   }, []);
   const items = banners?.map((e, index) => (
-    <SwiperSlide key={index} style={{ boxShadow: '0 0 5px 2px rgba(0,0,0,.2)',borderRadius:'16px' }}><img 
-    src={e?.image} alt="" /></SwiperSlide>
+    <SwiperSlide key={index} style={{ boxShadow: '0 0 5px 2px rgba(0,0,0,.2)',borderRadius:'16px' }}><img style={{objectFit:'cover',objectPosition:'left'}}
+    src={import.meta.env.VITE_BASE_URL+`${e?.image}`} alt={e?.title} /></SwiperSlide>
   ))
   return (
 
