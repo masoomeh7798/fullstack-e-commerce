@@ -6,7 +6,7 @@ import { IoEyeOff } from "react-icons/io5";
 import notify from "../../../Utils/notify"
 import useFormFields from '../../../Utils/useFormFields';
 import { useDispatch } from 'react-redux';
-import {login} from "../../../Store/Slice/AuthSlice"
+import {login} from "../../../Store/Slices/AuthSlice"
 
 export default function Login({ handlePageType }) {
   const [showPass, setShowPass] = useState(false);

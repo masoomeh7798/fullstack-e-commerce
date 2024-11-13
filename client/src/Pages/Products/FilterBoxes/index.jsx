@@ -4,7 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Slider from '@mui/material/Slider';
 import { useDispatch } from 'react-redux';
-import {getPrice,getCat,getBrand} from "../../../Store/Slice/FiltersSlice"
+import {getPrice,getCat,getBrand} from "../../../Store/Slices/FiltersSlice"
 
 function pricetext(price) {
     return `${price}`;
