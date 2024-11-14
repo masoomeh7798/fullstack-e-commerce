@@ -9,6 +9,7 @@ export default function Comments({ productId }) {
   const [commentContent, setCommentContent] = useState('نظر خود را بنويسيد...');
   const [rating, setRating] = useState(0)
   const [productComments, setProductComments] = useState([])
+  const [newComment, setnewComment] = useState(true);
 
 
   const handleSubmit = async (e) => {
@@ -27,6 +28,7 @@ export default function Comments({ productId }) {
       setRating(0)
       if (data?.success) {
         notify("success", data?.message)
+        setnewComment(!newComment)
       } else {
         notify("error", "چيزي ننوشتي :(")
       }
@@ -39,10 +41,10 @@ export default function Comments({ productId }) {
   useEffect(() => {
     (async () => {
       try {
-        const resC = await fetch(import.meta.env.VITE_BASE_API + `comment/${productId}`);
-        const dataC = await resC.json();
-        if (dataC?.success) {
-          setProductComments(dataC?.data?.comments)
+        const res = await fetch(import.meta.env.VITE_BASE_API + `comment/${productId}?sort=-createdAt`);
+        const data = await res.json();
+        if (data?.success) {
+          setProductComments(data?.data?.comments)
         }
       } catch (error) {
         console.log(error);
@@ -50,7 +52,7 @@ export default function Comments({ productId }) {
       }
     })()
 
-  }, []);
+  }, [newComment]);
 
   return (
     <>
@@ -70,7 +72,7 @@ export default function Comments({ productId }) {
           fontWeight={500}
         >نظرات</Typography>
         {productComments?.map(e=>(
-        <Stack
+        <Stack key={e?._id}
           direction={'row'}
           boxShadow={'0px 1px 2px 1px rgba(0,0,0,.2)'}
           borderRadius={'8px'}
@@ -123,7 +125,7 @@ export default function Comments({ productId }) {
                 variant='body1'
                 fontSize={{ xs: '12px', sm: '14px' }}
                 lineHeight={'14px'}
-              >{e?.createdAt}</Typography>
+              >{e?.createdAt?.split('T')[0]}</Typography>
               <Rating size='small' value={e?.rating} readOnly />
             </Stack>
             <Stack>

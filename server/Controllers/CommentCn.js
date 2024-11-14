@@ -10,7 +10,7 @@ import Comment from "../Models/CommentMd.js";
 export const getProductComment=catchAsync(async(req,res,next)=>{
    
     const {id:productId}=req.params
-    const comments=await Comment.find({productId,isPublish:true}).populate({path:'userId',select:'fullName _id img createdAt'})
+    const comments=await Comment.find({productId,isPublish:true}).sort(req?.query?.sort).populate({path:'userId',select:'fullName _id img'})
     return res.status(200).json({
         success:true,
         data:{comments}

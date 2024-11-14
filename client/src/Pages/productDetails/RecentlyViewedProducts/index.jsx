@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 export default function RecentlyViewedProducts() {
     const [products, setProducts] = useState([]);
     const {user,token}=useSelector(state=>state.auth)
-    console.log(user);
+   
     useEffect(() => {
         (async () => {
             try {

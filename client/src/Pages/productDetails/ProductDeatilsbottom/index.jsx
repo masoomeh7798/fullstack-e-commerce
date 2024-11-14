@@ -96,8 +96,8 @@ export default function ProductDeatilsBottom({ productId }) {
                                                 textAlign:'right'
                                             }}}
                                         >
-                                            <TableCell align="start">{e?.name}</TableCell>
-                                            <TableCell key={e?._id} align="start">{e?.value}</TableCell>
+                                            <TableCell align="right">{e?.name}</TableCell>
+                                            <TableCell key={e?._id} align="right">{e?.value}</TableCell>
                                         </TableRow>
                                     ))}
 
