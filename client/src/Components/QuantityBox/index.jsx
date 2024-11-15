@@ -1,14 +1,82 @@
 import { IconButton, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaMinus, FaPlus } from "react-icons/fa6";
+import { useDispatch, useSelector } from 'react-redux';
+import { changedQuantity, setIsAdded, setIsRemoved } from '../../Store/Slices/CartSlice';
 
-export default function QauntityBox() {
-    const [dynamicQuantity, setdynamicQuantity] = useState(1);
+export default function QauntityBox({productId}) {
+    const {token,user}=useSelector(state=>state.auth)
+    const {isAdded,isRemoved,dynamicQunatityD}=useSelector(state=>state.cart)
+    const [dynamicQuantity, setdynamicQuantity] = useState();
+    const dispatch=useDispatch()
+
+    useEffect(() => {
+        (async()=>{
+            try {
+                const res=await fetch(import.meta.env.VITE_BASE_API+`user/${user?.id}`,{
+                    "method":"GET",
+                    headers:{
+                        authorization:`Bearer ${token}`
+                    }
+                })
+                const data=await res.json()
+                setdynamicQuantity(data?.data?.user?.cart?.items?.filter(e=>e?.productId?._id==productId)[0]?.quantity || 0)
+            } catch (error) {
+                console.log(error);
+            }
+        })()
+        
+    }, [isAdded,isRemoved,productId,user?.id]);
+
+
+    const handleDecreaseQuantity=async()=>{
+        setdynamicQuantity(dynamicQuantity - 1)
+        dispatch(changedQuantity(dynamicQunatityD=>!dynamicQunatityD))
+        try {
+            const res=await fetch(import.meta.env.VITE_BASE_API+'cart',{
+                "method":"DELETE",
+                headers:{
+                    authorization:`Bearer ${token}`,
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({productId})
+            })
+            const data=await res.json();
+           (data?.data?.remove && dispatch(setIsRemoved(isRemoverd=>isRemoved+1)))
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleIncreaseQuantity=async()=>{
+        setdynamicQuantity(dynamicQuantity + 1)
+        dispatch(changedQuantity(dynamicQunatityD=>!dynamicQunatityD))
+        try {
+            const res=await fetch(import.meta.env.VITE_BASE_API+'cart',{
+                "method":"POST",
+                headers:{
+                    authorization:`Bearer ${token}`,
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({productId})
+            })
+            const data=await res.json();
+            (!data?.data?.add && dispatch(setIsAdded(isAdded=>isAdded+1)))
+      
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+   
     return (
         <Stack className='quantityChanger' direction={'row'} alignItems={'center'} gap={2} >
-            <IconButton onClick={() => setdynamicQuantity(dynamicQuantity + 1)} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' } }}><FaPlus color='var(--primary-clr)' fontSize={20} /></IconButton>
+            <IconButton onClick={handleIncreaseQuantity} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' } }}><FaPlus color='var(--primary-clr)' fontSize={20} />
+            </IconButton>
             <Typography width={'30px'} textAlign={'center'} fontSize={20}>{dynamicQuantity}</Typography>
-            <IconButton disabled={dynamicQuantity == 0} onClick={() => setdynamicQuantity(dynamicQuantity - 1)} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' }, "&:disabled": { opacity: .5 } }}><FaMinus color='var(--primary-clr)' fontSize={20} /></IconButton>
+            <IconButton disabled={dynamicQuantity == 0} onClick={handleDecreaseQuantity} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' }, "&:disabled": { opacity: .5 } }}><FaMinus color='var(--primary-clr)' fontSize={20} />
+            </IconButton>
         </Stack>
     )
 }

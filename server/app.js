@@ -13,6 +13,7 @@ import brandRouter from "./Routes/Brand.js";
 import userRouter from "./Routes/User.js";
 import authRouter from "./Routes/Auth.js";
 import commentRouter from "./Routes/Comment.js";
+import cartRouter from "./Routes/Cart.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,6 +33,7 @@ app.use('/api/brand',brandRouter)
 app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
 app.use('/api/comment',commentRouter)
+app.use('/api/cart',cartRouter)
 
 
 app.use("*", (req, res, next) => {

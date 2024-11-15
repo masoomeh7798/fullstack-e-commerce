@@ -20,12 +20,12 @@ export default function ProductSlider({ img }) {
                 style={{
                     '--swiper-navigation-color': '#fff',
                     '--swiper-pagination-color': '#fff',   
-        
+                    
                 }}
                 loop={true}
                 spaceBetween={10}
                 thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
-                modules={[FreeMode, Thumbs]}
+                modules={[ Thumbs]}
                 className="product-slider-2"
             >
                 {img?.map((e, index) => (

@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux';
 
 export default function ProductCard({ img, discount, finalPrice, price, name, description, brand, rating, variants, dynamicWidth, id }) {
     const [open, setOpen] = useState(false);
-    const {token}=useSelector(state=>state.auth)
+    const { token } = useSelector(state => state.auth)
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -30,17 +30,18 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
 
     const handleAddToRecentProduct = async (e) => {
         try {
-          const res = await fetch(import.meta.env.VITE_BASE_API + `product/${id}`, {
-            method: "GET",
-            headers: {
-              authorization: `Bearer ${token}`
-            }});
-          const data = await res.json();
+            const res = await fetch(import.meta.env.VITE_BASE_API + `product/${id}`, {
+                method: "GET",
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            });
+            const data = await res.json();
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      }
-    
+    }
+
 
 
     return (
@@ -49,7 +50,7 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
             <Card sx={{ height: `${dynamicWidth == '100% !important' ? '240px' : '450px'}`, width: `${dynamicWidth ? dynamicWidth : '250px'}`, position: 'relative', '&:hover .screen-heart': { visibility: 'visible', opacity: '1', right: '10px' }, '&:hover': { boxShadow: '0 0 5px 2px rgba(0,0,0,0.2)' } }}>
                 <Box className={`${dynamicWidth == '100% !important' && 'card-product-full'}`} sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'start', overflow: 'hidden', alignItems: 'start' }}>
                     <Box width={'100%'} height={`${dynamicWidth == '100% !important' ? '100%' : '48%'}`} overflow={'hidden'}>
-                        <CardMedia sx={{ '&:hover': { transform: 'scale(1.1)' }, transition: ' all .5s ease-in-out' ,cursor:'pointer'}}
+                        <CardMedia sx={{ '&:hover': { transform: 'scale(1.1)' }, transition: ' all .5s ease-in-out', cursor: 'pointer' }}
                             component="img"
                             image={import.meta.env.VITE_BASE_URL + `${img[0]}`}
                             height={'100%'}
@@ -66,20 +67,20 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                                 {description.split(' ').slice(0, 5).join(' ')}...
                             </Typography>
                         </Box>
-                          <Rating
+                        <Rating
                             readOnly
                             value={rating}
                             precision={0.5}
-                            sx={{direction:'ltr'}}
-                        />  
-                       
-                        
+                            sx={{ direction: 'ltr' }}
+                        />
+
+
                         <Stack width={'100%'} direction={'row'} justifyContent={'start'} alignItems={'center'} gap={2}>
                             <Typography fontSize={{ xs: '16px', lg: '12px', xl: '14px' }} sx={{ textDecoration: 'line-through' }}>{price} تومان</Typography>
                             <Typography color='secondary' fontSize={{ xs: '18px', lg: '16px', xl: '16px' }}>{finalPrice} تومان</Typography>
                         </Stack>
                         <Stack mt={'16px'} direction={'row'} justifyContent={'center'} alignItems={'center'}>
-                            <Button onClick={handleAddToRecentProduct} href={`/product-details/${id}/${name?.replaceAll(' ', '-')}`} target='_blank'  sx={{ bgcolor: 'var(--third-clr)', px: '16px' }} >افزودن به سبد خرید</Button>
+                            <Button onClick={handleAddToRecentProduct} href={`/product-details/${id}/${name?.replaceAll(' ', '-')}`} target='_blank' sx={{ bgcolor: 'var(--third-clr)', px: '16px' }} >مشاهده محصول</Button>
                         </Stack>
                     </CardContent>
                 </Box>
@@ -92,6 +93,7 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
             </Card>
 
             {open && <ProductModal
+                id={id}
                 name={name}
                 description={description}
                 variants={variants}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
@@ -12,12 +12,29 @@ import { Person } from '@mui/icons-material';
 
 
 export default function TopNav() {
+  const {token,user}=useSelector(state=>state.auth)
+  const {isAdded,isRemoved}=useSelector(state=>state.cart)
+  const [cartItems, setCartItems] = useState(0);
+  
+  useEffect(() => {
+    (async()=>{
+        try {
+            const res=await fetch(import.meta.env.VITE_BASE_API+`user/${user?.id}`,{
+                "method":"GET",
+                headers:{
+                    authorization:`Bearer ${token}`
+                }
+            })
+            const data=await res.json()
+            setCartItems(data?.data?.user?.cart?.items?.length)
+        } catch (error) {
+            console.log(error);
+        }
+    })()
+    
+}, [isRemoved,isAdded]);
 
-  const {token}=useSelector(state=>state.auth)
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   window.location.reload();
-  // };
+
   return (
     <Stack alignItems={'center'} direction={'row'} my={{ xs: 2, md: 3 }} gap={1}>
         <Stack flex={1} display={{xs:'inline-block',sm:'none'}}>
@@ -63,13 +80,13 @@ export default function TopNav() {
        <Typography fontSize={{ xs: '12px', sm: "16px" }} noWrap color='var(--text-clr)' component={'p'}>ورود/ ثبت نام</Typography>
       </Button>)}
       
-      <Box mt={'-1px'}>
+      <Link to='/cart' mt={'-1px'}>
         <IconButton sx={{ bgcolor: "var(--text-clr)",'&:hover':{bgcolor:'var(--secondary-clr-light)'}, width: {xs:'40px',md:'50px'}, height: {xs:'40px',md:"50px"}, p: 0 ,boxShadow:'inset 0 0 5px 2px rgba(0,0,0,.2)'}}>
-          <Badge badgeContent={1} max={9} color='secondary'>
+          <Badge badgeContent={cartItems} max={9} color='secondary'>
             <ShoppingCartIcon sx={{ width: {xs:'1.2em',md:'1.5em'}, height: {xs:'1.2em',md:'1.5em'} }} color='var(--text-clr)' />
           </Badge>
         </IconButton>
-      </Box>
+      </Link>
     </Stack>
     {/* end user and cart part */}
   </Stack>

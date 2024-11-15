@@ -28,17 +28,18 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-export default function ProductModal({ handleClose, open,img, discount, finalPrice, price, name, description, brand, rating, variants}) {
-
+export default function ProductModal({ handleClose, open,img, discount, finalPrice, price, name, description, brand, rating, variants,id}) {
+    const [addProductBtns, setAddProductBtns] = useState(false);
 
     return (
    
             <BootstrapDialog sx={{
                 '& .MuiDialog-paper': {
-                    padding: ' 0px 2%',
-                   maxWidth: { xs: '100%', sm: '80%', md: '70%', lg: '60%' }
+                padding: ' 0px 2%',
+                   maxWidth: '100%',
+                   width:{ xs: '100%', sm: '80%', md: '70%', lg: '50%' }
                 },
-            width:'100%',
+                width:'100%',
                 display: { xs: 'none', sm: 'block' },
                 '& .MuiDialogContent-root': { padding: '0' }
             }}
@@ -91,18 +92,22 @@ export default function ProductModal({ handleClose, open,img, discount, finalPri
                                 <Box mb={2}>
                                     <Typography textAlign={'justify'} fontSize={{ xs: '12px', sm: '16px' }}>{description}</Typography>
                                 </Box>
-                                <Stack
+                                {/* <Stack
                                 direction={'row'}
                                 >
                                    <Variants variants={variants}/>
-                                </Stack>
-                                <Stack direction={{ md: 'row' }} sx={{ width: '100%' }} alignItems={'center'} gap={2} mt={'auto'}>
-                                    <QuantityBox />
-                                    <Button sx={{ textWrap:'nowrap','& svg': { fontSize: "24px !important" }, borderRadius: '24px', bgcolor: "var(--third-clr)", color: 'var(--primary-clr)', padding: '8px 5px 8px 16px ', transition: "all .5s", '&:hover': { bgcolor: "var(--secondary-clr)", color: 'var(--text-clr)' } }} startIcon={<IoMdCart />}><Typography fontSize={{ xs: '12px', xxs: '14px', sm: '16px' }} fontWeight={500} mr={1}> افزودن به سبد خريد</Typography> </Button>
+                                </Stack> */}
+                                <Stack direction={{ md: 'row' }} sx={{ width: '100%' }} alignItems={'center'} gap={2} mt={7}>
+                                    {addProductBtns ? <QuantityBox productId={id}/>:
+                                     <Button
+                                     onClick={()=>setAddProductBtns(true)}
+                                     sx={{ textWrap:'nowrap','& svg': { fontSize: "24px !important" }, borderRadius: '24px', bgcolor: "var(--third-clr)", color: 'var(--primary-clr)', padding: '8px 5px 8px 16px ', transition: "all .5s", '&:hover': { bgcolor: "var(--secondary-clr)", color: 'var(--text-clr)' } }} startIcon={<IoMdCart />}><Typography fontSize={{ xs: '12px', xxs: '14px', sm: '16px' }} fontWeight={500} mr={1}> افزودن به سبد خريد</Typography> </Button>
+                                    } 
+                                   
                                 </Stack>
                                 <Stack direction={'row'} sx={{ width: '100%' }} justifyContent={{ xs: "center", md: 'start' }} alignItems={'center'} gap={2} mt={'20px'}>
                                     <Button sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px', bgcolor: "transparent", color: 'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor: "var(--text-clr)" } }} startIcon={<IoMdHeartEmpty />}><Typography fontSize={'12px'} fontWeight={400} mr={1}>دوستش دارم</Typography> </Button>
-                                    <Button sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px', bgcolor: "transparent", color: 'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor: "var(--text-clr)" } }} startIcon={<MdCompareArrows />}><Typography fontSize={'12px'} fontWeight={400} mr={1}>مقايسه</Typography> </Button>
+                                    {/* <Button sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px', bgcolor: "transparent", color: 'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor: "var(--text-clr)" } }} startIcon={<MdCompareArrows />}><Typography fontSize={'12px'} fontWeight={400} mr={1}>مقايسه</Typography> </Button> */}
                                 </Stack>
                             </Stack>
                             {/* end product info */}

@@ -12,6 +12,8 @@ import { MdOutlineClose } from "react-icons/md";
 import QuantityBox from '../../Components/QuantityBox'
 import { Link } from 'react-router-dom';
 import QauntityBox from '../../Components/QuantityBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsRemoved } from '../../Store/Slices/CartSlice';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -36,19 +38,50 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function Cart() {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch('https://fakestoreapi.com/products')
-        const data = await res.json()
-        setProducts(data)
-      } catch (error) {
-        console.log(error);
-      }
-    })()
+  const [cart, setCart] = useState([]);
+  const {token,user}=useSelector(state=>state.auth)
+  const {isAdded,isRemoved,dynamicQunatityD}=useSelector(state=>state.cart)
+  const dispatch=useDispatch()
+  let totalQuantity=0
+  cart?.items?.map(e=>{
+    totalQuantity+=e?.quantity
+  })
 
-  }, []);
+  const handleRemoveItem=async(productId)=>{
+    dispatch(setIsRemoved(isRemoved+1))
+    try {
+        const res=await fetch(import.meta.env.VITE_BASE_API+'cart/removeItem',{
+            "method":"DELETE",
+            headers:{
+                authorization:`Bearer ${token}`,
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({productId})
+        })
+        const data=await res.json()
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+  useEffect(() => {
+    (async()=>{
+        try {
+            const res=await fetch(import.meta.env.VITE_BASE_API+`user/${user?.id}`,{
+                "method":"GET",
+                headers:{
+                    authorization:`Bearer ${token}`
+                }
+            })
+            const data=await res.json()
+            setCart(data?.data?.user?.cart)
+        } catch (error) {
+            console.log(error);
+        }
+    })()
+    
+}, [isRemoved,isAdded,dynamicQunatityD]);
 
   return (
     <Stack
@@ -98,8 +131,8 @@ export default function Cart() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products?.map((e) => (
-                <StyledTableRow key={e.id}>
+              {cart?.items?.map((e,index) => (
+                <StyledTableRow key={index}>
                   <StyledTableCell align="center">
                     <Stack
                       direction={'row'}
@@ -117,7 +150,7 @@ export default function Cart() {
                         width={{ xs: '60px', md: '80px' }}
                         height={{ xs: '65px', md: '80px' }}
                       >
-                        <img src={e?.image} alt="" />
+                        <img src={import.meta.env.VITE_BASE_URL+e?.productId?.images[0]} alt={e?.productId?.name} />
                       </Box>
                       <Stack
                         gap={1}
@@ -133,16 +166,16 @@ export default function Cart() {
                           }
                         }}
                       >
-                        <Link to={`/product-details/${e?.id}/${e?.title.replaceAll(' ', '-')}`} target='_blank'>
+                        <Link to={`/product-details/${e?.productId?._id}/${e?.productId?.name?.replaceAll(' ', '-')}`} target='_blank'>
                           <Typography
                             textAlign={'start'}
                             fontSize={{ xs: '12px', sm: '14px', md: '16px' }}
-                          >{e?.title.split(' ').slice(0, 8).join(' ')}...</Typography></Link>
-                        <Rating size='small' value={4} readOnly />
+                          >{e?.productId?.name?.split(' ').slice(0, 8).join(' ')}</Typography></Link>
+                        <Rating size='small' value={e?.productId?.rating} readOnly />
                       </Stack>
                     </Stack>
                   </StyledTableCell>
-                  <StyledTableCell align="center">{e.price}</StyledTableCell>
+                  <StyledTableCell align="center">{e?.productId?.finalPrice}</StyledTableCell>
                   <StyledTableCell
                     sx={{
                       '& .quantityChanger button': {
@@ -152,9 +185,10 @@ export default function Cart() {
                         gap: { md: '8px' }
                       }
                     }}
-                    align="center"><QuantityBox /></StyledTableCell>
-                  <StyledTableCell align="center">{(e.id * e.price).toFixed(2)}</StyledTableCell>
-                  <StyledTableCell align="center"><Button
+                    align="center"><QuantityBox productId={e?.productId?._id} /></StyledTableCell>
+                  <StyledTableCell align="center">{e?.productId?.finalPrice * e?.quantity}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button
                     sx={{
                       minWidth: '',
                       '& svg': {
@@ -162,7 +196,7 @@ export default function Cart() {
                         fontSize: '24px'
                       }
                     }}
-                  ><MdOutlineClose /></Button></StyledTableCell>
+                  ><MdOutlineClose onClick={()=>handleRemoveItem(e?.productId?._id)} /></Button></StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -170,9 +204,9 @@ export default function Cart() {
         </TableContainer>
 
         {/* start table under md */}
-        {products?.map((e) => (
+        {cart?.items?.map((e,index) => (
           <Stack
-            key={e?.id}
+            key={index}
             width={'100%'}
             display={{ md: 'none' }}
             overflow={'hidden'}
@@ -193,7 +227,7 @@ export default function Cart() {
               width={{ xs: '100px', xxs: '150px', sm: '200px' }}
               height={{ xs: '100px', xxs: '150px', sm: '200px' }}
             >
-              <img src={e?.image} alt="" />
+              <img src={import.meta.env.VITE_BASE_URL+e?.productId?.images[0]} alt={e?.productId?.name} />
             </Box>
             <Stack
               width={'100%'}
@@ -213,12 +247,12 @@ export default function Cart() {
                   }
                 }}
               >
-                <Link to={`/product-details/${e?.id}/${e?.title.replaceAll(' ', '-')}`} target='_blank'>
+                <Link to={`/product-details/${e?.productId?._id}/${e?.productId?.name?.replaceAll(' ', '-')}`} target='_blank'>
                   <Typography
                     textAlign={'start'}
                     fontSize={{ xs: '14px', xxs: '16px' }}
                     width={{ xs: 80, xxs: 150, sm: 200 }}
-                  >{e?.title.split(' ').slice(0, 8).join(' ')}...</Typography></Link>
+                  >{e?.productId?.name?.split(' ').slice(0, 8).join(' ')}...</Typography></Link>
                 <Button
                   sx={{
                     minWidth: '',
@@ -227,7 +261,7 @@ export default function Cart() {
                       fontSize: '20px !important'
                     }
                   }}
-                ><MdOutlineClose /></Button>
+                ><MdOutlineClose onClick={()=>handleRemoveItem(e?.productId?._id)} /></Button>
               </Stack>
               <Stack
                 direction={'row'}
@@ -249,7 +283,7 @@ export default function Cart() {
                   textAlign={'start'}
                   fontSize={{ xs: '12px', sm: '14px', md: '16px' }}
                 >قيمت واحد</Typography>
-                <Typography>{e?.price}</Typography>
+                <Typography>{e?.productId?.finalPrice}</Typography>
               </Stack>
               <Stack
                 direction={'row'}
@@ -280,7 +314,7 @@ export default function Cart() {
                   textAlign={'start'}
                   fontSize={{ xs: '12px', sm: '14px', md: '16px' }}
                 >تعداد</Typography>
-                <Typography><QauntityBox /></Typography>
+                <QauntityBox productId={e?.productId?._id} />
               </Stack>
               <Stack
                 direction={'row'}
@@ -301,7 +335,7 @@ export default function Cart() {
                   textAlign={'start'}
                   fontSize={{ xs: '12px', sm: '14px', md: '16px' }}
                 >مجموع قيمت</Typography>
-                <Typography>{e?.price * e?.id}</Typography>
+                <Typography>{e?.productId?.finalPrice * e?.quantity}</Typography>
               </Stack>
 
             </Stack>
@@ -331,17 +365,10 @@ export default function Cart() {
             justifyContent={'space-between'}
             mt={1}
           >
-            <Typography>مجموع</Typography>
-            <Typography color='secondary'>1000 تومان</Typography>
+            <Typography>تعداد اقلام</Typography>
+            <Typography color='secondary'>{totalQuantity} عدد</Typography>
           </Stack>
-          <Stack
-            direction={'row'}
-            justifyContent={'space-between'}
-            mt={1}
-          >
-            <Typography>ارسال</Typography>
-            <Typography >رايگان</Typography>
-          </Stack>
+       
           <Stack
             direction={'row'}
             justifyContent={'space-between'}
@@ -349,7 +376,7 @@ export default function Cart() {
             mb={2}
           >
             <Typography>قيمت نهايي</Typography>
-            <Typography color='secondary'>800 تومان</Typography>
+            <Typography color='secondary'>{cart?.totalPrice} تومان</Typography>
           </Stack>
           <Button
             sx={{

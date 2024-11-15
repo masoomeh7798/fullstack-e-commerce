@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,10 +14,10 @@ const productSchema = new mongoose.Schema({
     type: [{ name: String, value: String }],
     default: []
   },
-  variants: {
-    type: [{ name: String, value:[String]}],
-    default: []
-  },
+  // variants: {
+  //   type: [{ name: String, value:[String],varQuantity:Number}],
+  //   default: []
+  // },
   images: {
     type: [String],
     default: []
