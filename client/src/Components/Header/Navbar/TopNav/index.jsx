@@ -8,7 +8,7 @@ import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Person } from '@mui/icons-material';
-
+import notify from "../../../../Utils/notify"
 
 
 export default function TopNav() {
@@ -28,7 +28,7 @@ export default function TopNav() {
           body: JSON.stringify({ query: e?.target?.value?.trim()}) 
       })
       const data = await res.json()
-      setSearchData(data)
+      setSearchData(data)     
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -78,7 +78,7 @@ export default function TopNav() {
           inputProps={{ 'aria-label': 'search' }}
         />
 
-        <IconButton sx={{ p: '10px' }} type="button" aria-label="search">
+        <IconButton onClick={()=>{if(!searchData.success){notify('error','محصول يافت نشد :(')}}} sx={{ p: '10px' }} type="button" aria-label="search">
           <SearchIcon fontSize='medium' color='var(--primary-clr)' />
         </IconButton>
         {searchData?.success &&
@@ -117,7 +117,7 @@ export default function TopNav() {
                   }}
                 >در محصولات:</Typography>
                 {searchData?.data?.product?.map((e, index) => (
-                  <Link key={index}
+                  <Link to={`/product-details/${e?._id}/${e?.name?.replaceAll(' ','-')}`} target='_blank' key={index}
                     style={{
                       lineHeight: '32px'
                     }}
@@ -136,7 +136,7 @@ export default function TopNav() {
                   }}
                 >در دسته بندي ها:</Typography>
                 {searchData?.data?.category?.map((e, index) => (
-                  <Link key={index}
+                  <Link to={`/products/${e?._id}/${e?.title?.replaceAll(' ','-')}`} target='_blank' key={index}
                     style={{
                       lineHeight: '32px'
                     }}
@@ -144,7 +144,7 @@ export default function TopNav() {
                 ))}
               </Stack>
             }
-            {searchData?.data?.brand?.length != 0 &&
+            {/* {searchData?.data?.brand?.length != 0 &&
               <Stack>
                 <Typography
                   fontWeight={500}
@@ -154,14 +154,14 @@ export default function TopNav() {
                   }}
                 >در برند ها:</Typography>
                 {searchData?.data?.brand?.map((e, index) => (
-                  <Link key={index}
+                  <Link to={`/products/${e?._id}/${e?.title?.replaceAll(' ','-')}`} target='_blank' key={index}
                     style={{
                       lineHeight: '32px'
                     }}
                   >{e?.title}</Link>
                 ))}
               </Stack>
-            }
+            } */}
           </Stack>}
       </Stack>
       {/* end search bar */}
