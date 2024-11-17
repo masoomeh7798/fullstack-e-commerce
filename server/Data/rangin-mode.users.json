@@ -1,0 +1,81 @@
+[{
+  "_id": {
+    "$oid": "6734d9af496cd8dfc79b1007"
+  },
+  "fullName": "admin",
+  "phone": "09025251542",
+  "email": "admin@gmail.com",
+  "password": "$2a$10$SUngt73EuK3iiizlbg58j.swLFtNrB2XooG1PD3tvpqFVaw3Ssssa",
+  "img": "file_1731516832128.jpg",
+  "role": "user",
+  "favoriteProductIds": [],
+  "recentlyProductIds": [
+    {
+      "$oid": "6733692410e193058fc1b486"
+    },
+    {
+      "$oid": "67336d2a2840a0c65cbe92bc"
+    },
+    {
+      "$oid": "67336b0c10e193058fc1b494"
+    },
+    {
+      "$oid": "67336b0c10e193058fc1b494"
+    },
+    {
+      "$oid": "67336da42840a0c65cbe92c2"
+    },
+    {
+      "$oid": "67336b0c10e193058fc1b494"
+    },
+    {
+      "$oid": "67336bc410e193058fc1b49a"
+    },
+    {
+      "$oid": "6733677210e193058fc1b47a"
+    },
+    {
+      "$oid": "67336b0c10e193058fc1b494"
+    },
+    {
+      "$oid": "67336b0c10e193058fc1b494"
+    }
+  ],
+  "cart": {
+    "totalPrice": 960000,
+    "items": [
+      {
+        "productId": {
+          "$oid": "67336bc410e193058fc1b49a"
+        },
+        "quantity": 4,
+        "_id": {
+          "$oid": "6737cf4f5224a3eada1a267a"
+        }
+      },
+      {
+        "productId": {
+          "$oid": "67336d2a2840a0c65cbe92bc"
+        },
+        "quantity": 4,
+        "_id": {
+          "$oid": "6737cf535224a3eada1a2703"
+        }
+      }
+    ],
+    "_id": {
+      "$oid": "6734d9af496cd8dfc79b1006"
+    }
+  },
+  "boughtProduct": [
+    "6733692410e193058fc1b486",
+    "67336d2a2840a0c65cbe92bc"
+  ],
+  "createdAt": {
+    "$date": "2024-11-13T16:54:07.120Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-15T22:46:43.987Z"
+  },
+  "__v": 136
+}]

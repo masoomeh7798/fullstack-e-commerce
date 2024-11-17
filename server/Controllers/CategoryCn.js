@@ -1,6 +1,6 @@
 import catchAsync from "../Utils/catchAsync.js";
 import ApiFeatures from "../Utils/apiFeatures.js";
-import Category from "../Models/categoryMd.js";
+import Category from "../Models/CategoryMd.js";
 import fs from 'fs'
 import { __dirname } from "../app.js";
 import jwt from "jsonwebtoken"

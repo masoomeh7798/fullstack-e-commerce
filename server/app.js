@@ -14,6 +14,7 @@ import userRouter from "./Routes/User.js";
 import authRouter from "./Routes/Auth.js";
 import commentRouter from "./Routes/Comment.js";
 import cartRouter from "./Routes/Cart.js";
+import searchRouter from "./Routes/search.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +35,7 @@ app.use('/api/user',userRouter)
 app.use('/api/auth',authRouter)
 app.use('/api/comment',commentRouter)
 app.use('/api/cart',cartRouter)
+app.use('/api/search',searchRouter)
 
 
 app.use("*", (req, res, next) => {
