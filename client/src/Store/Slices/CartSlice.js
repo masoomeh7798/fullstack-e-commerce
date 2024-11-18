@@ -12,7 +12,7 @@ const cartSlice=createSlice({
             state.isRemoved=action.payload
         },
         setIsAdded(state,action){
-            state.isRemoved=action.payload
+            state.isAdded=action.payload
         },
         changedQuantity(state,action){
             state.dynamicQunatityD=action.payload

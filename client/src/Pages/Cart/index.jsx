@@ -10,10 +10,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { MdOutlineClose } from "react-icons/md";
 import QuantityBox from '../../Components/QuantityBox'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import QauntityBox from '../../Components/QuantityBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsRemoved } from '../../Store/Slices/CartSlice';
+import { changedQuantity, setIsRemoved } from '../../Store/Slices/CartSlice';
+import notify from '../../Utils/notify';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -39,50 +40,77 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
-  const {token,user}=useSelector(state=>state.auth)
-  const {isAdded,isRemoved,dynamicQunatityD}=useSelector(state=>state.cart)
-  const dispatch=useDispatch()
-  let totalQuantity=0
-  cart?.items?.map(e=>{
-    totalQuantity+=e?.quantity
+  const { token, user } = useSelector(state => state.auth)
+  const { isAdded, isRemoved, dynamicQunatityD } = useSelector(state => state.cart)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  let totalQuantity = 0
+  cart?.items?.map(e => {
+    totalQuantity += e?.quantity
   })
 
-  const handleRemoveItem=async(productId)=>{
-    dispatch(setIsRemoved(isRemoved+1))
+  const handleChangedQuantity = () => {
+    dispatch(changedQuantity(!dynamicQunatityD))
+  };
+
+
+  const handleRemoveItem = async (productId) => {
+    dispatch(setIsRemoved(isRemoved + 1))
     try {
-        const res=await fetch(import.meta.env.VITE_BASE_API+'cart/removeItem',{
-            "method":"DELETE",
-            headers:{
-                authorization:`Bearer ${token}`,
-                "content-type":"application/json"
-            },
-            body:JSON.stringify({productId})
-        })
-        const data=await res.json()
+      const res = await fetch(import.meta.env.VITE_BASE_API + 'cart/removeItem', {
+        "method": "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({ productId })
+      })
+      const data = await res.json()
 
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-}
+  }
 
   useEffect(() => {
-    (async()=>{
-        try {
-            const res=await fetch(import.meta.env.VITE_BASE_API+`user/${user?.id}`,{
-                "method":"GET",
-                headers:{
-                    authorization:`Bearer ${token}`
-                }
-            })
-            const data=await res.json()
-            setCart(data?.data?.user?.cart)
-        } catch (error) {
-            console.log(error);
-        }
+    (async () => {
+      try {
+        const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
+          "method": "GET",
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        })
+        const data = await res.json()
+        setCart(data?.data?.user?.cart)
+      } catch (error) {
+        console.log(error);
+      }
     })()
-    
-}, [isRemoved,isAdded,dynamicQunatityD]);
 
+  }, [isRemoved, isAdded, dynamicQunatityD]);
+
+  const handleCheckCartItems = async () => {
+    try {
+      const res = await fetch(import.meta.env.VITE_BASE_API + 'order', {
+        "method": "GET",
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      const data = await res.json()
+      if (data?.data?.change) {
+        setCart(data?.data?.cart)
+        notify('success', data?.message)
+        handleChangedQuantity()
+      } else {
+        navigate('/payment')
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Stack
       width={{ lg: '85%', sm: '90%', xs: "95%" }} mx={'auto'}
@@ -131,7 +159,7 @@ export default function Cart() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {cart?.items?.map((e,index) => (
+              {cart?.items?.map((e, index) => (
                 <StyledTableRow key={index}>
                   <StyledTableCell align="center">
                     <Stack
@@ -150,7 +178,7 @@ export default function Cart() {
                         width={{ xs: '60px', md: '80px' }}
                         height={{ xs: '65px', md: '80px' }}
                       >
-                        <img src={import.meta.env.VITE_BASE_URL+e?.productId?.images[0]} alt={e?.productId?.name} />
+                        <img src={import.meta.env.VITE_BASE_URL + e?.productId?.images[0]} alt={e?.productId?.name} />
                       </Box>
                       <Stack
                         gap={1}
@@ -189,14 +217,14 @@ export default function Cart() {
                   <StyledTableCell align="center">{e?.productId?.finalPrice * e?.quantity}</StyledTableCell>
                   <StyledTableCell align="center">
                     <Button
-                    sx={{
-                      minWidth: '',
-                      '& svg': {
-                        fontWeight: 500,
-                        fontSize: '24px'
-                      }
-                    }}
-                  ><MdOutlineClose onClick={()=>handleRemoveItem(e?.productId?._id)} /></Button></StyledTableCell>
+                      sx={{
+                        minWidth: '',
+                        '& svg': {
+                          fontWeight: 500,
+                          fontSize: '24px'
+                        }
+                      }}
+                    ><MdOutlineClose onClick={() => handleRemoveItem(e?.productId?._id)} /></Button></StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -204,7 +232,7 @@ export default function Cart() {
         </TableContainer>
 
         {/* start table under md */}
-        {cart?.items?.map((e,index) => (
+        {cart?.items?.map((e, index) => (
           <Stack
             key={index}
             width={'100%'}
@@ -227,7 +255,7 @@ export default function Cart() {
               width={{ xs: '100px', xxs: '150px', sm: '200px' }}
               height={{ xs: '100px', xxs: '150px', sm: '200px' }}
             >
-              <img src={import.meta.env.VITE_BASE_URL+e?.productId?.images[0]} alt={e?.productId?.name} />
+              <img src={import.meta.env.VITE_BASE_URL + e?.productId?.images[0]} alt={e?.productId?.name} />
             </Box>
             <Stack
               width={'100%'}
@@ -261,7 +289,7 @@ export default function Cart() {
                       fontSize: '20px !important'
                     }
                   }}
-                ><MdOutlineClose onClick={()=>handleRemoveItem(e?.productId?._id)} /></Button>
+                ><MdOutlineClose onClick={() => handleRemoveItem(e?.productId?._id)} /></Button>
               </Stack>
               <Stack
                 direction={'row'}
@@ -368,7 +396,7 @@ export default function Cart() {
             <Typography>تعداد اقلام</Typography>
             <Typography color='secondary'>{totalQuantity} عدد</Typography>
           </Stack>
-       
+
           <Stack
             direction={'row'}
             justifyContent={'space-between'}
@@ -376,9 +404,10 @@ export default function Cart() {
             mb={2}
           >
             <Typography>قيمت نهايي</Typography>
-            <Typography color='secondary'>{cart?.totalPrice} تومان</Typography>
+            <Typography color='secondary'>{cart?.totalPrice || 0} تومان</Typography>
           </Stack>
           <Button
+            onClick={handleCheckCartItems}
             sx={{
               borderRadius: '4px',
               bgcolor: "var(--third-clr)",

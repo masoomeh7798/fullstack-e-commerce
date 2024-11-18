@@ -41,12 +41,15 @@ export const get = catchAsync(async (req, res, next) => {
       isCustomer = true
     }
     let recentlyProductIds = user?.recentlyProductIds || []
-    if (recentlyProductIds?.length == 10) {
-      recentlyProductIds.shift()
-      recentlyProductIds.push(id)
-    } else {
-      recentlyProductIds.push(id)
+    if (!recentlyProductIds.includes(id)) {
+      if (recentlyProductIds?.length == 10) {
+        recentlyProductIds.shift()
+        recentlyProductIds.push(id)
+      } else {
+        recentlyProductIds.push(id)
+      }
     }
+
     user.recentlyProductIds = recentlyProductIds
     user.save()
   }

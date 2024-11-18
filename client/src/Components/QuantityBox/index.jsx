@@ -8,7 +8,20 @@ export default function QauntityBox({productId}) {
     const {token,user}=useSelector(state=>state.auth)
     const {isAdded,isRemoved,dynamicQunatityD}=useSelector(state=>state.cart)
     const [dynamicQuantity, setdynamicQuantity] = useState();
+    const [productQuantity, setProductQuantity] = useState();
     const dispatch=useDispatch()
+
+
+  const handleRemove = () => {
+    dispatch(setIsRemoved(isRemoved - 1));
+  };
+  const handleAdded = () => {
+    dispatch(setIsAdded(isAdded + 1));
+  };
+  const handleChangedQuantity = () => {
+    dispatch(changedQuantity(!dynamicQunatityD))
+  };
+  
 
     useEffect(() => {
         (async()=>{
@@ -21,17 +34,23 @@ export default function QauntityBox({productId}) {
                 })
                 const data=await res.json()
                 setdynamicQuantity(data?.data?.user?.cart?.items?.filter(e=>e?.productId?._id==productId)[0]?.quantity || 0)
+
+                const resC=await fetch(import.meta.env.VITE_BASE_API+`product/${productId}`)
+                const dataC=await resC.json()
+                setProductQuantity(dataC?.data?.product?.quantity)
+               
+
             } catch (error) {
                 console.log(error);
             }
         })()
         
-    }, [isAdded,isRemoved,productId,user?.id]);
+    }, [isAdded,isRemoved,productId,user?.id,dynamicQunatityD]);
 
 
     const handleDecreaseQuantity=async()=>{
         setdynamicQuantity(dynamicQuantity - 1)
-        dispatch(changedQuantity(dynamicQunatityD=>!dynamicQunatityD))
+        handleChangedQuantity()
         try {
             const res=await fetch(import.meta.env.VITE_BASE_API+'cart',{
                 "method":"DELETE",
@@ -42,7 +61,7 @@ export default function QauntityBox({productId}) {
                 body:JSON.stringify({productId})
             })
             const data=await res.json();
-           (data?.data?.remove && dispatch(setIsRemoved(isRemoverd=>isRemoved+1)))
+           (data?.data?.remove && handleRemove())
             
         } catch (error) {
             console.log(error);
@@ -51,7 +70,7 @@ export default function QauntityBox({productId}) {
 
     const handleIncreaseQuantity=async()=>{
         setdynamicQuantity(dynamicQuantity + 1)
-        dispatch(changedQuantity(dynamicQunatityD=>!dynamicQunatityD))
+        handleChangedQuantity()
         try {
             const res=await fetch(import.meta.env.VITE_BASE_API+'cart',{
                 "method":"POST",
@@ -62,7 +81,7 @@ export default function QauntityBox({productId}) {
                 body:JSON.stringify({productId})
             })
             const data=await res.json();
-            (!data?.data?.add && dispatch(setIsAdded(isAdded=>isAdded+1)))
+            (!data?.data?.add && handleAdded())
       
         } catch (error) {
             console.log(error);
@@ -72,7 +91,7 @@ export default function QauntityBox({productId}) {
    
     return (
         <Stack className='quantityChanger' direction={'row'} alignItems={'center'} gap={2} >
-            <IconButton onClick={handleIncreaseQuantity} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' } }}><FaPlus color='var(--primary-clr)' fontSize={20} />
+            <IconButton disabled={dynamicQuantity==productQuantity} onClick={handleIncreaseQuantity} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' }, "&:disabled": { opacity: .5 } }}><FaPlus color='var(--primary-clr)' fontSize={20} />
             </IconButton>
             <Typography width={'30px'} textAlign={'center'} fontSize={20}>{dynamicQuantity}</Typography>
             <IconButton disabled={dynamicQuantity == 0} onClick={handleDecreaseQuantity} sx={{ bgcolor: 'var(--text-clr)', boxShadow: '0 1px rgba(0,0,0,.2)', border: '1px solid rgba(0,0,0,.1)', padding: { xs: '4px', sm: '10px' }, "&:disabled": { opacity: .5 } }}><FaMinus color='var(--primary-clr)' fontSize={20} />

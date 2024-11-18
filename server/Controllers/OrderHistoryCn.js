@@ -1,87 +1,100 @@
-// import catchAsync from "../Utils/catchAsync.js";
-// import HandleError from "../Utils/handleError.js";
-// import jwt from "jsonwebtoken";
-// import Product from "../Models/ProductMd.js";
-// import OrderHistory from "../Models/OrderHistoryMd.js";
-// import User from "../Models/UserMd.js";
+import catchAsync from "../Utils/catchAsync.js";
+import HandleError from "../Utils/handleError.js";
+import jwt from "jsonwebtoken";
+import Product from "../Models/ProductMd.js";
+import User from "../Models/UserMd.js";
+import OrderHistory from "../Models/OrderHistoryMd.js";
 // import ApiFeatures from "../Utils/apiFeatures.js";
 
 
-// export const checkCartItems = catchAsync(async (req, res, next) => {
-//   const { id: userId } = jwt.verify(req.headers.authorization.split(" ")[1], process.env.JWT_SECRET);
-//   const user = await User.findById(userId);
-//   if (!user?.cart?.items?.length >= 0 || user?.cart?.totalPrice <= 0) {
-//     return next(new HandleError("cart invalid", 400));
-//   }
-//   let change = false;
-//   let items = user?.cart?.items;
-//   let totalPrice = user?.cart?.totalPrice;
-//   let newTotalPrice = 0;
-//   let newItems = [];
-//   for (let item of items) {
-//     const product = await Product.findById(item.productId);
-//     if (product.quantity == 0) {
-//       change = true;
-//       break;
-//     } else if (product.quantity < item.quantity) {
-//       item.quantity = product.quantity;
-//       change = true;
-//     }
-//     newTotalPrice += product.finalPrice * item.quantity;
-//     newItems.push(item);
-//   }
-//   if (totalPrice != newTotalPrice) {
-//     change = true;
-//   }
-//   if (change) {
-//     user.cart.items = newItems;
-//     user.cart.totalPrice = newTotalPrice;
-//     await user.save();
-//     return res.status(400).json({
-//       message: "سبد خريدت به روز شد.",
-//       success: false,
-//       data: {
-//         cart: {
-//           items: newItems,
-//           totalPrice: newTotalPrice,
-//         },
-//         change
-//       },
-//     });
-//   }
-// });
+ export const checkCartItems = catchAsync(async (req, res, next) => {
+   const { id: userId } = jwt.verify(req?.headers?.authorization?.split(" ")[1], process.env.JWT_SECRET);
+   const user = await User.findById(userId).populate('cart.items.productId');
+   if (!(user?.cart?.items?.length >= 0) || user?.cart?.totalPrice <= 0) {
+     return next(new HandleError("cart invalid", 400));
+   }
+   let change = false;
+   let items = user?.cart?.items;
+   let totalPrice = user?.cart?.totalPrice;
+   let newTotalPrice = 0;
+   let newItems = [];
+   for (let item of items) {
+     const product = await Product.findById(item.productId)
+     if (product.quantity == 0) {
+       change = true;
+       break;
+     } else if (product.quantity < item.quantity) {
+       item.quantity = product.quantity;
+       change = true;
+     }
+     newTotalPrice += product.finalPrice * item.quantity;
+     newItems.push(item);
+   }
+   if (totalPrice != newTotalPrice) {
+     change = true;
+   }
+   if (change) {
+     user.cart.items = newItems;
+     user.cart.totalPrice = newTotalPrice;
+     await user.save();
+     return res.status(200).json({
+       message:change && "سبد خريد به روز شد.",
+       success: false,
+       data: {
+         cart: user?.cart,
+         change
+       },
+     });
+    }else{
+     return res.status(200).json({
+        message: "no changes",
+        success: true,
+        data: {
+          change
+        },
+      });   
+    }
+    
+ }
+);
 
 
-// export const payment = catchAsync(async (req, res, next) => {
-//   const { addressId = null, trackingCode = null } = req.body;
-//   const { id: userId } = jwt.verify(req.headers.authorization.split(" ")[1], process.env.JWT_SECRET);
-//   if (!addressId || !trackingCode) {
-//     return next(new HandleError("address required", 400));
-//   }
-//   const user = await User.findById(userId)
-//   const items = user.cart.items
-//   for (let item of items) {
-//     await Product.findByIdAndUpdate(item.productId, { $inc: { quantity: -item?.quantity } });
-//   }
-//   const orderData = {
-//     userId,
-//     addressId,
-//     totalPrice: user.cart.totalPrice,
-//     items,
-//     trackingCode
-//   };
+export const payment = catchAsync(async (req, res, next) => {
+  const { address , trackingCode = null } = req.body;
+  const { id: userId } = jwt.verify(req.headers.authorization.split(" ")[1], process.env.JWT_SECRET);
+  if (address=={} || !trackingCode) {
+    return next(new HandleError("آدرس و كد رهگيري را وارد كنيد.", 400));
+  }
+  const user = await User.findById(userId)
+  const items = user.cart.items
 
-//   const order = await OrderHistory.create(orderData);
-//   user.cart = { totalPrice: 0, items: [] };
-//   await user.save();
-//   return res.status(201).json({
-//     message: ".سفارش شما ثبت شد",
-//     data: {
-//       order,
-//     },
-//     success: true,
-//   });
-// })
+  for (let item of items) {
+    await Product.findByIdAndUpdate(item.productId, { $inc: { quantity: -item?.quantity } });
+    if(!user.boughtProduct.includes(item.productId)){
+        user.boughtProduct.push(item.productId);
+    }
+  }
+if (items<=0 ) {
+    return next(new HandleError("سبد خريد شما خالي است!", 400));
+  }
+  const order = await OrderHistory.create({
+    userId,
+    address,
+    totalPrice: user.cart.totalPrice,
+    items,
+    trackingCode
+});
+
+  user.cart = { totalPrice: 0, items: [] };
+  await user.save();
+  return res.status(201).json({
+    message: ".سفارش شما ثبت شد",
+    data: {
+      order,
+    },
+    success: true,
+  });
+})
 
 
 // export const getAll = catchAsync(async (req, res, next) => {

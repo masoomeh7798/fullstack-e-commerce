@@ -12,6 +12,7 @@ import Auth from './Pages/Auth';
 import { useSelector } from 'react-redux';
 import NotFound from './Pages/NotFound';
 import { Toaster } from 'react-hot-toast';
+import Payment from './Pages/Payment';
 
 // start default theme 
 export default function App() {
@@ -20,6 +21,15 @@ export default function App() {
   const showNavAndFooter = location.pathname != '/auth'
 
   const theme = createTheme({
+    "textField": {
+      width: '90%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      color: 'white',
+      paddingBottom: 0,
+      marginTop: 0,
+      fontWeight: 500
+  },
     "breakpoints": {
       "keys": ["xs", "xxs", "sm", "md", "lg", "xl"],
       "values": {
@@ -189,6 +199,7 @@ export default function App() {
         <Route exact path='/' element={<Home />} />
         <Route path='/products/:id/:category' element={<Products />} />
         <Route path='/product-details/:id/:name' element={<ProductDetails />} />
+        <Route path='/Payment' element={<Payment/>} />
         <Route path='/cart' element={token?<Cart />:<Navigate to='/auth' />} />
         <Route path='/auth' element={token ? <Navigate to='/' /> : <Auth />} />
         <Route path='*' element={<NotFound/>} />
