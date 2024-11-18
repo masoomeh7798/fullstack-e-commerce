@@ -4,12 +4,15 @@ import useFormFields from '../../Utils/useFormFields'
 import { useDispatch, useSelector } from 'react-redux'
 import notify from '../../Utils/notify'
 import { changedQuantity, setIsRemoved } from '../../Store/Slices/CartSlice'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function Payment() {
     const { token, user } = useSelector(state => state.auth)
     const { dynamicQunatityD,isRemoved } = useSelector(state => state.cart)
     const dispatch = useDispatch()
+    const navigate=useNavigate()
+
     const handleChangedQuantity = () => {
         dispatch(changedQuantity(!dynamicQunatityD))
     };
@@ -53,6 +56,9 @@ export default function Payment() {
                 notify('success',data?.message)
                 handleChangedQuantity()
                 handleRemove()
+                setTimeout(() => {
+                    navigate('/')
+                }, 3000);
             }else{
                 notify('error',data?.message)
             }
@@ -60,7 +66,6 @@ export default function Payment() {
             console.log(error);
         }
     }
-    console.log("1", fields);
 
     const handleBlur = (e) => {
         const { name } = e.target;

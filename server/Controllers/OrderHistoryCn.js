@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import Product from "../Models/ProductMd.js";
 import User from "../Models/UserMd.js";
 import OrderHistory from "../Models/OrderHistoryMd.js";
-// import ApiFeatures from "../Utils/apiFeatures.js";
+import ApiFeatures from "../Utils/apiFeatures.js";
 
 
  export const checkCartItems = catchAsync(async (req, res, next) => {
@@ -97,62 +97,62 @@ if (items<=0 ) {
 })
 
 
-// export const getAll = catchAsync(async (req, res, next) => {
-//   const { id: userId, role } = jwt.verify(
-//     req.headers.authorization.split(" ")[1],
-//     process.env.JWT_SECRET
-//   );
-//   let queryString;
-//   if (role == 'admin') {
-//     queryString = req?.query
-//   } else {
-//     queryString = { ...req.query, filters: { ...req?.query?.filters, userId } }
+export const getAll = catchAsync(async (req, res, next) => {
+  const { id: userId, role } = jwt.verify(
+    req.headers.authorization.split(" ")[1],
+    process.env.JWT_SECRET
+  );
+  let queryString;
+  if (role == 'admin') {
+    queryString = req?.query
+  } else {
+    queryString = { ...req.query, filters: { ...req?.query?.filters, userId } }
 
-//   }
-//   const features = new ApiFeatures(OrderHistory, queryString)
-//     .filters()
-//     .sort()
-//     .paginate()
-//     .limitFields()
+  }
+  const features = new ApiFeatures(OrderHistory, queryString)
+    .filters()
+    .sort()
+    .paginate()
+    .limitFields()
 
-//   const order = await features.model
-//   const count = await OrderHistory.countDocuments(queryString?.filters)
-//   return res.status(200).json({
-//     success: true,
-//     data: { order },
-//     count
-//   })
-// })
+  const order = await features.model
+  const count = await OrderHistory.countDocuments(queryString?.filters)
+  return res.status(200).json({
+    success: true,
+    data: { order },
+    count
+  })
+})
 
 
-// export const getOne = catchAsync(async (req, res, next) => {
-//   const { id: userId, role } = jwt.verify(
-//     req.headers.authorization.split(" ")[1],
-//     process.env.JWT_SECRET
-//   );
-//   const { id } = req.params
-//   let findQuery;
-//   if (role == 'admin') {
-//     findQuery = { _id: id }
-//   } else {
-//     findQuery = { _id: id, userId }
-//   }
-//   const order = await OrderHistory.findOne(findQuery).populate({path: 'items.productId'}).populate({ path: 'addressId' })
+export const getOne = catchAsync(async (req, res, next) => {
+  const { id: userId, role } = jwt.verify(
+    req.headers.authorization.split(" ")[1],
+    process.env.JWT_SECRET
+  );
+  const { id } = req.params
+  let findQuery;
+  if (role == 'admin') {
+    findQuery = { _id: id }
+  } else {
+    findQuery = { _id: id, userId }
+  }
+  const order = await OrderHistory.findOne(findQuery).populate({path: 'items.productId'})
 
-//   return res.status(200).json({
-//     success: true,
-//     data: { order },
-//     count
-//   })
-// })
+  return res.status(200).json({
+    success: true,
+    data: { order },
+    count
+  })
+})
 
-// export const update = catchAsync(async (req, res, next) => {
-//   const { id } = req.params
-//   const order = await OrderHistory.findByIdAndUpdate(id, req.body, { new: true })
-//   return res.status(200).json({
-//     success: true,
-//     data: { order },
-//     count
-//   })
-// })
+export const update = catchAsync(async (req, res, next) => {
+  const { id } = req.params
+  const order = await OrderHistory.findByIdAndUpdate(id, req.body, { new: true })
+  return res.status(200).json({
+    success: true,
+    data: { order },
+    count
+  })
+})
 
