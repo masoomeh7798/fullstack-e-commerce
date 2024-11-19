@@ -15,14 +15,15 @@ import './style.css'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCheckFavorite } from '../../../../Store/Slices/FavoriteSlice';
+import notify from "../../../../Utils/notify"
 
 
 export default function ProductCard({ img, discount, finalPrice, price, name, description, brand, rating, variants, dynamicWidth, id }) {
     const [open, setOpen] = useState(false);
-    const { token ,user} = useSelector(state => state.auth)
+    const { token, user } = useSelector(state => state.auth)
     const [isFavorite, setIsFavorite] = useState(false);
-    const {checkFavorite}=useSelector(state=>state.favorite)
-    const dispatch=useDispatch()
+    const { checkFavorite } = useSelector(state => state.favorite)
+    const dispatch = useDispatch()
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -30,12 +31,12 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
         setOpen(false);
     };
 
-    const handleCheckFavorite=()=>{
-       dispatch(setCheckFavorite(!checkFavorite))
+    const handleCheckFavorite = () => {
+        dispatch(setCheckFavorite(!checkFavorite))
     }
 
     useEffect(() => {
-        (async()=>{
+        (async () => {
             try {
                 const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
                     method: "GET",
@@ -44,30 +45,37 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                     }
                 });
                 const data = await res.json();
-                setIsFavorite(data?.data?.user?.favoriteProductIds.includes(id) && true)
+                if(res.ok){
+
+                    setIsFavorite(data?.data?.user?.favoriteProductIds.includes(id) && true)
+                }
             } catch (error) {
-                console.log(error);
-            }  
+                // console.log(error);
+            }
         })()
-       
+
     }, [checkFavorite]);
 
-    const handleCheckIsFavorite=async()=>{
+    const handleCheckIsFavorite = async () => {
         try {
             const res = await fetch(import.meta.env.VITE_BASE_API + `product/favorite/${id}`, {
                 method: "POST",
                 headers: {
                     authorization: `Bearer ${token}`,
-                    "content-type":"application/json"
+                    "content-type": "application/json"
                 },
-                body:JSON.stringify({isFavorite})
-                
+                body: JSON.stringify({ isFavorite })
+
             });
             const data = await res.json();
-            setIsFavorite(data?.isFavorite)
-            handleCheckFavorite()
+            if (data?.success) {
+                setIsFavorite(data?.isFavorite)
+                handleCheckFavorite()
+            } else {
+                notify('error', 'بايد ابتدا وارد سايت شويد.')
+            }
         } catch (error) {
-            console.log(error);
+            notify('error', 'بايد ابتدا وارد سايت شويد.')
         }
     }
 
@@ -82,8 +90,9 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                 },
             });
             const data = await res.json();
+            
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -131,12 +140,12 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                 </Box>
 
                 <Typography sx={{ position: 'absolute', backgroundColor: 'var(--secondary-clr)', color: 'var(--text-clr)', borderRadius: '4px', top: '10px', left: '10px', padding: '4px 8px' }} variant='body2' >{discount}%</Typography>
-                <Stack className='screen-heart' sx={{ position: 'absolute', top: '10px', right: '0px', '& button:hover': { bgcolor: 'var(--secondary-clr) !important', color: 'var(--text-clr) !important' }, '& button:last-child': { bgcolor: 'var(--text-clr)',color:'var(--secondary-clr)', transition: 'all .3s' }, visibility: 'hidden', opacity: '0', transition: ' all .5s ease-in-out' }} gap={1}>
+                <Stack className='screen-heart' sx={{ position: 'absolute', top: '10px', right: '0px', '& button:hover': { bgcolor: 'var(--secondary-clr) !important', color: 'var(--text-clr) !important' }, '& button:last-child': { bgcolor: 'var(--text-clr)', color: 'var(--secondary-clr)', transition: 'all .3s' }, visibility: 'hidden', opacity: '0', transition: ' all .5s ease-in-out' }} gap={1}>
                     <IconButton sx={{
-                        bgcolor:isFavorite ? 'var(--secondary-clr) ':'var(--text-clr)',
-                        color:isFavorite ? 'var(--text-clr) ': 'var(--secondary-clr) '
+                        bgcolor: isFavorite ? 'var(--secondary-clr) ' : 'var(--text-clr)',
+                        color: isFavorite ? 'var(--text-clr) ' : 'var(--secondary-clr) '
                     }}
-                    onClick={handleCheckIsFavorite}
+                        onClick={handleCheckIsFavorite}
                     ><FaRegHeart /></IconButton>
                     <IconButton sx={{ display: { xs: 'none', sm: 'inline-flex' } }} onClick={handleClickOpen}><BsArrowsFullscreen /></IconButton>
                 </Stack>
