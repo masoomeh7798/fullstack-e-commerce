@@ -1,22 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ProductSlider from '../ProductSlider';
 import { Box, Rating, Stack, Typography } from '@mui/material';
-
 import { IoMdCart } from "react-icons/io";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { MdCompareArrows } from "react-icons/md";
 import QuantityBox from '../../../../Components/QuantityBox'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 import './style.css'
-import Variants from '../../../../Components/Variants';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCheckFavorite } from '../../../../Store/Slices/FavoriteSlice';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -30,6 +28,51 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function ProductModal({ handleClose, open,img, discount, finalPrice, price, name, description, brand, rating, variants,id}) {
     const [addProductBtns, setAddProductBtns] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
+    const { token ,user} = useSelector(state => state.auth)
+    const {checkFavorite}=useSelector(state=>state.favorite)
+    const dispatch=useDispatch()
+
+    const handleCheckFavorite=()=>{
+        dispatch(setCheckFavorite(!checkFavorite))
+     }
+    
+    useEffect(() => {
+        (async()=>{
+            try {
+                const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
+                    method: "GET",
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
+                setIsFavorite(data?.data?.user?.favoriteProductIds.includes(id) && true)
+            } catch (error) {
+                console.log(error);
+            }  
+        })()
+       
+    }, [checkFavorite]);
+
+    const handleCheckIsFavorite=async()=>{
+        try {
+            const res = await fetch(import.meta.env.VITE_BASE_API + `product/favorite/${id}`, {
+                method: "POST",
+                headers: {
+                    authorization: `Bearer ${token}`,
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({isFavorite})
+
+            });
+            const data = await res.json();
+            setIsFavorite(data?.isFavorite)
+            handleCheckFavorite()
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
    
@@ -106,8 +149,11 @@ export default function ProductModal({ handleClose, open,img, discount, finalPri
                                    
                                 </Stack>
                                 <Stack direction={'row'} sx={{ width: '100%' }} justifyContent={{ xs: "center", md: 'start' }} alignItems={'center'} gap={2} mt={'20px'}>
-                                    <Button sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px', bgcolor: "transparent", color: 'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor: "var(--text-clr)" } }} startIcon={<IoMdHeartEmpty />}><Typography fontSize={'12px'} fontWeight={400} mr={1}>دوستش دارم</Typography> </Button>
-                                    {/* <Button sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px', bgcolor: "transparent", color: 'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor: "var(--text-clr)" } }} startIcon={<MdCompareArrows />}><Typography fontSize={'12px'} fontWeight={400} mr={1}>مقايسه</Typography> </Button> */}
+                                    <Button
+                                    onClick={handleCheckIsFavorite}
+                                    sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px',
+                                     bgcolor:isFavorite? "var(--secondary-clr)": "transparent", color:isFavorite?'var(--text-clr)':'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor:isFavorite?"var(--secondary-clr)" :"var(--text-clr)" } }} startIcon={<IoMdHeartEmpty />}><Typography fontSize={'12px'} fontWeight={400} mr={1}>دوستش دارم</Typography> </Button>
+                                   
                                 </Stack>
                             </Stack>
                             {/* end product info */}

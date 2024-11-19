@@ -6,30 +6,66 @@ import { Box, Rating, Stack, Typography } from '@mui/material';
 import ProductSlider from '../../Home/Products/ProductSlider'
 import { IoMdCart } from "react-icons/io";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { MdCompareArrows } from "react-icons/md";
 import QuantityBox from '../../../Components/QuantityBox'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
-import Variants from '../../../Components/Variants';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCheckFavorite } from '../../../Store/Slices/FavoriteSlice';
 
 
 export default function ProductDetailsTop({ productId }) {
     const [product, setProduct] = useState({});
     const [addProductBtns, setAddProductBtns] = useState(false);
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch(import.meta.env.VITE_BASE_API + `product/${productId}`)
-                const data = await res.json()
-                setProduct(data?.data?.product)
-                if (!res.ok) {
+    const [isFavorite, setIsFavorite] = useState(false);
+    const { token ,user} = useSelector(state => state.auth)
+    const {checkFavorite}=useSelector(state=>state.favorite)
+    const dispatch=useDispatch()
 
-                }
+    const handleCheckFavorite=()=>{
+        dispatch(setCheckFavorite(!checkFavorite))
+     }
+    
+    useEffect(() => {
+        (async()=>{
+            try {
+                const resC = await fetch(import.meta.env.VITE_BASE_API + `product/${productId}`)
+                const dataC = await resC.json()
+                setProduct(dataC?.data?.product)
+
+                const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
+                    method: "GET",
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
+                setIsFavorite(data?.data?.user?.favoriteProductIds.includes(productId) && true)
             } catch (error) {
                 console.log(error);
-            }
+            }  
         })()
+       
+    }, [checkFavorite]);
 
-    }, []);
+    const handleCheckIsFavorite=async()=>{
+        try {
+            const res = await fetch(import.meta.env.VITE_BASE_API + `product/favorite/${productId}`, {
+                method: "POST",
+                headers: {
+                    authorization: `Bearer ${token}`,
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({isFavorite})
+
+            });
+            const data = await res.json();
+            setIsFavorite(data?.isFavorite)
+            handleCheckFavorite()
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     return (
         <Box
             boxShadow={'0 0 10px 2px rgba(0,0,0,.2)'}
@@ -90,8 +126,10 @@ export default function ProductDetailsTop({ productId }) {
                                 sx={{ '& svg': { fontSize: "24px !important" }, borderRadius: '24px', bgcolor: "var(--third-clr)", color: 'var(--primary-clr)', padding: '8px 5px 8px 16px ', transition: "all .5s", '&:hover': { bgcolor: "var(--secondary-clr)", color: 'var(--text-clr)' } }} startIcon={<IoMdCart />}><Typography fontSize={{ xs: '12px', xxs: '14px', sm: '16px' }} fontWeight={500} mr={1}>افزودن به سبد خريد</Typography> </Button>}
                             </Stack>
                             <Stack direction={'row'} sx={{ width: '100%' }} justifyContent={{ xs: "center", md: 'start' }} alignItems={'center'} gap={2} mt={'20px'}>
-                                <Button sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px', bgcolor: "transparent", color: 'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor: "var(--text-clr)" } }} startIcon={<IoMdHeartEmpty />}><Typography fontSize={'12px'} fontWeight={400} mr={1} sx={{ textWrap: 'nowrap' }}>دوستش دارم</Typography> </Button>
-                                {/* <Button sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px', bgcolor: "transparent", color: 'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor: "var(--text-clr)" } }} startIcon={<MdCompareArrows />}><Typography fontSize={'12px'} fontWeight={400} mr={1}>مقايسه</Typography> </Button> */}
+                            <Button
+                                    onClick={handleCheckIsFavorite}
+                                    sx={{ '& svg': { fontSize: "16px !important" }, borderRadius: '24px',
+                                     bgcolor:isFavorite? "var(--secondary-clr)": "transparent", color:isFavorite?'var(--text-clr)':'var(--primary-clr)', py: '4px', paddingLeft: '16px !important', transition: "all .5s", border: '1px solid rgba(0,0,0,.1)', '&:hover': { bgcolor:isFavorite?"var(--secondary-clr)" :"var(--text-clr)" } }} startIcon={<IoMdHeartEmpty />}><Typography fontSize={'12px'} fontWeight={400} mr={1}>دوستش دارم</Typography> </Button>
                             </Stack>
                         </Stack>
                         {/* end product info */}

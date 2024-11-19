@@ -1,6 +1,7 @@
 import authSliceReducer from "./Slices/AuthSlice";
 import filtersSliceReducer from "./Slices/FiltersSlice";
 import cartSliceReducer from "./Slices/CartSlice";
+import favoriteSliceReducer from "./Slices/FavoriteSlice"
 import { configureStore } from "@reduxjs/toolkit";
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -19,6 +20,7 @@ const store = configureStore({
         auth: persistedAuthReducer,
         cart: cartSliceReducer,
         filters: filtersSliceReducer,
+        favorite:favoriteSliceReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

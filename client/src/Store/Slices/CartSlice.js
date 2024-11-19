@@ -5,7 +5,7 @@ const initialState={
     dynamicQunatityD:true,
 }
 const cartSlice=createSlice({
-    name:'authSlice',
+    name:'cartSlice',
     initialState,
     reducers:{
         setIsRemoved(state,action){
