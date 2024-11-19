@@ -36,25 +36,30 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
     }
 
     useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
-                    method: "GET",
-                    headers: {
-                        authorization: `Bearer ${token}`
-                    }
-                });
-                const data = await res.json();
-                if(res.ok){
+        if (user && token) {
+            (async () => {
+                try {
+                    const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
+                        method: "GET",
+                        headers: {
+                            authorization: `Bearer ${token}`
+                        }
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
 
-                    setIsFavorite(data?.data?.user?.favoriteProductIds.includes(id) && true)
+                        setIsFavorite(data?.data?.user?.favoriteProductIds.includes(id) && true)
+                    }
+                } catch (error) {
+                    // console.log(error);
                 }
-            } catch (error) {
-                // console.log(error);
-            }
-        })()
+            })()
+        } else {
+            return
+        }
 
     }, [checkFavorite]);
+
 
     const handleCheckIsFavorite = async () => {
         try {
@@ -90,7 +95,7 @@ export default function ProductCard({ img, discount, finalPrice, price, name, de
                 },
             });
             const data = await res.json();
-            
+
         } catch (error) {
             // console.log(error);
         }

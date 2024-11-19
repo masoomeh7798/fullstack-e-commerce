@@ -6,16 +6,24 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge, Box, Button, Stack, Typography } from '@mui/material';
 import { HiOutlineMenu } from "react-icons/hi";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Person } from '@mui/icons-material';
 import notify from "../../../../Utils/notify"
-
+import { IoMdLogOut } from "react-icons/io";
+import {logout} from "../../../../Store/Slices/AuthSlice"
 
 export default function TopNav() {
   const { token, user } = useSelector(state => state.auth)
   const { isAdded, isRemoved } = useSelector(state => state.cart)
   const [cartItems, setCartItems] = useState(0);
   const [searchData, setSearchData] = useState();
+  const [isLogout, setIsLogout] = useState(false);
+
+  const dispatch=useDispatch()
+
+  const handleLogout=()=>{
+    isLogout && dispatch(logout())
+  }
 
   const handleSearch = async (e) => {
     console.log(e?.target?.value?.trim());
@@ -24,11 +32,11 @@ export default function TopNav() {
         method: 'POST',
         headers: {
           "content-type": "application/json"
-        },      
-          body: JSON.stringify({ query: e?.target?.value?.trim()}) 
+        },
+        body: JSON.stringify({ query: e?.target?.value?.trim() })
       })
       const data = await res.json()
-      setSearchData(data)     
+      setSearchData(data)
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -37,21 +45,24 @@ export default function TopNav() {
 
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
-          "method": "GET",
-          headers: {
-            authorization: `Bearer ${token}`
-          }
-        })
-        const data = await res.json()
-        setCartItems(data?.data?.user?.cart?.items?.length)
-      } catch (error) {
-        console.log(error);
-      }
-    })()
-
+    if (token && user) {
+      (async () => {
+        try {
+          const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
+            "method": "GET",
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          })
+          const data = await res.json()
+          setCartItems(data?.data?.user?.cart?.items?.length)
+        } catch (error) {
+          console.log(error);
+        }
+      })()
+    } else {
+      return
+    }
   }, [isRemoved, isAdded]);
 
 
@@ -78,16 +89,16 @@ export default function TopNav() {
           inputProps={{ 'aria-label': 'search' }}
         />
 
-        <IconButton onClick={()=>{if(!searchData.success){notify('error','محصول يافت نشد :(')}}} sx={{ p: '10px' }} type="button" aria-label="search">
+        <IconButton onClick={() => { if (!searchData.success) { notify('error', 'محصول يافت نشد :(') } }} sx={{ p: '10px' }} type="button" aria-label="search">
           <SearchIcon fontSize='medium' color='var(--primary-clr)' />
         </IconButton>
         {searchData?.success &&
           <Stack
-          className='search-dropdown'
-          maxHeight={'300px'}
+            className='search-dropdown'
+            maxHeight={'300px'}
             direction={'row'}
             alignItems={'start'}
-            gap={{sm:3,md:4,lg:5}}
+            gap={{ sm: 3, md: 4, lg: 5 }}
             position={'absolute'}
             top={'110%'}
             right={0}
@@ -104,7 +115,7 @@ export default function TopNav() {
                   color: 'var(--secondary-clr)'
                 }
               },
-              overflowY:'scroll'
+              overflowY: 'scroll'
             }}
           >
             {searchData?.data?.product.length != 0 &&
@@ -117,7 +128,7 @@ export default function TopNav() {
                   }}
                 >در محصولات:</Typography>
                 {searchData?.data?.product?.map((e, index) => (
-                  <Link to={`/product-details/${e?._id}/${e?.name?.replaceAll(' ','-')}`} target='_blank' key={index}
+                  <Link to={`/product-details/${e?._id}/${e?.name?.replaceAll(' ', '-')}`} target='_blank' key={index}
                     style={{
                       lineHeight: '32px'
                     }}
@@ -131,12 +142,12 @@ export default function TopNav() {
                   fontWeight={500}
                   color='secondary'
                   sx={{
-                    textWrap:'nowrap',
+                    textWrap: 'nowrap',
                     opacity: .8
                   }}
                 >در دسته بندي ها:</Typography>
                 {searchData?.data?.category?.map((e, index) => (
-                  <Link to={`/products/${e?._id}/${e?.title?.replaceAll(' ','-')}`} target='_blank' key={index}
+                  <Link to={`/products/${e?._id}/${e?.title?.replaceAll(' ', '-')}`} target='_blank' key={index}
                     style={{
                       lineHeight: '32px'
                     }}
@@ -169,15 +180,43 @@ export default function TopNav() {
       <Stack flex={1} justifyContent={'end'} gap={{ xs: 1, sm: 2, md: 4 }} alignItems={'center'} direction={'row'}>
         {token ? (
           <IconButton
+            onMouseEnter={() => setIsLogout(true)}
+            onMouseLeave={() => setIsLogout(false)}
+            onClick={handleLogout}
             sx={{
-              p: { xs: '8px', md: '13px' },
+              width: { xs: '40px', md: '50px' },
+               height: { xs: '40px', md: "50px" },
+              transition: 'all .5s',
               boxShadow: 'inset 0 0 5px 2px rgba(0,0,0,.2)',
               display: { xs: 'none', sm: 'inline-flex' },
               '&:hover': {
-                bgcolor: 'var(--secondary-clr-light)'
+                bgcolor: 'var(--secondary-clr-light)',
+              },
+              '& svg.logout-svg': {
+                fontWeight: 800,
+                transform: 'scale(1.2)'
               }
             }}
-          ><Person /></IconButton>
+          >
+            <Person
+              style={{
+                position: 'absolute',
+                transition: 'opacity 0.5s ',
+                opacity: isLogout ? 0 : 1,
+                width: '60%',
+                height: '60%'
+              }}
+            />
+            <IoMdLogOut
+              style={{
+                position: 'absolute',
+                transition: 'opacity 0.5s ',
+                opacity: isLogout ? 1 : 0,
+                width: '50%',
+                height: '50%'
+              }}
+              className='logout-svg' />
+          </IconButton>
         ) :
           (<Button href='/auth' sx={{ borderRadius: 2, px: 2, py: 1, bgcolor: 'var(--secondary-clr)', display: { xs: 'none', sm: 'inline-block' }, '&:hover': { bgcolor: 'var(--secondary-clr-dark)' } }}>
             <Typography fontSize={{ xs: '12px', sm: "16px" }} noWrap color='var(--text-clr)' component={'p'}>ورود/ ثبت نام</Typography>
