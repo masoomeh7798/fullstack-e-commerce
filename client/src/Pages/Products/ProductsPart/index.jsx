@@ -178,13 +178,13 @@ export default function ProductsPart() {
         <Stack
           sx={{
             '& > div': {
-              width: { xs: '100%', sm: '47%', md: '30%', xl: '23.5%' },
+              width: { xs: '100%',xxs:'75%' , sm: '47%', md: '30%', xl: '23.5%' },
               mb: '10px'
             }
           }}
           direction={'row'}
           flexWrap={'wrap !important'}
-          justifyContent={{ xs: 'space-between', lg: 'start' }}
+          justifyContent={{ xs: 'center', lg: 'start' }}
           width={'100%'}
           gap={{ sm: '10px', lg: '20px' }}
           mt={'10px'}

@@ -33,7 +33,11 @@ export default function FeaturedCategories() {
 
     return (
 
-        <Stack direction={'column'} gap={2} my={3} sx={{overflowX:'scroll'}}>
+        <Stack direction={'column'} gap={2} my={3} sx={{overflowX:'scroll',
+            '&::-webkit-scrollbar':{
+                display:'none'
+            }
+        }}>
             <Typography fontSize={'1.5em'} fontWeight={400} component={'h3'}>دسته بندی های اصلی</Typography>
             <Stack gap={1} direction={'row'} justifyContent={'space-around'} sx={{ overflowX: 'scroll' ,overflow:'visible'}} >
                 {items}

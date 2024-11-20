@@ -44,10 +44,11 @@ export default function FilterBoxes() {
             display={{xs:'none',sm:'flex'}}
             direction={{ xs: 'row', xl: 'column' }}
             width={{ xs: '100%', xl: '19%' }}
+            justifyContent={{xs:'space-between',xl:'start'}}
         >
             {/* start categories */}
             <Box
-                width={{ xs: '33%', xl: '100% !important' }}
+                width={{ xs: '30%', xl: '100% !important' }}
                 mb={{ xl: 4 }}
             >
                 <Typography
@@ -90,7 +91,7 @@ export default function FilterBoxes() {
 
             {/* start brands */}
             <Box
-                width={{ xs: '33%', xl: '100% !important' }}
+                width={{ xs: '30%', xl: '100% !important' }}
                 mb={{ xl: 4 }}
             >
                 <Typography
@@ -133,7 +134,7 @@ export default function FilterBoxes() {
 
             {/* start price range */}
             <Box
-                width={{ xs: '33%', xl: '100% !important' }}
+                width={{ xs: '30%', xl: '100% !important' }}
                 mb={2}
             >
                 <Typography

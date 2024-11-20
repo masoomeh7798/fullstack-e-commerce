@@ -1,7 +1,7 @@
 .isCatOpen {
     opacity: 1 !important;
     visibility: visible !important;
-    top: 118% !important;
+    top: 27.8vh !important;
   }
   
 .catTabNav .MuiTabScrollButton-horizontal{
@@ -15,3 +15,7 @@
 .catTabNav .MuiTabs-flexContainer{
     gap:8px;
 }
+
+.catTabNav::-webkit-scrollbar {
+    display: none;
+  }

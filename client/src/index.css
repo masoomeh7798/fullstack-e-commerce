@@ -14,9 +14,21 @@ body{
   overflow-x: hidden !important;
 }
 
+
+
 ::-webkit-scrollbar {
-  display: none;
+  width: 8px; 
 }
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-clr-dark);
+  border-radius: 10px; 
+}
+
 
 :root {
   --primary-clr: #2A363B;
