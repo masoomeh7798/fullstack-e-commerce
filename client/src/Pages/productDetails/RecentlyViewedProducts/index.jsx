@@ -18,9 +18,10 @@ export default function RecentlyViewedProducts() {
     const {user,token}=useSelector(state=>state.auth)
    
     useEffect(() => {
+        if (user && token) {
         (async () => {
             try {
-                const res = await fetch(import.meta.env.VITE_BASE_API+`user/${user.id}`,{
+                const res = await fetch(import.meta.env.VITE_BASE_API+`user/${user?.id}`,{
                     method: 'GET',
                     headers:{
                         authorization:`Bearer ${token}`
@@ -31,7 +32,7 @@ export default function RecentlyViewedProducts() {
             } catch (error) {
                 console.log(error);
             }
-        })()
+        })()}
 
     }, []);
    

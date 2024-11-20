@@ -51,6 +51,9 @@ export const create=catchAsync(async(req,res,next)=>{
     let isCustomer=false;
         const {id}=jwt.verify(req?.headers?.authorization.split(' ')[1],process.env.JWT_SECRET)
         const user=await User.findById(id)
+        if(!req.body.content.trim()){
+            return next(new HandleError('چيزي ننوشتي :(',400))
+        }
         if(req.body?.rating&& user.boughtProduct.includes(productId)){
             isCustomer=true
             comments=await Comment.create({productId,userId:id,isCustomer,...req.body})

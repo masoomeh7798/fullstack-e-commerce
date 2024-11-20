@@ -46,7 +46,7 @@
   },
   "rating": 4.5,
   "ratingCount": 2,
-  "quantity": 10,
+  "quantity": 2,
   "price": 60000,
   "finalPrice": 54000,
   "discount": 10,
@@ -54,7 +54,7 @@
     "$date": "2024-11-12T14:25:31.525Z"
   },
   "updatedAt": {
-    "$date": "2024-11-12T14:25:31.525Z"
+    "$date": "2024-11-18T22:19:18.184Z"
   },
   "__v": 0
 },
@@ -269,9 +269,9 @@
   "brandId": {
     "$oid": "67336189bea1cee46976997e"
   },
-  "rating": 3.1,
-  "ratingCount": 15,
-  "quantity": 5,
+  "rating": 3.13,
+  "ratingCount": 16,
+  "quantity": 4,
   "price": 90000,
   "finalPrice": 56000,
   "discount": 30,
@@ -279,7 +279,7 @@
     "$date": "2024-11-12T14:41:40.017Z"
   },
   "updatedAt": {
-    "$date": "2024-11-13T23:45:22.120Z"
+    "$date": "2024-11-20T17:28:15.735Z"
   },
   "__v": 0
 },
@@ -385,7 +385,7 @@
   },
   "rating": 3.5,
   "ratingCount": 23,
-  "quantity": 54,
+  "quantity": 35,
   "price": 167000,
   "finalPrice": 167000,
   "discount": 0,
@@ -393,7 +393,7 @@
     "$date": "2024-11-12T14:49:48.315Z"
   },
   "updatedAt": {
-    "$date": "2024-11-12T14:49:48.315Z"
+    "$date": "2024-11-20T16:55:16.021Z"
   },
   "__v": 0
 },
@@ -497,9 +497,9 @@
   "brandId": {
     "$oid": "67336189bea1cee46976997e"
   },
-  "rating": 2.02,
-  "ratingCount": 21,
-  "quantity": 54,
+  "rating": 2.06,
+  "ratingCount": 22,
+  "quantity": 52,
   "price": 155000,
   "finalPrice": 120000,
   "discount": 13,
@@ -507,7 +507,7 @@
     "$date": "2024-11-12T14:58:50.679Z"
   },
   "updatedAt": {
-    "$date": "2024-11-15T17:56:49.588Z"
+    "$date": "2024-11-20T17:26:42.475Z"
   },
   "__v": 0
 },

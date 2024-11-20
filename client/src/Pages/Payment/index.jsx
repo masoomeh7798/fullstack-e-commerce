@@ -7,6 +7,7 @@ import { changedQuantity, setIsRemoved } from '../../Store/Slices/CartSlice'
 import { useNavigate } from 'react-router-dom'
 
 
+
 export default function Payment() {
     const { token, user } = useSelector(state => state.auth)
     const { dynamicQunatityD,isRemoved } = useSelector(state => state.cart)

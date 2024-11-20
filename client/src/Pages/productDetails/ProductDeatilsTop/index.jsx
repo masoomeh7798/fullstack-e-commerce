@@ -32,6 +32,7 @@ export default function ProductDetailsTop({ productId }) {
                 const dataC = await resC.json()
                 setProduct(dataC?.data?.product)
 
+                if (user && token) {
                 const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
                     method: "GET",
                     headers: {
@@ -42,7 +43,7 @@ export default function ProductDetailsTop({ productId }) {
                 if(res.ok){
 
                     setIsFavorite(data?.data?.user?.favoriteProductIds.includes(productId) && true)
-                }
+                }}
             } catch (error) {
                 // console.log(error);
             }
@@ -51,6 +52,7 @@ export default function ProductDetailsTop({ productId }) {
     }, [checkFavorite]);
 
     const handleCheckIsFavorite = async () => {
+         if (user && token) {
         try {
             const res = await fetch(import.meta.env.VITE_BASE_API + `product/favorite/${productId}`, {
                 method: "POST",
@@ -69,7 +71,9 @@ export default function ProductDetailsTop({ productId }) {
                 notify('error', 'بايد ابتدا وارد سايت شويد.')
             }
         } catch (error) {
+        }}else{
             notify('error', 'بايد ابتدا وارد سايت شويد.')
+
         }
     }
 

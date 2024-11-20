@@ -39,6 +39,7 @@ export default function ProductModal({ handleClose, open, img, discount, finalPr
     }
 
     useEffect(() => {
+        if (user && token) {
         (async () => {
             try {
                 const res = await fetch(import.meta.env.VITE_BASE_API + `user/${user?.id}`, {
@@ -49,17 +50,17 @@ export default function ProductModal({ handleClose, open, img, discount, finalPr
                 });
                 const data = await res.json();
                 if(res.ok){
-
                     setIsFavorite(data?.data?.user?.favoriteProductIds.includes(id) && true)
                 }
             } catch (error) {
                 // console.log(error);
             }
-        })()
+        })()}
 
     }, [checkFavorite]);
 
     const handleCheckIsFavorite = async () => {
+        if (user && token) {
         try {
             const res = await fetch(import.meta.env.VITE_BASE_API + `product/favorite/${id}`, {
                 method: "POST",
@@ -78,7 +79,8 @@ export default function ProductModal({ handleClose, open, img, discount, finalPr
                 notify('error', 'بايد ابتدا وارد سايت شويد.')
             }
         } catch (error) {
-            notify('error', 'بايد ابتدا وارد سايت شويد.')
+        }}else{
+            notify('error', 'بايد ابتدا وارد سايت شويد.')  
         }
     }
 

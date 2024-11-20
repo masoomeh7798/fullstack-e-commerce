@@ -14,6 +14,7 @@ export default function Comments({ productId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (user && token) {
     try {
       const res = await fetch(import.meta.env.VITE_BASE_API + `comment/${productId}`, {
         method: "POST",
@@ -34,6 +35,8 @@ export default function Comments({ productId }) {
       }
     } catch (error) {
       console.log(error);
+    }}else{
+      notify("error", "لطفا وارد حساب خود شوید")
     }
   }
 

@@ -220,7 +220,7 @@
   },
   "title": "ساعت مردانه",
   "subCategory": {
-    "$oid": "6732399045bc3dab3fb8961b"
+    "$oid": "673283d7291f097a31cf0350"
   },
   "isActive": true,
   "isMain": false,
@@ -238,7 +238,7 @@
   },
   "title": "ساعت زنانه",
   "subCategory": {
-    "$oid": "6732399045bc3dab3fb8961b"
+    "$oid": "673283d7291f097a31cf0350"
   },
   "isActive": true,
   "isMain": false,
@@ -439,6 +439,22 @@
   },
   "updatedAt": {
     "$date": "2024-11-11T17:19:02.303Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "673283d7291f097a31cf0350"
+  },
+  "title": "ساعت",
+  "image": "file_1731344981651.jpg",
+  "isActive": true,
+  "isMain": true,
+  "createdAt": {
+    "$date": "2024-11-11T22:23:19.145Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-11T22:23:19.145Z"
   },
   "__v": 0
 }]

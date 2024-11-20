@@ -17,6 +17,7 @@ export default function TopNav() {
   const { isAdded, isRemoved } = useSelector(state => state.cart)
   const [cartItems, setCartItems] = useState(0);
   const [searchData, setSearchData] = useState();
+  const [searchContent, setSearchContent] = useState(null);
   const [isLogout, setIsLogout] = useState(false);
 
   const dispatch=useDispatch()
@@ -26,21 +27,21 @@ export default function TopNav() {
   }
 
   const handleSearch = async (e) => {
-    console.log(e?.target?.value?.trim());
-    try {
-      const res = await fetch(import.meta.env.VITE_BASE_API + 'search', {
-        method: 'POST',
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({ query: e?.target?.value?.trim() })
-      })
-      const data = await res.json()
-      setSearchData(data)
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+   setSearchContent(e.target.value)
+      try {
+        const res = await fetch(import.meta.env.VITE_BASE_API + 'search', {
+          method: 'POST',
+          headers: {
+            "content-type": "application/json"
+          },
+          body: JSON.stringify({ query: e?.target?.value?.trim() })
+        })
+        const data = await res.json()
+        setSearchData(data)
+      } catch (error) {
+        console.log(error);
+      }
+    
   }
 
 
@@ -89,7 +90,7 @@ export default function TopNav() {
           inputProps={{ 'aria-label': 'search' }}
         />
 
-        <IconButton onClick={() => { if (!searchData.success) { notify('error', 'محصول يافت نشد :(') } }} sx={{ p: '10px' }} type="button" aria-label="search">
+        <IconButton onClick={() => { if (!searchData?.success || !searchContent) { notify('error', 'محصول يافت نشد :(') } }} sx={{ p: '10px' }} type="button" aria-label="search">
           <SearchIcon fontSize='medium' color='var(--primary-clr)' />
         </IconButton>
         {searchData?.success &&
@@ -124,7 +125,8 @@ export default function TopNav() {
                   fontWeight={500}
                   color='secondary'
                   sx={{
-                    opacity: .8
+                    opacity: .8,
+                    textWrap:'nowrap'
                   }}
                 >در محصولات:</Typography>
                 {searchData?.data?.product?.map((e, index) => (

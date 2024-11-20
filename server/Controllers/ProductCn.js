@@ -99,8 +99,9 @@ export const favoriteProduct = catchAsync(async (req, res, next) => {
     newFav = true
   }
   return res.status(200).json({
+    success:true,
     isFavorite: newFav,
-    message: newFav ? 'add product to favorite list' : 'remove product from favorite list'
+    message: newFav ? 'محصول به علاقه مندي ها اضافه شد.' : 'محصول از علاقه مندي ها حذف شد.'
   })
 })
 
